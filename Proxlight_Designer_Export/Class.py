@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 import os
+import db
 
 frm = tk.Tk()
 frm.title('Database')
@@ -10,8 +11,8 @@ frm.geometry('1200x700')
 frm.attributes('-fullscreen', True)
 
 
-connection = pymysql.connect(host="localhost", user="root", password="", database="asp_base")
-conn = connection.cursor()
+conn = db.connection.cursor()
+connection = db.connection.commit()
 sql = "select * from tb_class;"
 conn.execute(sql)
 
@@ -23,7 +24,7 @@ def save_update():
 
     sql_update = "update tb_class set cl_name='"+n_name+"' where cl_id='"+n_id+"';"
     conn.execute(sql_update)
-    connection.commit()
+    connection
 
     for i in tree.get_children():
         tree.delete(i)
@@ -65,7 +66,7 @@ def delete():
 
     sql_delete = "delete from tb_class where cl_Id = '"+value+"';"
     conn.execute(sql_delete)
-    connection.commit()
+    connection
 
     for i in tree.get_children():
         tree.delete(i)
@@ -199,9 +200,5 @@ txtId.config(font=("Saysettha OT", 14))
 txtName = tk.Entry(frm)
 txtName.place(x=1230, y=270)
 txtName.config(font=("Saysettha OT", 14))
-
-# btn = tk.Button(frm, text="ບັນທຶກການແກ້ໄຂ", command=save_update)
-# btn.place(x=1230, y=700)
-# btn.configure(font=("Saysettha OT", 14), bg="powderblue")
 
 frm.mainloop()

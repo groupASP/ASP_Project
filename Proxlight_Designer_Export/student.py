@@ -1,4 +1,3 @@
-import pymysql
 import tkinter
 from tkinter import ttk
 import os
@@ -14,11 +13,18 @@ a.geometry("1500x900")
 # a.title("display from database")
 a.attributes('-fullscreen', True)
 
+# ຄຳສັ່ງເຊື່ອມຕໍ່
+conn = db.connection.cursor()
+connection = db.connection.commit()
+
+sql = "select* from tb_student"
+conn.execute(sql)
+
 def back():
     l = messagebox.askquestion("Back", "ທ່ານຕ້ອງການຈະກັບໄປໜ້າຫຼັກ ຫຼື ບໍ່?")
     if (l == 'yes'):
         a.withdraw()
-        os.system("python window1.py")
+        os.system("D:\ASP_Project\Proxlight_Designer_Export\window1.py")
 
 
 def save():
@@ -40,14 +46,13 @@ def save():
         st_Gender="ຍິງ"
 
     sql_update ="update tb_student set st_Name='"+st_Name+"',st_Surname='"+st_Surname+"',st_Gender='"+st_Gender+"',st_DOB='"+st_DOB+"',st_Tel='"+st_Tel+"',st_Village='"+st_Village+"',st_District='"+st_District+"',st_Province='"+st_Province+"' where st_Id='"+st_Id+"';"
-    db.conn.execute(sql_update)
-    db.connection.commit()
+    conn.execute(sql_update)
 
     for i in tree.get_children():
         tree.delete(i)
 
     sql_select="select * from tb_student;"
-    db.conn.execute(sql_select)
+    conn.execute(sql_select)
 
     i=0
     for row in db.conn:
@@ -72,7 +77,7 @@ def edit():
     value = tree.item(data)['values'][0]
 
     sql_select = "select * from tb_student where st_Id='" + value + "';"
-    db.conn.execute(sql_select)
+    conn.execute(sql_select)
 
     for row in db.conn:
         st_Id = row[0]
@@ -127,8 +132,8 @@ def delete():
     mon = tree.item(pm)['values'][0]
     # print(mon)
     sql_delete = "delete from tb_student where st_Id='" + mon + "';"
-    db.conn.execute(sql_delete)
-    db.connection.commit()
+    conn.execute(sql_delete)
+    connection
     # sc =tkinter.Label(a, text="Delete successfully!!!!!!")
     # sc.pack()
     # sc.config(font=("Times New Roman", 30), fg="red",bg="#04C582")
@@ -137,7 +142,7 @@ def delete():
         tree.delete(i)
 
     sql_select = "select * from tb_student;"
-    db.conn.execute(sql_select)
+    conn.execute(sql_select)
 
     i = 0
     for row in db.conn:
@@ -148,7 +153,7 @@ def delete():
 
 def insert():
     a.withdraw()
-    os.system("insert_studen.py")
+    os.system("D:\ASP_Project\Proxlight_Designer_Export\insert_studen.py")
 
 
 '''lb=tkinter.Label(a,text="ລາຍຊື່ນັກສຶກສາ")
@@ -164,12 +169,12 @@ canvas = Canvas(
     relief="ridge")
 canvas.place(x=0, y=0)
 
-background_img = PhotoImage(file=f"background2.png")
+background_img = PhotoImage(file=f"Proxlight_Designer_Export/Image/background2.png")
 background = canvas.create_image(
     950.0, 540.0,
     image=background_img)
 
-img1 = PhotoImage(file=f"add.png")
+img1 = PhotoImage(file=f"Proxlight_Designer_Export/Image/add.png")
 btAdd = Button(
     image=img1,
     borderwidth=0,
@@ -179,7 +184,7 @@ btAdd = Button(
 btAdd.place(
     x=480, y=650, )
 
-img2 = PhotoImage(file=f"back.png")
+img2 = PhotoImage(file=f"Proxlight_Designer_Export/Image/back.png")
 btBack = Button(
     image=img2,
     borderwidth=0,
@@ -189,7 +194,7 @@ btBack = Button(
 btBack.place(
     x=100, y=650, )
 
-img3 = PhotoImage(file=f"delete.png")
+img3 = PhotoImage(file=f"Proxlight_Designer_Export/Image/delete.png")
 btDelete = Button(
     image=img3,
     borderwidth=0,
@@ -199,7 +204,7 @@ btDelete = Button(
 btDelete.place(
     x=1200, y=650, )
 
-img4 = PhotoImage(file=f"edit.png")
+img4 = PhotoImage(file=f"Proxlight_Designer_Export/Image/edit.png")
 btEdit = Button(
     image=img4,
     borderwidth=0,
@@ -214,12 +219,6 @@ st.theme_use("clam")
 st.configure("Treeview.Heading", fg="blue", font=("Saysettha OT", 14))
 st.configure("Treeview", rowheight=50, font=("Saysettha OT", 12))
 
-# ຄຳສັ່ງເຊື່ອມຕໍ່
-connection = pymysql.connect(host="Localhost", user="root", password="", database="asp_base")
-conn = connection.cursor()
-
-sql = "select* from tb_student"
-conn.execute(sql)
 
 tree = ttk.Treeview(a)
 tree["columns"] = ("1", "2", "3", "4", "5", "6", "7", "8", "9")
