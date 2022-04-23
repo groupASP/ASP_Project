@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import font as tkfont
 import os
-import pymysql
+import db
 from tkinter import messagebox
 from tkinter import *
 
@@ -11,15 +11,15 @@ frm.geometry('1920x1080')
 frm.attributes('-fullscreen', True)
 
 def insert():
-    connection = pymysql.connect(host="Localhost",user="root",password="",database="asp_base")
-    conn = connection.cursor()
+    conn = db.connection.cursor()
+    connection = db.connection.commit()
     cl_Id = en.get()
     cl_Name = en1.get()
     value = messagebox.askquestion("ການຢືນຢັນ", "ທ່ານຕ້ອງການເພີ່ມຂໍ້ມູນແທ້ຫຼືບໍ່?")
     if(value == 'yes'):
         sql_insert = "insert into tb_class values('"+cl_Id+"','"+cl_Name+"');"
         conn.execute(sql_insert)
-        connection.commit()
+        connection
         messagebox.showinfo("ການສະແດງຜົນ","ທ່ານໄດ້ເພີ່ມຂໍ້ມູນສຳເລັດແລ້ວ")
     en.delete(0,END)
     en1.delete(0,END)
