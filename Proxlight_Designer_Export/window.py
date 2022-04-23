@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import  messagebox
-import  os
+import os
 
 window = Tk()
 
@@ -26,7 +26,7 @@ def login():
 
     elif(txtu == user) and (txtp == pw):
         window.withdraw()
-        os.system("python window1.py")
+        os.system("D:\ASP_Project\Proxlight_Designer_Export\window1.py")
 
 
     elif(txtu != user) and (txtp != pw):
@@ -56,12 +56,12 @@ canvas = Canvas(
     relief = "ridge")
 canvas.place(x = 0, y = 0)
 
-background_img = PhotoImage(file = f"background_login.png")
+background_img = PhotoImage(file = f"Proxlight_Designer_Export/Image/background_login.png")
 background = canvas.create_image(
     600.0, 337.5,
     image=background_img)
 
-img0 = PhotoImage(file = f"login.png")
+img0 = PhotoImage(file = f"Proxlight_Designer_Export/Image/login.png")
 b0 = Button(
     image = img0,
     borderwidth = 0,
@@ -74,7 +74,7 @@ b0.place(
     width = 392,
     height = 62)
 
-entry0_img = PhotoImage(file = f"img_textBox0.png")
+entry0_img = PhotoImage(file = f"Proxlight_Designer_Export/Image/img_textBox0.png")
 entry0_bg = canvas.create_image(
     305.5, 357.0,
     image = entry0_img)
@@ -90,7 +90,7 @@ entry0.place(
     width = 375.0,
     height = 58)
 
-entry1_img = PhotoImage(file = f"img_textBox1.png")
+entry1_img = PhotoImage(file = f"Proxlight_Designer_Export/Image/img_textBox1.png")
 entry1_bg = canvas.create_image(
     305.5, 473.0,
     image = entry1_img)
