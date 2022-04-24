@@ -35,11 +35,11 @@ def save():
     # st_Gender=rd1.get()
     #print(v1)
     if(v1.get()==1):
-        st_Gender="ຊາຍ"
-    else:
-        st_Gender="ຍິງ"
+        s_Gender="ຊາຍ"
+    if(v1.get()==2):
+        s_Gender="ຍິງ"
 
-    sql_update ="update tb_student set st_Name='"+st_Name+"',st_Surname='"+st_Surname+"',st_Gender='"+st_Gender+"',st_DOB='"+st_DOB+"',st_Tel='"+st_Tel+"',st_Village='"+st_Village+"',st_District='"+st_District+"',st_Province='"+st_Province+"' where st_Id='"+st_Id+"';"
+    sql_update ="update tb_student set st_Name='"+st_Name+"',st_Surname='"+st_Surname+"',st_Gender='"+s_Gender+"',st_DOB='"+st_DOB+"',st_Tel='"+st_Tel+"',st_Village='"+st_Village+"',st_District='"+st_District+"',st_Province='"+st_Province+"' where st_Id='"+st_Id+"';"
     db.conn.execute(sql_update)
     db.connection.commit()
 
@@ -53,6 +53,7 @@ def save():
     for row in db.conn:
         tree.insert('', i,text="",values=(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8]))
         i=i+1
+
 
     # sc =tkinter.Label(a, text="Edit successfully!!!!!!")
     # sc.pack()
@@ -99,24 +100,7 @@ def edit():
             rd1.select()
         else:
             rd2.select()
-        # #####ສາຂາ
-        # cbList = ["ໄອທີ", "ນິເທດສາດ", "ບໍລິຫານທຸລະກິດ", "ການທະນາຄານ"]
-        # if(o_major == cbList[0]):
-        #     combo.current(0)
-        #
-        # elif(o_major == cbList[1]):
-        #     combo.current(1)
-        #
-        # elif(o_major == cbList[2]):
-        #     combo.current(2)
-        #
-        # elif(o_major == cbList[3]):
-        #     combo.current(3)
-        #
-        # bb2.config(state="disabled")
 
-        # a.deiconify()
-        # b.withdraw()
         a.withdraw()
         b.deiconify()
         tx11.config(state="disabled")
@@ -129,9 +113,6 @@ def delete():
     sql_delete = "delete from tb_student where st_Id='" + mon + "';"
     db.conn.execute(sql_delete)
     db.connection.commit()
-    # sc =tkinter.Label(a, text="Delete successfully!!!!!!")
-    # sc.pack()
-    # sc.config(font=("Times New Roman", 30), fg="red",bg="#04C582")
 
     for i in tree.get_children():
         tree.delete(i)
@@ -254,7 +235,6 @@ tree.place(x=30, y=80)
 
 ############################################################################################################
 ############################################################################################################
-
 
 # ໜ້າທີ່2
 b = tkinter.Tk()
