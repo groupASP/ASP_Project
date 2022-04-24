@@ -3,10 +3,8 @@ from tkinter import ttk
 from tkinter import font as tkfont
 import os
 import pymysql
-import mysql.connector
 from tkinter import messagebox
 from tkinter import *
-import db
 
 frm = tkinter.Tk()
 frm.title("Insert Student")
@@ -14,8 +12,6 @@ frm.geometry('1920x1080')
 frm.attributes('-fullscreen', True)
 
 def insert():
-    # connection = pymysql.connect(host="localhost", user="root", password="", database="asp_base")
-    # conn = connection.cursor()
     connection=pymysql.connect(host="Localhost",user="root",password="",database="asp_base")
     conn=connection.cursor()
     t_Id = en_id.get()

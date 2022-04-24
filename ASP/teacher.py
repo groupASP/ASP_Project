@@ -22,7 +22,7 @@ def back():
     l = messagebox.askquestion("Back", "ທ່ານຕ້ອງການຈະກັບໄປໜ້າຫຼັກ ຫຼື ບໍ່?")
     if (l == 'yes'):
         a.withdraw()
-        os.system("python window1.py")
+        os.system("D:\ASP_Project\ASP\window1.py")
 
 
 def save():
@@ -157,7 +157,7 @@ def delete():
 
 def insert():
     a.withdraw()
-    os.system("insert_teacher.py")
+    os.system("D:\ASP_Project\ASP\insert_teacher.py")
 
 
 '''lb=tkinter.Label(a,text="ລາຍຊື່ນັກສຶກສາ")
@@ -173,12 +173,12 @@ canvas = Canvas(
     relief="ridge")
 canvas.place(x=0, y=0)
 
-background_img = PhotoImage(file=f"bg_teach.png")
+background_img = PhotoImage(file=f"ASP/Image/bg_teach.png")
 background = canvas.create_image(
     950.0, 540.0,
     image=background_img)
 
-img1 = PhotoImage(file=f"add.png")
+img1 = PhotoImage(file=f"ASP/Image/add.png")
 btAdd = Button(
     image=img1,
     borderwidth=0,
@@ -188,7 +188,7 @@ btAdd = Button(
 btAdd.place(
     x=480, y=650, )
 
-img2 = PhotoImage(file=f"back.png")
+img2 = PhotoImage(file=f"ASP/Image/back.png")
 btBack = Button(
     image=img2,
     borderwidth=0,
@@ -198,7 +198,7 @@ btBack = Button(
 btBack.place(
     x=100, y=650, )
 
-img3 = PhotoImage(file=f"delete.png")
+img3 = PhotoImage(file=f"ASP/Image/delete.png")
 btDelete = Button(
     image=img3,
     borderwidth=0,
@@ -208,7 +208,7 @@ btDelete = Button(
 btDelete.place(
     x=1200, y=650, )
 
-img4 = PhotoImage(file=f"edit.png")
+img4 = PhotoImage(file=f"ASP/Image/edit.png")
 btEdit = Button(
     image=img4,
     borderwidth=0,
