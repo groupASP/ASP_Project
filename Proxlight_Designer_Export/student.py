@@ -34,9 +34,9 @@ def save():
     #n_major=combo.get()
     # st_Gender=rd1.get()
     #print(v1)
-    if(v1.get()==0):
+    if(v1.get()==1):
         st_Gender="ຊາຍ"
-    elif(v1.get()==1):
+    else:
         st_Gender="ຍິງ"
 
     sql_update ="update tb_student set st_Name='"+st_Name+"',st_Surname='"+st_Surname+"',st_Gender='"+st_Gender+"',st_DOB='"+st_DOB+"',st_Tel='"+st_Tel+"',st_Village='"+st_Village+"',st_District='"+st_District+"',st_Province='"+st_Province+"' where st_Id='"+st_Id+"';"
@@ -365,13 +365,13 @@ rd2.place(x=300, y=330)
 rd2.configure(font=("Saysettha OT", 16), bg="#ECF8DC")
 
 # button
-bts = tkinter.Button(b, text="ບັນທຶກການແກ້ໄຂ",command=save)
-bts.place(x=1200, y=580)
-bts.configure(font=("Saysettha OT", 16), bg="blue", fg="white")
+bts = tkinter.Button(b, text="Update",command=save,width=20)
+bts.place(x=900, y=650)
+bts.configure(font=("Saysettha OT", 18), bg="green", fg="white")
 
-bt = tkinter.Button(b, text="BACK",command=back1)
-bt.place(x=500, y=580)
-bt.configure(font=("Saysettha OT", 16), bg="blue", fg="white")
+bt = tkinter.Button(b, text="BACK",command=back1,width=20)
+bt.place(x=300, y=650)
+bt.configure(font=("Saysettha OT", 18), bg="gray", fg="black")
 
 
 a.mainloop()

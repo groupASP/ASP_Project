@@ -19,6 +19,10 @@ def stu():
     window1.withdraw()
     os.system("python student.py")
 
+def teacher():
+    window1.withdraw()
+    os.system("python teacher.py")
+
 window1 = Tk()
 window1.attributes('-fullscreen', True)
 
@@ -148,7 +152,7 @@ b8 = Button(
     image = img8,
     borderwidth = 0,
     highlightthickness = 0,
-    command = btn_clicked,
+    command = teacher,
     relief = "flat")
 
 b8.place(
