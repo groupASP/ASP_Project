@@ -23,6 +23,10 @@ def teacher():
     window1.withdraw()
     os.system("python teacher.py")
 
+def face():
+    window1.withdraw()
+    os.system("python face.py")
+
 window1 = Tk()
 window1.attributes('-fullscreen', True)
 
@@ -126,7 +130,7 @@ b6 = Button(
     image = img6,
     borderwidth = 0,
     highlightthickness = 0,
-    command = btn_clicked,
+    command = face,
     relief = "flat")
 
 b6.place(

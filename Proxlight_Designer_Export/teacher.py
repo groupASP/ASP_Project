@@ -267,7 +267,7 @@ tree.place(x=1, y=80)
 b = tkinter.Tk()
 b.geometry("1500x900")
 b.config(bg="#ECF8DC")
-# b.attributes('-fullscreen', True)
+b.attributes('-fullscreen', True)
 b.withdraw()
 
 lbShow = tkinter.Label(b, text="ແກ້ໄຂຂໍ້ມູນ")
