@@ -53,9 +53,7 @@ def back():
     l = messagebox.askquestion("Back","ທ່ານຕ້ອງການຈະກັບໄປໜ້າຂໍ້ມູນອາຈານ ຫຼື ບໍ່?")
     if(l == 'yes'):
         frm.withdraw()
-        os.system("python teacher.py")
-
-
+        os.system("D:\ASP_Project\ASP\\teacher.py")
 
 canvas = Canvas(
     frm,
@@ -67,7 +65,7 @@ canvas = Canvas(
     relief = "ridge")
 canvas.place(x = 0, y = 0)
 
-background_img = PhotoImage(file = f"bg_teacher.png")
+background_img = PhotoImage(file = f"ASP/Image/bg_teacher.png")
 background = canvas.create_image(
     950.0, 540.0,
     image=background_img)
@@ -172,35 +170,9 @@ rd2 = tkinter.Radiobutton(frm, text="ຍິງ", variable=v1, value=2)
 rd2.place(x=270, y=330)
 rd2.config(font=("Saysettha OT", 20),bg="#ECF8DC")
 
-# conn = mysql.connector.connect(user="root", password="", host="Localhost",database="asp_base")
-# curs = conn.cursor()
-#
-# #combobox form database
-# curs.execute('select p_Name from tb_province;')
-# results = curs.fetchall()
-# comboboxProvince = [result[0] for result in results]
-#
-# #combobox form database
-# curs.execute('select d_Name from tb_district;')
-# results = curs.fetchall()
-# comboboxDistrict = [result[0] for result in results]
-#
-# #combobox form database
-# curs.execute('select v_Name from tb_village;')
-# results = curs.fetchall()
-# comboboxVillage = [result[0] for result in results]
-#
-
-
-
-# cbClass = ttk.Combobox(frm, width=18, value=cbList2)
-# cbClass.place(x=1250, y=520)
-# cbClass.config(font=("Saysettha OT", 18), state="readonly")
-# cbClass.current()
-# cbClass.option_add("*font", cbFont)
 
 #Button
-img1 = PhotoImage(file = f"add.png")
+img1 = PhotoImage(file = f"ASP/Image/add.png")
 btAdd = Button(
     image = img1,
     borderwidth = 0,
@@ -211,7 +183,7 @@ btAdd = Button(
 btAdd.place(
     x = 900, y = 730,)
 
-img2 = PhotoImage(file = f"back.png")
+img2 = PhotoImage(file = f"ASP/Image/back.png")
 btBack = Button(
     image = img2,
     borderwidth = 0,

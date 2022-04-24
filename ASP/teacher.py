@@ -1,4 +1,3 @@
-import pymysql
 import tkinter
 from tkinter import ttk
 import os
@@ -13,6 +12,11 @@ a.geometry("1500x900")
 
 # a.title("display from database")
 a.attributes('-fullscreen', True)
+
+# ຄຳສັ່ງເຊື່ອມຕໍ່
+connection = db.pymysql.connect(host="Localhost", user="root", password="", database="asp_base")
+conn = connection.cursor()
+
 
 def back():
     l = messagebox.askquestion("Back", "ທ່ານຕ້ອງການຈະກັບໄປໜ້າຫຼັກ ຫຼື ບໍ່?")
@@ -219,9 +223,6 @@ st.theme_use("clam")
 st.configure("Treeview.Heading", fg="blue", font=("Saysettha OT", 14))
 st.configure("Treeview", rowheight=50, font=("Saysettha OT", 12))
 
-# ຄຳສັ່ງເຊື່ອມຕໍ່
-connection = pymysql.connect(host="Localhost", user="root", password="", database="asp_base")
-conn = connection.cursor()
 
 sql = "select* from tb_teacher"
 conn.execute(sql)
