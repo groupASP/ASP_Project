@@ -38,13 +38,7 @@ def save():
     st_Village=tx66.get()
     st_District=tx77.get()
     st_Province=tx88.get()
-    #n_major=combo.get()
-    # st_Gender=rd1.get()
-    #print(v1)
-    if(v1.get()==1):
-        s_Gender="ຊາຍ"
-    if(v1.get()==2):
-        s_Gender="ຍິງ"
+    s_Gender=combo.get()
 
     sql_update ="update tb_student set st_Name='"+st_Name+"',st_Surname='"+st_Surname+"',st_Gender='"+s_Gender+"',st_DOB='"+st_DOB+"',st_Tel='"+st_Tel+"',st_Village='"+st_Village+"',st_District='"+st_District+"',st_Province='"+st_Province+"' where st_Id='"+st_Id+"';"
     conn.execute(sql_update)
@@ -70,6 +64,7 @@ def save():
     tx66.delete(0, END)
     tx77.delete(0, END)
     tx88.delete(0, END)
+    combo.current(0)
     messagebox.showinfo("ການແກ້ໄຂຂໍ້ມູນ", "ທ່ານໄດ້ແກ້ໄຂຂໍ້ມູນນັກສຶກສາສຳເລັດແລ້ວ!!!")
 
 def edit():
@@ -98,12 +93,14 @@ def edit():
         tx66.insert(0, st_Village)
         tx77.insert(0, st_District)
         tx88.insert(0, st_Province)
-        ######ເພດ
-        # print(st_Gender)
-        if (st_Gender == "ຊາຍ"):
-            rd1.select()
-        else:
-            rd2.select()
+
+        #####ເພດ
+        cbList = ["ຊາຍ", "ຍິງ"]
+        if(st_Gender == cbList[0]):
+            combo.current(0)
+
+        elif(st_Gender == cbList[1]):
+            combo.current(1)
 
         a.withdraw()
         b.deiconify()
@@ -240,7 +237,6 @@ b.withdraw()
 
 lbShow = tkinter.Label(b, text="ແກ້ໄຂຂໍ້ມູນ")
 lbShow.pack(side='top', fill='x')
-# lbShow.place(x=1,y=1000)
 lbShow.configure(font=("Saysettha OT", 30), bg="#04C582", fg="white")
 
 def ex():
@@ -328,16 +324,15 @@ tx88 = tkinter.Entry(b)
 tx88.place(x=890, y=520)
 tx88.config(font=("Saysettha OT", 18),width=18)
 
-####radio
-v1 = tkinter.IntVar()
+######combo
+cbList = ["ຊາຍ", "ຍິງ"]
+cbfont=tkfont.Font(family="Saysettha OT", size=20)
 
-rd1 = tkinter.Radiobutton(b, text="ຊາຍ", variable=v1, value=1)
-rd1.place(x=150, y=330)
-rd1.config(font=("Saysettha OT", 16), bg="#ECF8DC")
-
-rd2 = tkinter.Radiobutton(b, text="ຍິງ", variable=v1, value=2)
-rd2.place(x=300, y=330)
-rd2.configure(font=("Saysettha OT", 16), bg="#ECF8DC")
+combo = ttk.Combobox(b, width=15,value=cbList)
+combo.place(x=150, y=330)
+combo.configure(font=("Saysettha OT", 20),state="readonly")
+combo.current(0)
+combo.option_add("*font", cbfont)
 
 # button
 bts = tkinter.Button(b, text="Update",command=save,width=20)

@@ -12,6 +12,8 @@ frm.geometry('1920x1080')
 frm.attributes('-fullscreen', True)
 
 def insert():
+    # connection = pymysql.connect(host="localhost", user="root", password="", database="asp_base")
+    # conn = connection.cursor()
     connection=pymysql.connect(host="Localhost",user="root",password="",database="asp_base")
     conn=connection.cursor()
     t_Id = en_id.get()
@@ -23,11 +25,7 @@ def insert():
     t_Tel=en_tel.get()
     t_Email=en_email.get()
     t_Degree=en_degree.get()
-
-    if(v1.get() == 1):
-        t_Gender = "ຊາຍ"
-    else:
-        t_Gender = "ຍິງ"
+    t_Gender=cbGender.get()
     value = messagebox.askquestion("ການຢືນຢັນ", "ທ່ານຕ້ອງການເພີ່ມຂໍ້ມູນແທ້ຫຼືບໍ່?")
     if(value == 'yes'):
         sql_insert = "insert into tb_teacher values('"+t_Id+"','"+t_Name+"','"+t_Surname+"','"+t_Gender+"','"+t_Village+"','"+t_District+"','"+t_Province+"','"+t_Tel+"','"+t_Email+"','"+t_Degree+"');"
@@ -153,18 +151,14 @@ en_province.config(font=("Saysettha OT", 18))
 en_province.option_add("*font", cbFont)
 
 
+# ComboList
+cbList = ["ຊາຍ", "ຍິງ"]
 
-
-# RadioButton
-v1 = tkinter.IntVar()
-
-rd1 = tkinter.Radiobutton(frm, text="ຊາຍ", variable=v1, value=1)
-rd1.place(x=120, y=330)
-rd1.config(font=("Saysettha OT", 20),bg="#ECF8DC")
-
-rd2 = tkinter.Radiobutton(frm, text="ຍິງ", variable=v1, value=2)
-rd2.place(x=270, y=330)
-rd2.config(font=("Saysettha OT", 20),bg="#ECF8DC")
+cbGender = ttk.Combobox(frm, width=15, value=cbList)
+cbGender.place(x=200, y=330)
+cbGender.config(font=("Saysettha OT", 18), state="readonly")
+cbGender.current(0)
+cbGender.option_add("*font", cbFont)
 
 
 #Button

@@ -1,3 +1,4 @@
+from math import comb
 import tkinter
 from tkinter import ttk
 from tkinter import font as tkfont
@@ -23,13 +24,10 @@ def insert():
     st_village=en_village.get()
     st_district=en_district.get()
     st_province=en_province.get()
-    if(v1.get() == 1):
-        S_Gender = "ຊາຍ"
-    else:
-        S_Gender = "ຍິງ"
+    st_Gender=cbGender.get()
     value = messagebox.askquestion("ການຢືນຢັນ", "ທ່ານຕ້ອງການເພີ່ມຂໍ້ມູນແທ້ຫຼືບໍ່?")
     if(value == 'yes'):
-        sql_insert = "insert into tb_student values('"+st_Id+"','"+st_Name+"','"+st_Surname+"','"+S_Gender+"','"+st_DOB+"','"+st_Tel+"','"+st_village+"','"+st_district+"','"+st_province+"');"
+        sql_insert = "insert into tb_student values('"+st_Id+"','"+st_Name+"','"+st_Surname+"','"+st_Gender+"','"+st_DOB+"','"+st_Tel+"','"+st_village+"','"+st_district+"','"+st_province+"');"
         conn.execute(sql_insert)
         connection.commit()
         messagebox.showinfo("ການສະແດງຜົນ","ທ່ານໄດ້ເພີ່ມຂໍ້ມູນນັກສຶກສາສຳເລັດແລ້ວ")
@@ -41,6 +39,7 @@ def insert():
     en_village.delete(0,END)
     en_district.delete(0,END)
     en_province.delete(0,END)
+    cbGender.set("")
 
 
 def back():
@@ -127,17 +126,6 @@ en4.place(x=1150, y=330)
 en4.config(font=("Saysettha OT",18),width=25)
 
 
-# RadioButton
-v1 = tkinter.IntVar()
-
-rd1 = tkinter.Radiobutton(frm, text="ຊາຍ", variable=v1, value=1)
-rd1.place(x=150, y=330)
-rd1.config(font=("Saysettha OT", 20),bg="#ECF8DC")
-
-rd2 = tkinter.Radiobutton(frm, text="ຍິງ", variable=v1, value=2)
-rd2.place(x=300, y=330)
-rd2.config(font=("Saysettha OT", 20),bg="#ECF8DC")
-
 
 #SET FONT
 cbFont = tkfont.Font(family="Saysettha OT", size=16)
@@ -157,6 +145,14 @@ en_province.place(x=870, y=520)
 en_province.config(font=("Saysettha OT", 18))
 en_province.option_add("*font", cbFont)
 
+# ComboList
+cbList = ["ຊາຍ", "ຍິງ"]
+
+cbGender = ttk.Combobox(frm, width=15, value=cbList)
+cbGender.place(x=200, y=330)
+cbGender.config(font=("Saysettha OT", 18), state="readonly")
+cbGender.current(0)
+cbGender.option_add("*font", cbFont)
 
 #Button
 img1 = PhotoImage(file = f"ASP/Image/add.png")

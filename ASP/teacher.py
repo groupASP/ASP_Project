@@ -37,14 +37,7 @@ def save():
     t_Tel=en_tel.get()
     t_Email=en_email.get()
     t_Degree=en_degree.get()
-    #n_major=combo.get()
-    # st_Gender=rd1.get()
-    #print(v1)
-    if(v1.get()==0):
-        t_Gender="ຊາຍ"
-    elif(v1.get()==1):
-        t_Gender="ຍິງ"
-
+    t_Gender=combo.get()
     sql_update ="update tb_teacher set t_Name='"+t_Name+"',t_Surname='"+t_Surname+"',t_Gender='"+t_Gender+"',t_Village='"+t_Village+"',t_District='"+t_District+"',t_Province='"+t_Province+"',t_Tel='"+t_Tel+"',t_Email='"+t_Email+"',t_Degree='"+t_Degree+"' where t_Id='"+t_Id+"';"
     db.conn.execute(sql_update)
     db.connection.commit()
@@ -102,30 +95,15 @@ def edit():
         en_tel.insert(0, t_Tel)
         en_email.insert(0, t_Email)
         en_degree.insert(0, t_Degree)
-        ######ເພດ
-        # print(st_Gender)
-        if (t_Gender == "ຊາຍ"):
-            rd1.select()
-        else:
-            rd2.select()
-        # #####ສາຂາ
-        # cbList = ["ໄອທີ", "ນິເທດສາດ", "ບໍລິຫານທຸລະກິດ", "ການທະນາຄານ"]
-        # if(o_major == cbList[0]):
-        #     combo.current(0)
-        #
-        # elif(o_major == cbList[1]):
-        #     combo.current(1)
-        #
-        # elif(o_major == cbList[2]):
-        #     combo.current(2)
-        #
-        # elif(o_major == cbList[3]):
-        #     combo.current(3)
-        #
-        # bb2.config(state="disabled")
+    
+        #####ເພດ
+        cbList = ["ຊາຍ", "ຍິງ"]
+        if(t_Gender == cbList[0]):
+            combo.current(0)
 
-        # a.deiconify()
-        # b.withdraw()
+        elif(t_Gender == cbList[1]):
+            combo.current(1)
+
         a.withdraw()
         b.deiconify()
         en_id.config(state="disabled")
@@ -138,9 +116,7 @@ def delete():
     sql_delete = "delete from tb_teacher where t_Id='" + mon + "';"
     db.conn.execute(sql_delete)
     db.connection.commit()
-    # sc =tkinter.Label(a, text="Delete successfully!!!!!!")
-    # sc.pack()
-    # sc.config(font=("Times New Roman", 30), fg="red",bg="#04C582")
+
 
     for i in tree.get_children():
         tree.delete(i)
@@ -337,7 +313,6 @@ lb_degree.config(font=("Saysettha OT", 18),bg="#ECF8DC")
 # Entry
 en_id = tkinter.Entry(b,width=18)
 en_id.place(x=200, y=150)
-# en=enID.get().encode('utf-8')
 en_id.config(font=("Saysettha OT",18),width=18)
 
 en_name = tkinter.Entry(b)
@@ -378,16 +353,15 @@ en_province.place(x=1250, y=330)
 en_province.config(font=("Saysettha OT", 18))
 en_province.option_add("*font", cbFont)
 
-####radio
-v1 = tkinter.IntVar()
+######combo
+cbList = ["ຊາຍ", "ຍິງ"]
+cbfont=tkfont.Font(family="ASP/font/Saysettha OT", size=20)
 
-rd1 = tkinter.Radiobutton(b, text="ຊາຍ", variable=v1, value=1)
-rd1.place(x=150, y=330)
-rd1.config(font=("Saysettha OT", 16), bg="#ECF8DC")
-
-rd2 = tkinter.Radiobutton(b, text="ຍິງ", variable=v1, value=2)
-rd2.place(x=300, y=330)
-rd2.configure(font=("Saysettha OT", 16), bg="#ECF8DC")
+combo = ttk.Combobox(b, width=15,value=cbList)
+combo.place(x=150, y=330)
+combo.configure(font=("Saysettha OT", 20),state="readonly")
+combo.current(0)
+combo.option_add("*font", cbfont)
 
 # button
 bts = tkinter.Button(b, text="Update",command=save,width=20)
@@ -397,16 +371,6 @@ bts.configure(font=("Saysettha OT", 18), bg="green", fg="white")
 bt = tkinter.Button(b, text="BACK",command=back1,width=20)
 bt.place(x=300, y=650)
 bt.configure(font=("Saysettha OT", 18), bg="gray", fg="black")
-
-# img5 = PhotoImage(file=f"bt_update.png")
-# btUpdate = Button(
-#     image=img5,
-#     borderwidth=0,
-#     highlightthickness=0,
-#     command=save,
-#     relief="flat")
-# btUpdate.place(
-#     x=900, y=650, )
 
 
 a.mainloop()
