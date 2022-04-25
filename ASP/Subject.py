@@ -13,7 +13,7 @@ frm.attributes('-fullscreen', True)
 connection = pymysql.connect(host='localhost', user='root', password='', db='asp_base')
 conn = connection.cursor()
 
-sql = "select * from tb_room;"
+sql = "select * from tb_subject;"
 conn.execute(sql)
 
 def save_update():
@@ -76,12 +76,12 @@ def delete():
 
     i=0
     for row in conn:
-        tree.insert('', i, text='', values=(row[0], row[1], row[2], row[3], row[4], row[5]))
+        tree.insert('', i, text='', values=(row[0], row[1]))
         i += 1
 
 def open():
     frm.withdraw()
-    os.system("D:\ASP_Project\ASP\insert_Room.py")
+    os.system("D:\ASP_Project\ASP\insert_Subject.py")
 
 def back():
     l = messagebox.askquestion("Back", "ທ່ານຕ້ອງການຈະກັບໄປໜ້າຫຼັກ ຫຼື ບໍ່?")

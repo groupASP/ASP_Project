@@ -19,7 +19,7 @@ def insert():
     if(value == 'yes'):
         sql_insert = "insert into tb_subject values('"+s_Id+"','"+s_Name+"');"
         conn.execute(sql_insert)
-        connection
+        connection.commit()
         messagebox.showinfo("ການສະແດງຜົນ","ທ່ານໄດ້ເພີ່ມຂໍ້ມູນສຳເລັດແລ້ວ")
     en.delete(0,END)
     en1.delete(0,END)
