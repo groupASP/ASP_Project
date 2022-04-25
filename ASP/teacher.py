@@ -206,7 +206,13 @@ st.configure("Treeview", rowheight=50, font=("Saysettha OT", 12))
 sql = "select* from tb_teacher"
 conn.execute(sql)
 
-tree = ttk.Treeview(a)
+tree_frame = Frame(a, bg="#ffffff")
+tree_frame.place(x=1, y=80)
+
+tree_Scrollbar = Scrollbar(tree_frame)
+tree_Scrollbar.pack(side="right", fill="y")
+
+tree = ttk.Treeview(tree_frame, yscrollcommand=tree_Scrollbar.set)
 tree["columns"] = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
 tree.column("#0", width=1)
 tree.column("#1", width=100)
@@ -231,13 +237,15 @@ tree.heading("#8", text="ເບີໂທ")
 tree.heading("#9", text="ອີເມວ")
 tree.heading("#10", text="ລະດັບການສຶກສາ")
 
+tree_Scrollbar.config(command=tree.yview)
+
 # ຄຳສັ່ງສະແດງຜົນ
 
 i = 0
 for row in conn:
     tree.insert('', i, text="", values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]))
     i = i + 1
-tree.place(x=1, y=80)
+tree.pack()
 
 ############################################################################################################
 ############################################################################################################
