@@ -47,7 +47,7 @@ def back():
     l = messagebox.askquestion("Back","ທ່ານຕ້ອງການຈະກັບໄປໜ້າຂໍ້ມູນອາຈານ ຫຼື ບໍ່?")
     if(l == 'yes'):
         frm.withdraw()
-        os.system("D:\ASP_Project\ASP\\teacher.py")
+        os.system("python D:\ASP_Project\ASP\\teacher.py")
 
 canvas = Canvas(
     frm,
@@ -59,7 +59,7 @@ canvas = Canvas(
     relief = "ridge")
 canvas.place(x = 0, y = 0)
 
-background_img = PhotoImage(file = f"ASP/Image/bg_teacher.png")
+background_img = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\bg_teacher.png")
 background = canvas.create_image(
     950.0, 540.0,
     image=background_img)
@@ -162,7 +162,7 @@ cbGender.option_add("*font", cbFont)
 
 
 #Button
-img1 = PhotoImage(file = f"ASP/Image/add.png")
+img1 = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\add.png")
 btAdd = Button(
     image = img1,
     borderwidth = 0,
@@ -173,7 +173,7 @@ btAdd = Button(
 btAdd.place(
     x = 900, y = 730,)
 
-img2 = PhotoImage(file = f"ASP/Image/back.png")
+img2 = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\back.png")
 btBack = Button(
     image = img2,
     borderwidth = 0,

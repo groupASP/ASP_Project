@@ -24,12 +24,12 @@ canvas = Canvas(
     relief = "ridge")
 canvas.place(x = 0, y = 0)
 
-background_img = PhotoImage(file = f"background_edit.png")
+background_img = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\background_edit.png")
 background = canvas.create_image(
     950.0, 540.0,
     image=background_img)
 
-img0 = PhotoImage(file = f"back.png")
+img0 = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\back.png")
 b0 = Button(
     image = img0,
     borderwidth = 0,

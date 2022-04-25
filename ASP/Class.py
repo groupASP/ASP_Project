@@ -82,13 +82,13 @@ def delete():
 
 def open():
     frm.withdraw()
-    os.system("D:\ASP_Project\ASP\insert_Class.py")
+    os.system("python D:\ASP_Project\ASP\insert_Class.py")
 
 def back():
     l = messagebox.askquestion("Back", "ທ່ານຕ້ອງການຈະກັບໄປໜ້າຫຼັກ ຫຼື ບໍ່?")
     if (l == 'yes'):
         frm.withdraw()
-        os.system("D:\ASP_Project\ASP\window1.py")
+        os.system("python D:\ASP_Project\ASP\window1.py")
 
 canvas = tk.Canvas(
     frm,
@@ -100,11 +100,11 @@ canvas = tk.Canvas(
     relief = "ridge")
 canvas.place(x = 0, y = 0)
 
-background_img = tk.PhotoImage(file = f"ASP/Image/bg_insert.png")
+background_img = tk.PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\bg_insert.png")
 background = canvas.create_image(
     950.0, 540.0,
     image=background_img)
-img1 = tk.PhotoImage(file=f"ASP/Image/add.png")
+img1 = tk.PhotoImage(file=f"D:\ASP_Project\ASP\\Image\\add.png")
 btAdd = tk.Button(
     image=img1,
     borderwidth=0,
@@ -114,7 +114,7 @@ btAdd = tk.Button(
 btAdd.place(
     x=480, y=700, )
 
-img2 = tk.PhotoImage(file=f"ASP/Image/back.png")
+img2 = tk.PhotoImage(file=f"D:\ASP_Project\ASP\\Image\\back.png")
 btBack = tk.Button(
     image=img2,
     borderwidth=0,
@@ -124,7 +124,7 @@ btBack = tk.Button(
 btBack.place(
     x=100, y=700, )
 
-img3 = tk.PhotoImage(file=f"ASP/Image/delete.png")
+img3 = tk.PhotoImage(file=f"D:\ASP_Project\ASP\\Image\\delete.png")
 btDelete = tk.Button(
     image=img3,
     borderwidth=0,
@@ -134,7 +134,7 @@ btDelete = tk.Button(
 btDelete.place(
     x=1200, y=700, )
 
-img4 = tk.PhotoImage(file=f"ASP/Image/edit.png")
+img4 = tk.PhotoImage(file=f"D:\ASP_Project\ASP\\Image\\edit.png")
 btEdit = tk.Button(
     image=img4,
     borderwidth=0,
@@ -144,7 +144,7 @@ btEdit = tk.Button(
 btEdit.place(
     x=840, y=700, )
 
-img5 = tk.PhotoImage(file=f"ASP/Image/bt_update.png")
+img5 = tk.PhotoImage(file=f"D:\ASP_Project\ASP\\Image\\bt_update.png")
 btSaveUpdate = tk.Button(
     image=img5,
     borderwidth=0,

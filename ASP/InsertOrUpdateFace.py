@@ -77,7 +77,7 @@ def back():
     l = messagebox.askquestion("BACK","ທ່ານຕ້ອງການຈະກັບໄປໜ້າຫຼັກ ຫຼື ບໍ່?")
     if(l == 'yes'):
         frm.withdraw()
-        os.system("D:\ASP_Project\ASP\\face.py")
+        os.system("python D:\ASP_Project\ASP\\face.py")
 
 Notification = Label(frm, text="All things are good", bg="Green", fg="white", width=15,
                 height=3, font=('times', 17, 'bold'))

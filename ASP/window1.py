@@ -15,30 +15,30 @@ def logout():
     l = messagebox.askquestion("LOGOUT","ທ່ານຕ້ອງການຈະອອກໄປໜ້າເຂົ້າສູ່ລະບົບ ຫຼື ບໍ່?")
     if(l == 'yes'):
         window1.withdraw()
-        os.system("D:\ASP_Project\ASP\\window.py")
+        os.system("python D:\ASP_Project\ASP\\window.py")
 def stu():
     window1.withdraw()
-    os.system("D:\ASP_Project\ASP\\student.py")
+    os.system("python D:\ASP_Project\ASP\\student.py")
 
 def teacher():
     window1.withdraw()
-    os.system("D:\ASP_Project\ASP\\teacher.py")
+    os.system("python D:\ASP_Project\ASP\\teacher.py")
 
 def face():
     window1.withdraw()
-    os.system("D:\ASP_Project\ASP\\face.py")
+    os.system("python D:\ASP_Project\ASP\\face.py")
 
 def clas():
     window1.withdraw()
-    os.system("D:\ASP_Project\ASP\\Class.py")
+    os.system("python D:\ASP_Project\ASP\\Class.py")
 
 def room():
     window1.withdraw()
-    os.system("D:\ASP_Project\ASP\\Room.py")
+    os.system("python D:\ASP_Project\ASP\\Room.py")
 
 def Sub():
     window1.withdraw()
-    os.system("D:\ASP_Project\ASP\\Subject.py")
+    os.system("python D:\ASP_Project\ASP\\Subject.py")
 
 window1 = Tk()
 window1.attributes('-fullscreen', True)
@@ -55,12 +55,12 @@ canvas = Canvas(
     relief = "ridge")
 canvas.place(x = 0, y = 0)
 
-background_img = PhotoImage(file = f"ASP/Image/bgm.png")
+background_img = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\bgm.png")
 background = canvas.create_image(
     950.0, 540.0,
     image=background_img)
 
-img0 = PhotoImage(file = f"ASP/Image/exit.png")
+img0 = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\exit.png")
 b0 = Button(
     image = img0,
     borderwidth = 0,
@@ -73,7 +73,7 @@ b0.place(
     width = 250,
     height = 73)
 
-img1 = PhotoImage(file = f"ASP/Image/logout.png")
+img1 = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\logout.png")
 b1 = Button(
     image = img1,
     borderwidth = 0,
@@ -86,7 +86,7 @@ b1.place(
     width = 250,
     height = 73)
 
-img2 = PhotoImage(file = f"ASP/Image/report.png")
+img2 = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\report.png")
 b2 = Button(
     image = img2,
     borderwidth = 0,
@@ -99,7 +99,7 @@ b2.place(
     width = 180,
     height = 180)
 
-img3 = PhotoImage(file = f"ASP/Image/sub.png")
+img3 = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\sub.png")
 b3 = Button(
     image = img3,
     borderwidth = 0,
@@ -112,7 +112,7 @@ b3.place(
     width = 180,
     height = 180)
 
-img4 = PhotoImage(file = f"ASP/Image/room.png")
+img4 = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\room.png")
 b4 = Button(
     image = img4,
     borderwidth = 0,
@@ -125,7 +125,7 @@ b4.place(
     width = 180,
     height = 180)
 
-img5 = PhotoImage(file = f"ASP/Image/class.png")
+img5 = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\class.png")
 b5 = Button(
     image = img5,
     borderwidth = 0,
@@ -138,7 +138,7 @@ b5.place(
     width = 180,
     height = 180)
 
-img6 = PhotoImage(file = f"ASP/Image/face.png")
+img6 = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\face.png")
 b6 = Button(
     image = img6,
     borderwidth = 0,
@@ -151,7 +151,7 @@ b6.place(
     width = 180,
     height = 180)
 
-img7 = PhotoImage(file = f"ASP/Image/attan.png")
+img7 = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\attan.png")
 b7 = Button(
     image = img7,
     borderwidth = 0,
@@ -164,7 +164,7 @@ b7.place(
     width = 180,
     height = 180)
 
-img8 = PhotoImage(file = f"ASP/Image/t.png")
+img8 = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\t.png")
 b8 = Button(
     image = img8,
     borderwidth = 0,
@@ -177,7 +177,7 @@ b8.place(
     width = 180,
     height = 180)
 
-img9 = PhotoImage(file = f"ASP/Image/st.png")
+img9 = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\st.png")
 b9 = Button(
     image = img9,
     borderwidth = 0,
@@ -190,7 +190,7 @@ b9.place(
     width = 180,
     height = 180)
 
-img10 = PhotoImage(file = f"ASP/Image/table.png")
+img10 = PhotoImage(file = f"D:\ASP_Project\ASP\\Image\\table.png")
 b10 = Button(
     image = img10,
     borderwidth = 0,
