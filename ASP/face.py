@@ -67,7 +67,8 @@ def back():
         os.system("D:\ASP_Project\ASP\window1.py")
 
 def selectFile():
-    fileopen = askopenfilename()
+   file=askopenfilename(initialdir="ASP/ImageData",title="Select file",filetypes=(("jpeg files","*.jpg"),("all files","*.*")))
+   f=open(window.file, 'r')
 
 
 window = Tk()
