@@ -1,3 +1,4 @@
+from re import sub
 from tkinter import *
 from tkinter import  messagebox
 import os
@@ -26,6 +27,18 @@ def teacher():
 def face():
     window1.withdraw()
     os.system("D:\ASP_Project\ASP\\face.py")
+
+def clas():
+    window1.withdraw()
+    os.system("D:\ASP_Project\ASP\\Class.py")
+
+def room():
+    window1.withdraw()
+    os.system("D:\ASP_Project\ASP\\Room.py")
+
+def Sub():
+    window1.withdraw()
+    os.system("D:\ASP_Project\ASP\\Subject.py")
 
 window1 = Tk()
 window1.attributes('-fullscreen', True)
@@ -91,7 +104,7 @@ b3 = Button(
     image = img3,
     borderwidth = 0,
     highlightthickness = 0,
-    command = btn_clicked,
+    command = Sub,
     relief = "flat")
 
 b3.place(
@@ -104,7 +117,7 @@ b4 = Button(
     image = img4,
     borderwidth = 0,
     highlightthickness = 0,
-    command = btn_clicked,
+    command = room,
     relief = "flat")
 
 b4.place(
@@ -117,7 +130,7 @@ b5 = Button(
     image = img5,
     borderwidth = 0,
     highlightthickness = 0,
-    command = btn_clicked,
+    command = clas,
     relief = "flat")
 
 b5.place(

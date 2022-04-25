@@ -4,49 +4,32 @@ import  os
 import pymysql
 import numpy as np
 import cv2
+from PIL import Image
 
 
 def trainImg():
-    recognizer = cv2.face.LBPHFaceRecognizer_create()
-    global detector
-    detector = cv2.CascadeClassifier("D:\ASP_Project\ASP\Detect\haarcascade_frontalface_default.xml")
-    try:
-        global faces,Id
-        faces, Id = getImagesAndLabels("ASP/Data")
-    except Exception as e:
-        l='please make "DataSet" folder & put Images'
-        Notification.configure(text=l, bg="SpringGreen3", width=50, font=('times', 18, 'bold'))
-        Notification.place(x=350, y=400)
+    Recognizer = cv2.face.LBPHFaceRecognizer_create()
+    path = "ASP/ImageData"
 
-    recognizer.train(faces, np.array(Id))
-    try:
-        recognizer.save("ASP/Data/trainingData.yml")
-    except Exception as e:
-        q='Please make "Recognizer" folder'
-        Notification.configure(text=q, bg="SpringGreen3", width=50, font=('times', 18, 'bold'))
-        Notification.place(x=350, y=400)
+    def getImagesID(path):
+        imagePaths = [os.path.join(path, f) for f in os.listdir(path)]
+        faces=[]
+        IDs=[]
 
-    res = "Model Trained" 
-    Notification.configure(text=res, bg="SpringGreen3", width=50, font=('times', 18, 'bold'))
-    Notification.place(x=250, y=400)
-
-
-
-def getImagesAndLabels(path):
-    imagePaths = [os.path.join(path, f) for f in os.listdir(path)]
-    faceSamples = []
-    Ids = []
-
-    for imagePath in imagePaths:
-        pilImage = Image.open(imagePath).convert('L')
-        imageNp = np.array(pilImage, 'uint8')
-
-        Id = int(os.path.split(imagePath)[-1].split(".")[1])
-        faces = detector.detectMultiScale(imageNp)
-        for (x, y, w, h) in faces:
-            faceSamples.append(imageNp[y:y + h, x:x + w])
-            Ids.append(Id)
-    return faceSamples, Ids
+        for imagePath in imagePaths:
+            faceImg = Image.open(imagePath).convert("L")
+            faceNp = np.array(faceImg, "uint8")
+            ID = int(os.path.split(imagePath)[-1].split(".")[2])
+            faces.append(faceNp)
+            print(ID)
+            IDs.append(ID)
+            cv2.imshow("Training", faceNp)
+            cv2.waitKey(10)
+        return IDs, faces
+    Ids, faces = getImagesID(path)
+    Recognizer.train(faces, np.array(Ids))
+    Recognizer.save("ASP/Data/trainingImage.yml")
+    cv2.destroyAllWindows()
 
 def insert():
     window.withdraw()

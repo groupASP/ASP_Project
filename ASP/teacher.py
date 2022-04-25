@@ -4,7 +4,7 @@ import os
 from tkinter import font as tkfont
 from tkinter import messagebox
 from tkinter import *
-import db
+import pymysql
 
 a = tkinter.Tk()
 a.geometry("1500x900")
@@ -14,8 +14,11 @@ a.geometry("1500x900")
 a.attributes('-fullscreen', True)
 
 # ຄຳສັ່ງເຊື່ອມຕໍ່
-connection = db.pymysql.connect(host="Localhost", user="root", password="", database="asp_base")
+connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
 conn = connection.cursor()
+
+sql = "select* from tb_teacher"
+conn.execute(sql)
 
 
 def back():
@@ -39,17 +42,17 @@ def save():
     t_Degree=en_degree.get()
     t_Gender=combo.get()
     sql_update ="update tb_teacher set t_Name='"+t_Name+"',t_Surname='"+t_Surname+"',t_Gender='"+t_Gender+"',t_Village='"+t_Village+"',t_District='"+t_District+"',t_Province='"+t_Province+"',t_Tel='"+t_Tel+"',t_Email='"+t_Email+"',t_Degree='"+t_Degree+"' where t_Id='"+t_Id+"';"
-    db.conn.execute(sql_update)
-    db.connection.commit()
+    conn.execute(sql_update)
+    connection.commit()
 
     for i in tree.get_children():
         tree.delete(i)
 
     sql_select="select * from tb_teacher;"
-    db.conn.execute(sql_select)
+    conn.execute(sql_select)
 
     i=0
-    for row in db.conn:
+    for row in conn:
         tree.insert('', i,text="",values=(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9]))
         i=i+1
 
@@ -72,9 +75,9 @@ def edit():
     value = tree.item(data)['values'][0]
 
     sql_select = "select * from tb_teacher where t_Id='" + value + "';"
-    db.conn.execute(sql_select)
+    conn.execute(sql_select)
 
-    for row in db.conn:
+    for row in conn:
         t_Id = row[0]
         t_Name = row[1]
         t_Surname = row[2]
@@ -114,18 +117,18 @@ def delete():
     mon = tree.item(pm)['values'][0]
     # print(mon)
     sql_delete = "delete from tb_teacher where t_Id='" + mon + "';"
-    db.conn.execute(sql_delete)
-    db.connection.commit()
+    conn.execute(sql_delete)
+    connection.commit()
 
 
     for i in tree.get_children():
         tree.delete(i)
 
     sql_select = "select * from tb_student;"
-    db.conn.execute(sql_select)
+    conn.execute(sql_select)
 
     i = 0
-    for row in db.conn:
+    for row in conn:
         tree.insert('', i, text="", values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]))
         i = i + 1
     messagebox.showinfo("ການສະແດງຜົນ", "ທ່ານໄດ້ລົບຂໍ້ມູນນັກອາຈານສຳເລັດແລ້ວ!!!")

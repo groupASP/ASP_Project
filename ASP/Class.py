@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
 import os
-import db
+import pymysql
 
 frm = tk.Tk()
 frm.title('Database')
@@ -11,9 +11,10 @@ frm.geometry('1200x700')
 frm.attributes('-fullscreen', True)
 
 
-conn = db.connection.cursor()
-connection = db.connection.commit()
-sql = "select * from tb_class;"
+connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
+conn = connection.cursor()
+
+sql = "select* from tb_class"
 conn.execute(sql)
 
 def save_update():
@@ -24,7 +25,7 @@ def save_update():
 
     sql_update = "update tb_class set cl_name='"+n_name+"' where cl_id='"+n_id+"';"
     conn.execute(sql_update)
-    connection
+    connection.commit()
 
     for i in tree.get_children():
         tree.delete(i)
@@ -66,7 +67,7 @@ def delete():
 
     sql_delete = "delete from tb_class where cl_Id = '"+value+"';"
     conn.execute(sql_delete)
-    connection
+    connection.commit()
 
     for i in tree.get_children():
         tree.delete(i)
