@@ -1,5 +1,7 @@
 from tkinter import *
+from tkinter import ttk
 from tkinter import messagebox
+from tkinter import font as tkfont
 import os
 import pymysql
 
@@ -21,10 +23,10 @@ frm.configure(background='snow')
 # def del_sc2():
 #     sc2.destroy()
 def clear():
-    en_id.delete(first=0, last=22)
     en_name.delete(first=0, last=22)
     en_surname.delete(first=0, last=22)
-    en_id.focus()
+
+    en_name.focus()
 
 def getId():
     connection = pymysql.connect(host="localhost", user="root", password="", database="asp_base")
@@ -45,15 +47,18 @@ def insertOrUpdate():
     Id = oid+1
     Name=en_name.get()
     Surname=en_surname.get()
-    S_Id = en_id.get()
+    st_Id = cb.get()
+    t_Id = cb1.get()
     faceDetect = cv2.CascadeClassifier('ASP/Detect/haarcascade_frontalface_default.xml')
     cam = cv2.VideoCapture(0)
+    cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)  # set new dimensionns to cam object (not cap)
+    cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1024)
     connection = pymysql.connect(host="localhost", user="root", password="", database="asp_base")
     conn = connection.cursor()
     sql = "Select * from tb_face;"
     conn.execute(sql)
 
-    sql="Insert into tb_face(F_ID, Name, SURNAME, S_ID) values('"+str(Id)+"', '"+str(Name)+"', '"+str(Surname)+"', '"+str(S_Id)+"');"
+    sql="Insert into tb_face(f_ID, Name, SURNAME, st_Id, t_Id) values('"+str(Id)+"', '"+str(Name)+"', '"+str(Surname)+"', '"+str(st_Id)+"', '"+str(t_Id)+"');"
     conn.execute(sql)
     connection.commit()
     conn.close()
@@ -69,7 +74,7 @@ def insertOrUpdate():
             cv2.waitKey(100)
         cv2.imshow("Face", img)
         cv2.waitKey(1)
-        if(SampleNum>120):
+        if(SampleNum>50):
             break
     cam.release()
     cv2.destroyAllWindows()
@@ -126,8 +131,8 @@ button_2 = Button(
     relief="flat"
 )
 button_2.place(
-    x=900,
-    y=600,
+    x=1100,
+    y=650,
     width=272,
     height=95
 )
@@ -142,7 +147,7 @@ button_3 = Button(
 )
 button_3.place(
     x=200,
-    y=600,
+    y=650,
     width=246,
     height=90
 )
@@ -160,6 +165,10 @@ lb3 = Label(frm, text="ລະຫັດນັກສຶກສາ:")
 lb3.place(x=250, y=400)
 lb3.config(font=("Saysettha OT", 20),bg="#ECF8DC")
 
+lb4 = Label(frm, text="ລະຫັດອາຈານ:")
+lb4.place(x=250, y=500)
+lb4.config(font=("Saysettha OT", 20),bg="#ECF8DC")
+
 #entry
 en_name = Entry(frm)
 en_name.place(x=550, y=210)
@@ -169,8 +178,35 @@ en_surname = Entry(frm)
 en_surname.place(x=550, y=310)
 en_surname.config(font=("Saysettha OT",18),width=30)
 
-en_id = Entry(frm)
-en_id.place(x=550, y=410)
-en_id.config(font=("Saysettha OT",18),width=30)
+#connect database
+conn = pymysql.connect(user="root", password="", host="Localhost",database="asp_base")
+curs = conn.cursor()
+
+#set font
+cbFont = tkfont.Font(family="Saysettha OT", size=18)
+
+#combo_student_id form database
+curs.execute('select st_Id from tb_student;')
+results = curs.fetchall()
+combo_st_id = [result[0] for result in results]
+
+#combo_teacher_id form database
+curs.execute('select t_Id from tb_teacher;')
+results = curs.fetchall()
+combo_t_id = [result[0] for result in results]
+
+#combobox_student_id
+cb =ttk.Combobox(frm, width=28,values=combo_st_id)
+cb.place(x=550, y=410)
+cb.config(font=(cbFont), state="readonly")
+cb.option_add("*font", cbFont)
+cb.current()
+
+#combobox_teacher_id
+cb1 =ttk.Combobox(frm, width=28,values=combo_t_id)
+cb1.place(x=550, y=510)
+cb1.config(font=(cbFont), state="readonly")
+cb1.option_add("*font", cbFont)
+cb1.current()
 
 frm.mainloop()

@@ -13,6 +13,7 @@ from tkinter.filedialog import *
 connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
 conn = connection.cursor()
 
+#function for training
 def trainImg():
     Recognizer = cv2.face.LBPHFaceRecognizer_create()
     path = "ASP/ImageData"
@@ -37,15 +38,17 @@ def trainImg():
     Recognizer.save("ASP/Data/trainingImage.yml")
     cv2.destroyAllWindows()
 
+#fucntion for next to insert_face
 def insert():
     window.withdraw()
     os.system("D:\ASP_Project\ASP\InsertOrUpdateFace.py")
 
+#function delete data
 def delete():
     data = tree.selection()
     value = tree.item(data)['values'][0]
 
-    sql_delete = "delete from tb_face where F_ID = '"+str(value)+"';"
+    sql_delete = "delete from tb_face where f_Id = '"+str(value)+"';"
     conn.execute(sql_delete)
     connection.commit()
 
@@ -60,20 +63,28 @@ def delete():
         tree.insert('', i, text='', values=(row[0], row[1], row[2], row[3]))
         i += 1
 
+#fucntion for bt_back
 def back():
     l = messagebox.askquestion("BACK","ທ່ານຕ້ອງການຈະກັບໄປໜ້າຫຼັກ ຫຼື ບໍ່?")
     if(l == 'yes'):
         window.withdraw()
         os.system("D:\ASP_Project\ASP\window1.py")
 
+#function for open directory
 def selectFile():
-   file=askopenfilename(initialdir="ASP/ImageData",title="Select file",filetypes=(("jpeg files","*.jpg"),("all files","*.*")))
-   f=open(window.file, 'r')
+    try:
+        file=askopenfilenames(initialdir="ASP/ImageData",title="Select file",filetypes=(("jpeg files","*.jpg"),("all files","*.*")))
+        f=open(window.file, 'r')
+        f.close()
+    except Exception as e:
+        print("THANK YOU")
 
-
+#frm design
 window = Tk()
 window.attributes('-fullscreen', True)
 window.configure(bg = "#ffffff")
+
+#image and bg_button
 canvas = Canvas(
     window,
     bg = "#FFFFFF",
@@ -98,7 +109,7 @@ button_1 = Button(
     command=insert,
     relief="flat")
 button_1.place(
-    x=1100,
+    x=1200,
     y=150,
     width=181,
     height=173)
@@ -112,7 +123,7 @@ button_2 = Button(
     relief="flat"
 )
 button_2.place(
-    x=1100,
+    x=1200,
     y=450,
     width=181,
     height=172
@@ -162,24 +173,26 @@ sql = "select* from tb_face"
 conn.execute(sql)
 
 tree =Treeview(window)
-tree["columns"] = ("1", "2", "3", "4")
+tree["columns"] = ("1", "2", "3", "4","5")
 tree.column("#0", width=1)
 tree.column("#1", width=100)
 tree.column("#2", width=200)
 tree.column("#3", width=200)
 tree.column("#4", width=200)
+tree.column("#5", width=200)
 
 tree.heading("#1", text="ລະຫັດ")
 tree.heading("#2", text="ຊື່")
 tree.heading("#3", text="ນາມສະກຸນ")
 tree.heading("#4", text="ລະຫັດນັກສຶກສາ")
+tree.heading("#5", text="ລະຫັດນັກອາຈານ")
 
 # ຄຳສັ່ງສະແດງຜົນ
 i = 0
 for row in conn:
-    tree.insert('', i, text="", values=(row[0], row[1], row[2], row[3]))
+    tree.insert('', i, text="", values=(row[0], row[1], row[2], row[3], row[4]))
     i = i + 1
-tree.place(x=150, y=100)
+tree.place(x=120, y=100)
 
 
 window.resizable(False, False)
