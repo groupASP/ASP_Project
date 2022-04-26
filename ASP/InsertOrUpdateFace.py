@@ -4,6 +4,7 @@ import os
 import pymysql
 
 frm = Tk()
+frm.geometry("1500x900")
 frm.attributes("-fullscreen", True)
 frm.configure(background='snow')
 
@@ -20,10 +21,10 @@ frm.configure(background='snow')
 # def del_sc2():
 #     sc2.destroy()
 def clear():
-    txt.delete(first=0, last=22)
-    txt2.delete(first=0, last=22)
-    txt3.delete(first=0, last=22)
-    txt.focus()
+    en_id.delete(first=0, last=22)
+    en_name.delete(first=0, last=22)
+    en_surname.delete(first=0, last=22)
+    en_id.focus()
 
 def getId():
     connection = pymysql.connect(host="localhost", user="root", password="", database="asp_base")
@@ -42,9 +43,9 @@ def insertOrUpdate():
 
     oid = getId()
     Id = oid+1
-    Name=txt.get()
-    Surname=txt2.get()
-    S_Id = txt3.get()
+    Name=en_name.get()
+    Surname=en_surname.get()
+    S_Id = en_id.get()
     faceDetect = cv2.CascadeClassifier('ASP/Detect/haarcascade_frontalface_default.xml')
     cam = cv2.VideoCapture(0)
     connection = pymysql.connect(host="localhost", user="root", password="", database="asp_base")
@@ -74,7 +75,7 @@ def insertOrUpdate():
     cv2.destroyAllWindows()
 
 def back():
-    l = messagebox.askquestion("BACK","ທ່ານຕ້ອງການຈະກັບໄປໜ້າຫຼັກ ຫຼື ບໍ່?")
+    l = messagebox.askquestion("BACK","ທ່ານຕ້ອງການຈະກັບໄປໜ້າຂໍ້ມູນໃບໜ້າ ຫຼື ບໍ່?")
     if(l == 'yes'):
         frm.withdraw()
         os.system("python D:\ASP_Project\ASP\\face.py")
@@ -84,31 +85,92 @@ Notification = Label(frm, text="All things are good", bg="Green", fg="white", wi
 
 
 
-lbl = Label(frm, text="Name:", width=20, height=2, fg="black", bg="snow", font=('times', 15, ' bold '))
-lbl.place(x=200, y=200)
 
-txt = Entry(frm, validate="key", width=20, bg="lightblue", fg="red", font=('times', 25, ' bold '))
-txt.place(x=550, y=210)
 
-lbl2 = Label(frm, text="Surname:", width=20, fg="black", bg="snow", height=2, font=('times', 15, ' bold '))
-lbl2.place(x=200, y=300)
+#button
+canvas = Canvas(
+    frm,
+    bg = "#FFFFFF",
+    height = 1080,
+    width = 1920,
+    bd = 0,
+    highlightthickness = 0,
+    relief = "ridge")
 
-txt2 = Entry(frm, width=20, bg="lightblue", fg="red", font=('times', 25, ' bold '))
-txt2.place(x=550, y=310)
+canvas.place(x = 0, y = 0)
 
-lbl3 = Label(frm, text="Surname:", width=20, fg="black", bg="snow", height=2, font=('times', 15, ' bold '))
-lbl3.place(x=200, y=400)
+background_img = PhotoImage(file = "D:\ASP_Project\ASP\\Image\\bg_insert_face.png")
+background = canvas.create_image(
+    950.0, 540.0,
+    image=background_img)
 
-txt3 = Entry(frm, width=20, bg="lightblue", fg="red", font=('times', 25, ' bold '))
-txt3.place(x=550, y=410)
+bt1 = PhotoImage(file="D:\ASP_Project\ASP\\Image\\bt_clear.png")
+button_1 = Button(
+    image=bt1,
+    borderwidth=0,
+    highlightthickness=0,
+    command=clear,
+    relief="flat")
+button_1.place(
+    x=1100.,
+    y=300,
+    width=220,
+    height=80)
 
-takeImg = Button(frm, text="Take Images",command=insertOrUpdate, fg="black"  ,bg="lightgreen"  ,width=20  ,height=3, activebackground = "Red" ,font=('times', 15, ' bold '))
-takeImg.place(x=800, y=500)
+bt2 = PhotoImage(file="D:\ASP_Project\ASP\\Image\\bt_takeImage.png")
+button_2 = Button(
+    image=bt2,
+    borderwidth=0,
+    highlightthickness=0,
+    command=insertOrUpdate,
+    relief="flat"
+)
+button_2.place(
+    x=900,
+    y=600,
+    width=272,
+    height=95
+)
 
-back = Button(frm, text="Back",command=back, fg="black"  ,bg="lightgray"  ,width=20  ,height=3, activebackground = "Red" ,font=('times', 15, ' bold '))
-back.place(x=200, y=500)
+bt3= PhotoImage(file="D:\ASP_Project\ASP\\Image\\back.png")
+button_3 = Button(
+    image=bt3,
+    borderwidth=0,
+    highlightthickness=0,
+    command=back,
+    relief="flat"
+)
+button_3.place(
+    x=200,
+    y=600,
+    width=246,
+    height=90
+)
 
-clearButton = Button(frm, text="Clear",command=clear,fg="black"  ,bg="deep pink"  ,width=10  ,height=1 ,activebackground = "Red" ,font=('times', 15, ' bold '))
-clearButton.place(x=950, y=310)
+#label
+lb1 = Label(frm, text="ຊື່ນັກສຶກສາ:")
+lb1.place(x=250, y=200)
+lb1.config(font=("Saysettha OT", 20),bg="#ECF8DC")
+
+lb2 = Label(frm, text="ນາມສະກຸນນັກສຶກສາ:")
+lb2.place(x=250, y=300)
+lb2.config(font=("Saysettha OT", 20),bg="#ECF8DC")
+
+lb3 = Label(frm, text="ລະຫັດນັກສຶກສາ:")
+lb3.place(x=250, y=400)
+lb3.config(font=("Saysettha OT", 20),bg="#ECF8DC")
+
+#entry
+en_name = Entry(frm)
+en_name.place(x=550, y=210)
+en_name.config(font=("Saysettha OT",18),width=30)
+
+en_surname = Entry(frm)
+en_surname.place(x=550, y=310)
+en_surname.config(font=("Saysettha OT",18),width=30)
+
+en_id = Entry(frm)
+en_id.place(x=550, y=410)
+en_id.config(font=("Saysettha OT",18),width=30)
 
 frm.mainloop()
