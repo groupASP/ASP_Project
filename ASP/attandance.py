@@ -59,7 +59,6 @@ a.attributes("-fullscreen", True)
 #     cv2.destroyAllWindows()
 
 def auto_att():
-    import tkinter as tk
     import cv2
     import pymysql
 
