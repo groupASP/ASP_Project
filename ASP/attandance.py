@@ -120,7 +120,6 @@ def auto_att():
                 print(ex)
             cam.release()
             cv2.destroyAllWindows()
-        auto()
     except Exception as e:
         print(e)
 
