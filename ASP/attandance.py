@@ -103,7 +103,7 @@ def auto_att():
                 key = cv2.waitKey(1) & 0xFF == ord('q')
                 if key:
                     break
-                elif conf == 38:
+                elif conf < 38:
                     break
             try:
                 connection = pymysql.connect(host="localhost", user="root", password="", database="asp_base")
