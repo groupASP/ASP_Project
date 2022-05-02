@@ -4,9 +4,7 @@ import  os
 from tkinter import ttk
 from tkinter.ttk import Treeview
 import pymysql
-import numpy as np
 import cv2
-from PIL import Image
 from tkinter.filedialog import *
 
 # ຄຳສັ່ງເຊື່ອມຕໍ່
@@ -15,6 +13,9 @@ conn = connection.cursor()
 
 #function for training
 def trainImg():
+    import numpy as np
+    from PIL import Image
+
     Recognizer = cv2.face.LBPHFaceRecognizer_create()
     path = "ASP/ImageData"
 

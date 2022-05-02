@@ -2,7 +2,7 @@ from asyncio import exceptions
 from tkinter import *
 import tkinter
 from tkinter import ttk
-import pymysql
+from datetime import datetime
 from tkinter import font as tkfont
 from tkinter import messagebox
 import os
@@ -66,7 +66,7 @@ def auto_att():
     faceDetect = cv2.CascadeClassifier('ASP/Detect/haarcascade_frontalface_default.xml')
     cam = cv2.VideoCapture(0)
     rec = cv2.face.LBPHFaceRecognizer_create()
-    rec.read("ASP\\Data\\trainingData.yml")
+    rec.read("ASP\\Data\\trainingImage.yml")
     fontface=cv2.FONT_HERSHEY_SIMPLEX
     fontScale = 2
     fontColor = (255,0,0)
@@ -103,16 +103,16 @@ def auto_att():
                 key = cv2.waitKey(1) & 0xFF == ord('q')
                 if key:
                     break
-                elif conf < 38:
-                    break
+                # elif conf < 38:
+                #     break
             try:
                 connection = pymysql.connect(host="localhost", user="root", password="", database="asp_base")
                 conn = connection.cursor()
             except Exception as e:
                 print(e)
-
-            insert_data =  "INSERT INTO tb_attandance VALUES (0, %s, %s, %s)"
-            VALUES = (str(profile[0]),str(profile[1]), str(profile[2]), str(profile[3]))
+            timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            insert_data =  "INSERT INTO tb_attandance VALUES (0, %s, %s, %s, %s);"
+            VALUES = (str(profile[1]), str(profile[2]), str(profile[3]), timestamp)
             try:
                 conn.execute(insert_data, VALUES)
                 connection.commit()
@@ -120,6 +120,7 @@ def auto_att():
                 print(ex)
             cam.release()
             cv2.destroyAllWindows()
+        auto()
     except Exception as e:
         print(e)
 

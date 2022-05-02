@@ -13,5 +13,8 @@
 # v_Id = comboboxVillage
 # listToStr = ' '.join(map(str, v_Id))
 # print(listToStr)
+from datetime import datetime
 
+timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
+print("timestamp =", timestamp)
