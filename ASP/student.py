@@ -71,7 +71,7 @@ def edit():
     data = tree.selection()
     value = tree.item(data)['values'][0]
 
-    sql_select = "select * from tb_student where st_Id='" + value + "';"
+    sql_select = "select * from tb_student where st_Id='" + str(value) + "';"
     conn.execute(sql_select)
 
     for row in conn:
@@ -156,7 +156,7 @@ btAdd = Button(
     command=insert,
     relief="flat")
 btAdd.place(
-    x=480, y=650, )
+    x=480, y=700, )
 
 img2 = PhotoImage(file=f"ASP/Image/back.png")
 btBack = Button(
@@ -166,7 +166,7 @@ btBack = Button(
     command=back,
     relief="flat")
 btBack.place(
-    x=100, y=650, )
+    x=100, y=700, )
 
 img3 = PhotoImage(file=f"ASP/Image/delete.png")
 btDelete = Button(
@@ -176,7 +176,7 @@ btDelete = Button(
     command=delete,
     relief="flat")
 btDelete.place(
-    x=1200, y=650, )
+    x=1200, y=700, )
 
 img4 = PhotoImage(file=f"ASP/Image/edit.png")
 btEdit = Button(
@@ -186,44 +186,46 @@ btEdit = Button(
     command=edit,
     relief="flat")
 btEdit.place(
-    x=840, y=650, )
+    x=840, y=700, )
 
 st = ttk.Style()
 st.theme_use("clam")
 st.configure("Treeview.Heading", fg="blue", font=("Saysettha OT", 14))
-st.configure("Treeview", rowheight=50, font=("Saysettha OT", 12))
+st.configure("Treeview", rowheight=55, font=("Saysettha OT", 12))
 
 
 tree = ttk.Treeview(a)
-tree["columns"] = ("1", "2", "3", "4", "5", "6", "7", "8", "9")
+tree["columns"] = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
 tree.column("#0", width=5)
-tree.column("#1", width=100)
+tree.column("#1", width=200)
 tree.column("#2", width=180)
 tree.column("#3", width=180)
 tree.column("#4", width=80)
-tree.column("#5", width=180)
+tree.column("#5", width=100)
 tree.column("#6", width=180)
-tree.column("#7", width=180)
-tree.column("#8", width=180)
-tree.column("#8", width=180)
+tree.column("#7", width=150)
+tree.column("#8", width=150)
+tree.column("#9", width=150)
+tree.column("#10", width=170)
 
 tree.heading("#1", text="ລະຫັດ")
 tree.heading("#2", text="ຊື່")
 tree.heading("#3", text="ນາມສະກຸນ")
 tree.heading("#4", text="ເພດ")
-tree.heading("#5", text="ວັນເດືອນປີເກີດ")
-tree.heading("#6", text="ເບີໂທ")
-tree.heading("#7", text="ບ້ານ")
-tree.heading("#8", text="ເມືອງ")
-tree.heading("#9", text="ແຂວງ")
+tree.heading("#5", text="ຊັ້ນຮຽນ")
+tree.heading("#6", text="ວັນເດືອນປີເກີດ")
+tree.heading("#7", text="ເບີໂທ")
+tree.heading("#8", text="ບ້ານ")
+tree.heading("#9", text="ເມືອງ")
+tree.heading("#10", text="ແຂວງ")
 
 # ຄຳສັ່ງສະແດງຜົນ
 
 i = 0
 for row in conn:
-    tree.insert('', i, text="", values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8]))
+    tree.insert('', i, text="", values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]))
     i = i + 1
-tree.place(x=30, y=80)
+tree.place(x=-15, y=80)
 
 ############################################################################################################
 ############################################################################################################

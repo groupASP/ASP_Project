@@ -13,15 +13,15 @@ def insert():
     import pymysql
     connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
     conn = connection.cursor()
-    cl_Id = en.get()
+    cl_Id = 0
     cl_Name = en1.get()
     value = messagebox.askquestion("ການຢືນຢັນ", "ທ່ານຕ້ອງການເພີ່ມຂໍ້ມູນແທ້ຫຼືບໍ່?")
     if(value == 'yes'):
-        sql_insert = "insert into tb_class values('"+cl_Id+"','"+cl_Name+"');"
+        sql_insert = "insert into tb_class values('"+str(cl_Id)+"','"+cl_Name+"');"
         conn.execute(sql_insert)
         connection.commit()
         messagebox.showinfo("ການສະແດງຜົນ","ທ່ານໄດ້ເພີ່ມຂໍ້ມູນສຳເລັດແລ້ວ")
-    en.delete(0,END)
+    # en.delete(0,END)
     en1.delete(0,END)
 
 def back():
@@ -48,18 +48,18 @@ background = canvas.create_image(
     image=background_img)
 
 
-lb1 = tkinter.Label(frm, text="ລະຫັດຊັ້ນຮຽນ:")
-lb1.place(x=20, y=150)
-lb1.config(font=("Saysettha OT", 18),bg="#ECF8DC")
+# lb1 = tkinter.Label(frm, text="ລະຫັດຊັ້ນຮຽນ:")
+# lb1.place(x=20, y=150)
+# lb1.config(font=("Saysettha OT", 18),bg="#ECF8DC")
 
 lb2 = tkinter.Label(frm, text="ຊື່ຊັ້ນຮຽນ:")
 lb2.place(x=20, y=300)
 lb2.config(font=("Saysettha OT", 18),bg="#ECF8DC")
 
 # Entry
-en = tkinter.Entry(frm,width=18)
-en.place(x=200, y=150)
-en.config(font=("Saysettha OT",18),width=18)
+# en = tkinter.Entry(frm,width=18)
+# en.place(x=200, y=150)
+# en.config(font=("Saysettha OT",18),width=18)
 
 en1 = tkinter.Entry(frm)
 en1.place(x=200, y=300)

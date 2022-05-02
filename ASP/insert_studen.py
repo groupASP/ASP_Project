@@ -5,6 +5,7 @@ from tkinter import font as tkfont
 import os
 from tkinter import messagebox
 from tkinter import *
+import pymysql
 
 frm = tkinter.Tk()
 frm.title("Insert Student")
@@ -25,9 +26,10 @@ def insert():
     st_district=en_district.get()
     st_province=en_province.get()
     st_Gender=cbGender.get()
+    cl_Id=cb.get()
     value = messagebox.askquestion("ການຢືນຢັນ", "ທ່ານຕ້ອງການເພີ່ມຂໍ້ມູນແທ້ຫຼືບໍ່?")
     if(value == 'yes'):
-        sql_insert = "insert into tb_student values('"+st_Id+"','"+st_Name+"','"+st_Surname+"','"+st_Gender+"','"+st_DOB+"','"+st_Tel+"','"+st_village+"','"+st_district+"','"+st_province+"');"
+        sql_insert = "insert into tb_student values('"+st_Id+"','"+st_Name+"','"+st_Surname+"','"+st_Gender+"','"+cl_Id+"','"+st_DOB+"','"+st_Tel+"','"+st_village+"','"+st_district+"','"+st_province+"');"
         conn.execute(sql_insert)
         connection.commit()
         messagebox.showinfo("ການສະແດງຜົນ","ທ່ານໄດ້ເພີ່ມຂໍ້ມູນນັກສຶກສາສຳເລັດແລ້ວ")
@@ -102,6 +104,10 @@ lb10 = tkinter.Label(frm, text="ແຂວງ:")
 lb10.place(x=800, y=520)
 lb10.config(font=("Saysettha OT", 18),bg="#ECF8DC")
 
+lb11 = tkinter.Label(frm, text="ຊັ້ນຮຽນ:")
+lb11.place(x=1200, y=520)
+lb11.config(font=("Saysettha OT", 18),bg="#ECF8DC")
+
 
 # Entry
 en = tkinter.Entry(frm,width=18)
@@ -154,6 +160,22 @@ cbGender.config(font=("Saysettha OT", 18), state="readonly")
 cbGender.current(0)
 cbGender.option_add("*font", cbFont)
 
+#connect database
+conn = pymysql.connect(user="root", password="", host="Localhost",database="asp_base")
+curs = conn.cursor()
+
+#combo_student_id form database
+curs.execute('select cl_Id from tb_class;')
+results = curs.fetchall()
+combo_cl_id = [result[0] for result in results]
+
+#combobox_student_id
+cb =ttk.Combobox(frm, width=16,values=combo_cl_id)
+cb.place(x=1300, y=520)
+cb.config(font=(cbFont), state="readonly")
+cb.option_add("*font", cbFont)
+cb.current()
+
 #Button
 img1 = PhotoImage(file = f"ASP/Image/add.png")
 btAdd = Button(
@@ -164,7 +186,7 @@ btAdd = Button(
     relief = "flat")
 
 btAdd.place(
-    x = 900, y = 650,)
+    x = 900, y = 690,)
 
 img2 = PhotoImage(file = f"ASP/Image/back.png")
 btBack = Button(
@@ -175,7 +197,7 @@ btBack = Button(
     relief = "flat")
 
 btBack.place(
-    x = 400, y = 650,)
+    x = 400, y = 690,)
 
 
 frm.mainloop()

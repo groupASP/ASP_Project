@@ -1,11 +1,11 @@
-from asyncio import exceptions
 from tkinter import *
 import tkinter
 from tkinter import ttk
-from datetime import datetime
+import pymysql
 from tkinter import font as tkfont
 from tkinter import messagebox
 import os
+from datetime import datetime
 
 a=tkinter.Tk()
 # a.geometry("1500x900")
@@ -104,15 +104,16 @@ def auto_att():
                 if key:
                     break
                 # elif conf < 38:
-                #     break
+                    # break
             try:
                 connection = pymysql.connect(host="localhost", user="root", password="", database="asp_base")
                 conn = connection.cursor()
             except Exception as e:
                 print(e)
-            timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            
+            timestam=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             insert_data =  "INSERT INTO tb_attandance VALUES (0, %s, %s, %s, %s);"
-            VALUES = (str(profile[1]), str(profile[2]), str(profile[3]), timestamp)
+            VALUES = (str(profile[1]),str(profile[2]), str(profile[3]),timestam)
             try:
                 conn.execute(insert_data, VALUES)
                 connection.commit()

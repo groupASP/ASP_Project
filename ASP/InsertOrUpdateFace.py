@@ -25,13 +25,12 @@ frm.configure(background='snow')
 def clear():
     en_name.delete(first=0, last=22)
     en_surname.delete(first=0, last=22)
-
     en_name.focus()
 
 def getId():
     connection = pymysql.connect(host="localhost", user="root", password="", database="asp_base")
     conn = connection.cursor()
-    sql = "SELECT F_ID FROM tb_face order by F_ID desc limit 1;"
+    sql = "SELECT f_Id FROM tb_face order by f_Id desc limit 1;"
     conn.execute(sql)
     profile=None
     for row in conn:
@@ -58,7 +57,7 @@ def insertOrUpdate():
     sql = "Select * from tb_face;"
     conn.execute(sql)
 
-    sql="Insert into tb_face(f_ID, Name, SURNAME, st_Id, t_Id) values('"+str(Id)+"', '"+str(Name)+"', '"+str(Surname)+"', '"+str(st_Id)+"', '"+str(t_Id)+"');"
+    sql="Insert into tb_face(f_Id, Name, Surname, st_Id, t_Id) values('"+str(Id)+"', '"+str(Name)+"', '"+str(Surname)+"', '"+str(st_Id)+"', '"+str(t_Id)+"');"
     conn.execute(sql)
     connection.commit()
     conn.close()
@@ -87,9 +86,6 @@ def back():
 
 Notification = Label(frm, text="All things are good", bg="Green", fg="white", width=15,
                 height=3, font=('times', 17, 'bold'))
-
-
-
 
 
 #button

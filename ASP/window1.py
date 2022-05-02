@@ -40,6 +40,14 @@ def Sub():
     window1.withdraw()
     os.system("D:\ASP_Project\ASP\\Subject.py")
 
+def attan():
+    window1.withdraw()
+    os.system("D:\ASP_Project\ASP\\face.py")
+
+def sche():
+    window1.withdraw()
+    os.system("D:\ASP_Project\ASP\\schedule.py")
+
 window1 = Tk()
 window1.attributes('-fullscreen', True)
 
@@ -156,7 +164,7 @@ b7 = Button(
     image = img7,
     borderwidth = 0,
     highlightthickness = 0,
-    command = btn_clicked,
+    command = attan,
     relief = "flat")
 
 b7.place(
@@ -195,7 +203,7 @@ b10 = Button(
     image = img10,
     borderwidth = 0,
     highlightthickness = 0,
-    command = btn_clicked,
+    command = sche,
     relief = "flat")
 
 b10.place(

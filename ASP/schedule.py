@@ -11,7 +11,7 @@ a.geometry("1500x900")
 
 
 # a.title("display from database")
-a.attributes('-fullscreen', True)
+# a.attributes('-fullscreen', True)
 
 
 # ຄຳສັ່ງເຊື່ອມຕໍ່
@@ -130,7 +130,7 @@ def delete():
 
 def insert():
     a.withdraw()
-    os.system("D:\ASP_Project\ASP\insert_studen.py")
+    os.system("D:\ASP_Project\ASP\insert_schedule.py")
 
 
 canvas = Canvas(
@@ -143,7 +143,7 @@ canvas = Canvas(
     relief="ridge")
 canvas.place(x=0, y=0)
 
-background_img = PhotoImage(file=f"ASP/Image/background2.png")
+background_img = PhotoImage(file=f"ASP/Image/bg_sche.png")
 background = canvas.create_image(
     950.0, 540.0,
     image=background_img)

@@ -47,7 +47,7 @@ def update():
     data = tree.selection()
     value = tree.item(data)['values'][0]
 
-    sql_select = "select * from tb_class where cl_Id='"+value+"';"
+    sql_select = "select * from tb_class where cl_Id='"+str(value)+"';"
     conn.execute(sql_select)
 
     for row in conn:
@@ -65,7 +65,7 @@ def delete():
     data = tree.selection()
     value = tree.item(data)['values'][0]
 
-    sql_delete = "delete from tb_class where cl_Id = '"+value+"';"
+    sql_delete = "delete from tb_class where cl_Id = '"+str(value)+"';"
     conn.execute(sql_delete)
     connection.commit()
 
@@ -159,15 +159,7 @@ st.theme_use("clam")
 st.configure("Treeview.Heading", foreground="blue", font=("Saysettha OT", 16))
 st.configure('Treeview', rowheight=50, font=("Saysettha OT", 14))
 
-tree_frame = tk.Frame(frm, bg="#ffffff")
-tree_frame.place(x=150, y=100)
-
-tree_Scrollbar = tk.Scrollbar(tree_frame)
-tree_Scrollbar.pack(side="right", fill="y")
-
-
-
-tree = ttk.Treeview(tree_frame, yscrollcommand=tree_Scrollbar.set)
+tree = ttk.Treeview(frm)
 tree['columns'] = ('1', '2')
 
 tree.column('#0', width=0)
@@ -177,14 +169,14 @@ tree.column('#2', width=800)
 tree.heading('#1', text='ລະຫັດ', anchor='w')
 tree.heading('#2', text='ຊື່', anchor='w')
 
-tree_Scrollbar.config(command=tree.yview)
+
 
 i = 0
 for row in conn:
     tree.insert('', i, text="", values=(row[0], row[1]))
     i = i+1
 
-tree.pack()
+tree.place(x=150, y=100)
 
 ############################################################################
 

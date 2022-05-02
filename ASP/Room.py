@@ -39,14 +39,14 @@ def save_update():
 
     txtId.delete(0, 'end')
     txtName.delete(0, 'end')
-    messagebox.showinfo("ການແກ້ໄຂຂໍ້ມູນ", "ທ່ານໄດ້ແກ້ໄຂຂໍ້ມູນຊັ້ນຮຽນສຳເລັດແລ້ວ!!!")
+    messagebox.showinfo("ການແກ້ໄຂຂໍ້ມູນ", "ທ່ານໄດ້ແກ້ໄຂຂໍ້ມູນຫ້ອງຮຽນສຳເລັດແລ້ວ!!!")
     btEdit.config(state="normal")
 
 def update():
     data = tree.selection()
     value = tree.item(data)['values'][0]
 
-    sql_select = "select * from tb_room where r_Id='"+value+"';"
+    sql_select = "select * from tb_room where r_Id='"+str(value)+"';"
     conn.execute(sql_select)
 
     for row in conn:
@@ -64,7 +64,7 @@ def delete():
     data = tree.selection()
     value = tree.item(data)['values'][0]
 
-    sql_delete = "delete from tb_room where r_Id = '"+value+"';"
+    sql_delete = "delete from tb_room where r_Id = '"+str(value)+"';"
     conn.execute(sql_delete)
     connection.commit()
 
