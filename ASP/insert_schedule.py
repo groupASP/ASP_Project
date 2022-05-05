@@ -1,4 +1,3 @@
-from math import comb
 import tkinter
 from tkinter import ttk
 from tkinter import font as tkfont

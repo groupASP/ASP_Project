@@ -29,7 +29,7 @@ def insert():
     cl_Id=cb.get()
     value = messagebox.askquestion("ການຢືນຢັນ", "ທ່ານຕ້ອງການເພີ່ມຂໍ້ມູນແທ້ຫຼືບໍ່?")
     if(value == 'yes'):
-        sql_insert = "insert into tb_student values('"+st_Id+"','"+st_Name+"','"+st_Surname+"','"+st_Gender+"','"+cl_Id+"','"+st_DOB+"','"+st_Tel+"','"+st_village+"','"+st_district+"','"+st_province+"');"
+        sql_insert = "insert into tb_student values('"+str(st_Id)+"','"+st_Name+"','"+st_Surname+"','"+st_Gender+"','"+cl_Id+"','"+st_DOB+"','"+st_Tel+"','"+st_village+"','"+st_district+"','"+st_province+"');"
         conn.execute(sql_insert)
         connection.commit()
         messagebox.showinfo("ການສະແດງຜົນ","ທ່ານໄດ້ເພີ່ມຂໍ້ມູນນັກສຶກສາສຳເລັດແລ້ວ")

@@ -9,10 +9,12 @@ import pymysql
 a = tkinter.Tk()
 a.geometry("1500x900")
 
-
 # a.title("display from database")
 # a.attributes('-fullscreen', True)
 
+frm = tkinter.Tk()
+frm.title("Insert Student")
+frm.geometry('1920x1080')
 
 # ຄຳສັ່ງເຊື່ອມຕໍ່
 connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
@@ -30,17 +32,16 @@ def back():
 
 def save():
     tx11.config(state="normal")
-    st_Id=tx11.get()
-    st_Name=tx22.get()
-    st_Surname=tx33.get()
-    st_DOB=tx44.get()
-    st_Tel=tx55.get()
-    st_Village=tx66.get()
-    st_District=tx77.get()
-    st_Province=tx88.get()
-    s_Gender=combo.get()
+    sc_Id=tx11.get()
+    sc_Day=tx22.get()
+    sc_Period=tx33.get()
+    sc_Year=tx44.get()
+    r_Id=tx55.get()
+    s_Id=tx66.get()
+    st_Id=tx77.get()
+    t_Id=tx88.get()
 
-    sql_update ="update tb_schedule set sc_Day='"+st_Surname+"', sc_Period='"+s_Gender+"', sc_Year='"+st_DOB+"', r_Id='"+st_Tel+"', s_Id='"+st_Village+"', st_Id='"+st_District+"', t_Id='"+st_Province+"' where sc_Id='"+st_Id+"';"
+    sql_update ="update tb_schedule set sc_Day='"+sc_Day+"', sc_Period='"+sc_Period+"', sc_Year='"+sc_Year+"', r_Id='"+r_Id+"', s_Id='"+s_Id+"', st_Id='"+st_Id+"', t_Id='"+t_Id+"' where sc_Id='"+str(sc_Id)+"';"
     conn.execute(sql_update)
     connection.commit()
 
@@ -71,36 +72,27 @@ def edit():
     data = tree.selection()
     value = tree.item(data)['values'][0]
 
-    sql_select = "select * from tb_schedule where sc_Id='" + value + "';"
+    sql_select = "select * from tb_schedule where sc_Id='" + str(value) + "';"
     conn.execute(sql_select)
 
     for row in conn:
-        st_Id = row[0]
-        st_Name = row[1]
-        st_Surname = row[2]
-        st_Gender = row[3]
-        st_DOB = row[4]
-        st_Tel = row[5]
-        st_Village = row[6]
-        st_District = row[7]
-        st_Province = row[8]
+        sc_Id = row[0]
+        sc_Day = row[1]
+        sc_Period = row[2]
+        sc_Year = row[3]
+        r_Id = row[4]
+        s_Id = row[5]
+        st_Id = row[6]
+        t_Id = row[7]
 
-        tx11.insert(0, st_Id)
-        tx22.insert(0, st_Name)
-        tx33.insert(0, st_Surname)
-        tx44.insert(0, st_DOB)
-        tx55.insert(0, st_Tel)
-        tx66.insert(0, st_Village)
-        tx77.insert(0, st_District)
-        tx88.insert(0, st_Province)
-
-        #####ເພດ
-        cbList = ["ຊາຍ", "ຍິງ"]
-        if(st_Gender == cbList[0]):
-            combo.current(0)
-
-        elif(st_Gender == cbList[1]):
-            combo.current(1)
+        tx11.insert(0, sc_Id)
+        tx22.insert(0, sc_Day)
+        tx33.insert(0, sc_Period)
+        tx44.insert(0, sc_Year)
+        tx55.insert(0, r_Id)
+        tx66.insert(0, s_Id)
+        tx77.insert(0, st_Id)
+        tx88.insert(0, t_Id)
 
         a.withdraw()
         b.deiconify()
@@ -111,7 +103,7 @@ def delete():
     pm = tree.selection()
     mon = tree.item(pm)['values'][0]
     # print(mon)
-    sql_delete = "delete from tb_schedule where st_Id='" + mon + "';"
+    sql_delete = "delete from tb_schedule where sc_Id='" + str(mon) + "';"
     conn.execute(sql_delete)
     connection.commit()
 
@@ -339,6 +331,8 @@ bts.configure(font=("Saysettha OT", 18), bg="green", fg="white")
 bt = tkinter.Button(b, text="BACK",command=back1,width=20)
 bt.place(x=300, y=650)
 bt.configure(font=("Saysettha OT", 18), bg="gray", fg="black")
+
+
 
 
 a.mainloop()
