@@ -1,3 +1,4 @@
+from sre_parse import State
 import tkinter
 from tkinter import ttk
 import os
@@ -9,12 +10,8 @@ import pymysql
 a = tkinter.Tk()
 a.geometry("1500x900")
 
-# a.title("display from database")
-# a.attributes('-fullscreen', True)
-
-frm = tkinter.Tk()
-frm.title("Insert Student")
-frm.geometry('1920x1080')
+a.title("display from database")
+a.attributes('-fullscreen', True)
 
 # ຄຳສັ່ງເຊື່ອມຕໍ່
 connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
@@ -31,17 +28,21 @@ def back():
 
 
 def save():
-    tx11.config(state="normal")
-    sc_Id=tx11.get()
-    sc_Day=tx22.get()
-    sc_Period=tx33.get()
-    sc_Year=tx44.get()
-    r_Id=tx55.get()
-    s_Id=tx66.get()
-    st_Id=tx77.get()
-    t_Id=tx88.get()
+    sc_Id = en_scid.get()
+    d_Id = cb_day.get()
+    sc_Period = cb_period.get()
+    sc_Year = en_year.get()
+    r_Id = cb_room.get()
+    cl_Id = cb_cl.get()
+    s_Id = cb_subject.get()
+    t_Id = cb_teacher.get()
+    
+    sc_Id.config(state="disabled")
 
-    sql_update ="update tb_schedule set sc_Day='"+sc_Day+"', sc_Period='"+sc_Period+"', sc_Year='"+sc_Year+"', r_Id='"+r_Id+"', s_Id='"+s_Id+"', st_Id='"+st_Id+"', t_Id='"+t_Id+"' where sc_Id='"+str(sc_Id)+"';"
+    connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
+    conn = connection.cursor()
+
+    sql_update ="update tb_schedule set d_Id='"+d_Id+"', sc_Period='"+sc_Period+"', sc_Year='"+sc_Year+"', r_Id='"+r_Id+"', cl_Id='"+cl_Id+"', s_Id='"+s_Id+"', t_Id='"+t_Id+"' where sc_Id='"+str(sc_Id)+"';"
     conn.execute(sql_update)
     connection.commit()
 
@@ -57,53 +58,57 @@ def save():
         i=i+1
 
 
-    tx11.delete(0, END)
-    tx22.delete(0, END)
-    tx33.delete(0, END)
-    tx44.delete(0, END)
-    tx55.delete(0, END)
-    tx66.delete(0, END)
-    tx77.delete(0, END)
-    tx88.delete(0, END)
-    combo.current(0)
+    en_scid.delete(0, END)
+    en_year.delete(0, END)
+    cb_room.current(0)
+    cb_cl.current(0)
+    cb_period.current(0)
+    cb_subject.current(0)
+    cb_teacher.current(0)
+    cb_day.current(0)
     messagebox.showinfo("ການແກ້ໄຂຂໍ້ມູນ", "ທ່ານໄດ້ແກ້ໄຂຂໍ້ມູນນັກສຶກສາສຳເລັດແລ້ວ!!!")
 
 def edit():
     data = tree.selection()
     value = tree.item(data)['values'][0]
 
+    connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
+    conn = connection.cursor()
+
     sql_select = "select * from tb_schedule where sc_Id='" + str(value) + "';"
     conn.execute(sql_select)
 
     for row in conn:
         sc_Id = row[0]
-        sc_Day = row[1]
+        d_Id = row[1]
         sc_Period = row[2]
         sc_Year = row[3]
         r_Id = row[4]
+        cl_Id = row[6]
         s_Id = row[5]
-        st_Id = row[6]
         t_Id = row[7]
 
-        tx11.insert(0, sc_Id)
-        tx22.insert(0, sc_Day)
-        tx33.insert(0, sc_Period)
-        tx44.insert(0, sc_Year)
-        tx55.insert(0, r_Id)
-        tx66.insert(0, s_Id)
-        tx77.insert(0, st_Id)
-        tx88.insert(0, t_Id)
-
-        a.withdraw()
-        b.deiconify()
-        tx11.config(state="disabled")
+        en_scid.insert(0, sc_Id)
+        cb_day.insert(0, d_Id)
+        cb_period.insert(0, sc_Period)
+        en_year.insert(0, sc_Year)
+        cb_room.insert(0, r_Id)
+        cb_cl.insert(0, cl_Id)
+        cb_subject.insert(0, s_Id)
+        cb_teacher.insert(0, t_Id)
+    en_scid.config(state="disabled")
+    a.withdraw()
+    b.deiconify()
 
 
 def delete():
-    pm = tree.selection()
-    mon = tree.item(pm)['values'][0]
-    # print(mon)
-    sql_delete = "delete from tb_schedule where sc_Id='" + str(mon) + "';"
+    data = tree.selection()
+    value = tree.item(data)['values'][0]
+    
+    connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
+    conn = connection.cursor()
+
+    sql_delete = "delete from tb_schedule where sc_Id='" + str(value) + "';"
     conn.execute(sql_delete)
     connection.commit()
 
@@ -202,8 +207,8 @@ tree.heading("#2", text="ມື້")
 tree.heading("#3", text="ຄາບຮຽນ")
 tree.heading("#4", text="ສົກຮຽນ")
 tree.heading("#5", text="ລະຫັດຫ້ອງ")
+tree.heading("#7", text="ລະຫັດຊັ້ນຮຽນ")
 tree.heading("#6", text="ລະຫັດວິຊາ")
-tree.heading("#7", text="ລະຫັດນັກສຶກສາ")
 tree.heading("#8", text="ລະຫັດອາຈານ")
 
 # ຄຳສັ່ງສະແດງຜົນ
@@ -228,100 +233,141 @@ lbShow = tkinter.Label(b, text="ແກ້ໄຂຂໍ້ມູນ")
 lbShow.pack(side='top', fill='x')
 lbShow.configure(font=("Saysettha OT", 30), bg="#04C582", fg="white")
 
+
+
 def ex():
     exit()
 
 def back1():
-    tx11.delete(0, END)
-    tx22.delete(0, END)
-    tx33.delete(0, END)
-    tx44.delete(0, END)
-    tx55.delete(0, END)
-    tx66.delete(0, END)
-    tx77.delete(0, END)
-    tx88.delete(0, END)
+    en_scid.delete(0, END)
+    en_year.delete(0, END)
+    cb_room.set("")
+    cb_cl.set("")
+    cb_period.set("")
+    cb_day.set("")
+    cb_subject.set("")
+    cb_teacher.set("")
     a.deiconify()
     b.withdraw()
 
-lb11 = tkinter.Label(b, text="ລະຫັດນັກສຶກສາ:")
-lb11.place(x=20, y=150)
-lb11.config(font=("Saysettha OT", 18), bg="#ECF8DC")
+lb = tkinter.Label(b, text="ລະຫັດ:")
+lb.place(x=40, y=50)
+lb.config(font=("Saysettha OT", 18),bg="#ECF8DC")
 
-lb22 = tkinter.Label(b, text="ຊື່:")
-lb22.place(x=550, y=150)
-lb22.config(font=("Saysettha OT", 18), bg="#ECF8DC")
+lb1 = tkinter.Label(b, text="ມື້ຮຽນ:")
+lb1.place(x=40, y=150)
+lb1.config(font=("Saysettha OT", 18),bg="#ECF8DC")
 
-lb33 = tkinter.Label(b, text="ນາມສະກຸນ:")
-lb33.place(x=1000, y=150)
-lb33.config(font=("Saysettha OT", 18), bg="#ECF8DC")
+lb2 = tkinter.Label(b, text="ຮອບຮຽນ:")
+lb2.place(x=500, y=150)
+lb2.config(font=("Saysettha OT", 18),bg="#ECF8DC")
 
-lb44 = tkinter.Label(b, text="ເພດ:")
-lb44.place(x=20, y=330)
-lb44.config(font=("Saysettha OT", 20), bg="#ECF8DC")
+lb3 = tkinter.Label(b, text="ສົກຮຽນ:")
+lb3.place(x=1050, y=150)
+lb3.config(font=("Saysettha OT", 18),bg="#ECF8DC")
 
-lb55 = tkinter.Label(b, text="ວັນເດືອນປີເກີດ:")
-lb55.place(x=480, y=330)
-lb55.config(font=("Saysettha OT", 18), bg="#ECF8DC")
+lb4 = tkinter.Label(b, text="ຫ້ອງຮຽນ:")
+lb4.place(x=20, y=450)
+lb4.config(font=("Saysettha OT", 18),bg="#ECF8DC")
 
-lb66 = tkinter.Label(b, text="ເບີໂທ:")
-lb66.place(x=1050, y=330)
-lb66.config(font=("Saysettha OT", 18), bg="#ECF8DC")
+lb5 = tkinter.Label(b, text="ຊັ້ນຮຽນ:")
+lb5.place(x=390, y=450)
+lb5.config(font=("Saysettha OT", 18),bg="#ECF8DC")
 
-lb77 = tkinter.Label(b, text="ບ້ານ:")
-lb77.place(x=30, y=520)
-lb77.config(font=("Saysettha OT", 18), bg="#ECF8DC")
+lb6 = tkinter.Label(b, text="ວິຊາຮຽນ:")
+lb6.place(x=800, y=450)
+lb6.config(font=("Saysettha OT", 18),bg="#ECF8DC")
 
-lb88 = tkinter.Label(b, text="ເມືອງ:")
-lb88.place(x=410, y=520)
-lb88.config(font=("Saysettha OT", 18), bg="#ECF8DC")
+lb7 = tkinter.Label(b, text="ລະຫັດອາຈານ:")
+lb7.place(x=1180, y=450)
+lb7.config(font=("Saysettha OT", 18),bg="#ECF8DC")
 
-lb99 = tkinter.Label(b, text="ແຂວງ:")
-lb99.place(x=800, y=520)
-lb99.config(font=("Saysettha OT", 18), bg="#ECF8DC")
+# Entry
+en_year = tkinter.Entry(b)
+en_year.place(x=1150, y=150)
+en_year.config(font=("Saysettha OT",18),width=20)
 
-###entryyyyy
+en_scid = tkinter.Entry(b)
+en_scid.place(x=800, y=50)
+en_scid.config(font=("Saysettha OT",18),width=20)
 
-tx11 = tkinter.Entry(b)
-tx11.place(x=200, y=150)
-tx11.config(font=("Saysettha OT", 18),width=18)
 
-tx22 = tkinter.Entry(b)
-tx22.place(x=600, y=150)
-tx22.config(font=("Saysettha OT", 18),width=18)
+#SET FONT
+cbFont = tkfont.Font(family="Saysettha OT", size=16)
 
-tx33 = tkinter.Entry(b)
-tx33.place(x=1150, y=150)
-tx33.config(font=("Saysettha OT", 18),width=18)
 
-tx44 = tkinter.Entry(b)
-tx44.place(x=650, y=330)
-tx44.config(font=("Saysettha OT", 18),width=18)
+# combo peroid
+cb_list_period = ["ພາກເຊົ້າ", "ພາກບ່າຍ", "ພາກຄ່ຳ"]
 
-tx55 = tkinter.Entry(b)
-tx55.place(x=1150, y=330)
-tx55.config(font=("Saysettha OT", 18),width=18)
+cb_period = ttk.Combobox(b, width=15, value=cb_list_period)
+cb_period.place(x=650, y=150)
+cb_period.config(font=("Saysettha OT", 18), state="readonly")
+cb_period.current(0)
+cb_period.option_add("*font", cbFont)
 
-tx66 = tkinter.Entry(b)
-tx66.place(x=110, y=520)
-tx66.config(font=("Saysettha OT", 18),width=18)
+#connect database
+conn = pymysql.connect(user="root", password="", host="Localhost",database="asp_base")
+curs = conn.cursor()
 
-tx77 = tkinter.Entry(b)
-tx77.place(x=490, y=520)
-tx77.config(font=("Saysettha OT", 18),width=18)
 
-tx88 = tkinter.Entry(b)
-tx88.place(x=890, y=520)
-tx88.config(font=("Saysettha OT", 18),width=18)
+# combo day
+curs.execute('select d_Id from tb_day;')
+results = curs.fetchall()
+combo_d_id = [result[0] for result in results]
 
-######combo
-cbList = ["ຊາຍ", "ຍິງ"]
-cbfont=tkfont.Font(family="Saysettha OT", size=20)
+cb_day = ttk.Combobox(b, width=15, value=combo_d_id)
+cb_day.place(x=150, y=150)
+cb_day.config(font=("Saysettha OT", 18), state="readonly")
+cb_day.option_add("*font", cbFont)
+cb_day.current()
 
-combo = ttk.Combobox(b, width=15,value=cbList)
-combo.place(x=150, y=330)
-combo.configure(font=("Saysettha OT", 20),state="readonly")
-combo.current(0)
-combo.option_add("*font", cbfont)
+#combo_room_id form database
+curs.execute('select r_Id from tb_room;')
+results = curs.fetchall()
+combo_r_id = [result[0] for result in results]
+
+#combobox_room_id
+cb_room =ttk.Combobox(b, width=12,values=combo_r_id)
+cb_room.place(x=150, y=450)
+cb_room.config(font=(cbFont), state="readonly")
+cb_room.option_add("*font", cbFont)
+cb_room.current()
+
+#combo_subject_id form database
+curs.execute('select s_Id from tb_subject;')
+results = curs.fetchall()
+combo_s_id = [result[0] for result in results]
+
+#combobox_subject_id
+cb_subject =ttk.Combobox(b, width=18,values=combo_s_id)
+cb_subject.place(x=910, y=450)
+cb_subject.config(font=(cbFont), state="readonly")
+cb_subject.option_add("*font", cbFont)
+cb_subject.current()
+
+#combo_class_id form database
+curs.execute('select cl_Id from tb_class;')
+results = curs.fetchall()
+combo_cl_id = [result[0] for result in results]
+
+#combobox_class_id
+cb_cl =ttk.Combobox(b, width=17,values=combo_cl_id)
+cb_cl.place(x=520, y=450)
+cb_cl.config(font=(cbFont), state="readonly")
+cb_cl.option_add("*font", cbFont)
+cb_cl.current()
+
+#combo_teacher_id form database
+curs.execute('select t_Id from tb_teacher;')
+results = curs.fetchall()
+combo_t_id = [result[0] for result in results]
+
+#combobox_student_id
+cb_teacher =ttk.Combobox(b, width=13,values=combo_t_id)
+cb_teacher.place(x=1330, y=450)
+cb_teacher.config(font=(cbFont), state="readonly")
+cb_teacher.option_add("*font", cbFont)
+cb_teacher.current()
 
 # button
 bts = tkinter.Button(b, text="Update",command=save,width=20)
@@ -331,7 +377,6 @@ bts.configure(font=("Saysettha OT", 18), bg="green", fg="white")
 bt = tkinter.Button(b, text="BACK",command=back1,width=20)
 bt.place(x=300, y=650)
 bt.configure(font=("Saysettha OT", 18), bg="gray", fg="black")
-
 
 
 
