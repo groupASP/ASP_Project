@@ -11,7 +11,7 @@ a.geometry("1500x900")
 
 
 # a.title("display from database")
-a.attributes('-fullscreen', True)
+a.attributes("-fullscreen", True)
 
 # ຄຳສັ່ງເຊື່ອມຕໍ່
 connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
@@ -23,7 +23,7 @@ conn.execute(sql)
 
 def back():
     l = messagebox.askquestion("Back", "ທ່ານຕ້ອງການຈະກັບໄປໜ້າຫຼັກ ຫຼື ບໍ່?")
-    if (l == 'yes'):
+    if l == "yes":
         a.withdraw()
         os.system("D:\ASP_Project\ASP\window1.py")
 
@@ -31,30 +31,68 @@ def back():
 def save():
     global t_Gender
     en_id.config(state="normal")
-    t_Id=en_id.get()
-    t_Name=en_name.get()
-    t_Surname=en_surname.get()
-    t_Village=en_village.get()
-    t_District=en_district.get()
-    t_Province=en_province.get()
-    t_Tel=en_tel.get()
-    t_Email=en_email.get()
-    t_Degree=en_degree.get()
-    t_Gender=combo.get()
-    sql_update ="update tb_teacher set t_Name='"+t_Name+"',t_Surname='"+t_Surname+"',t_Gender='"+t_Gender+"',t_Village='"+t_Village+"',t_District='"+t_District+"',t_Province='"+t_Province+"',t_Tel='"+t_Tel+"',t_Email='"+t_Email+"',t_Degree='"+t_Degree+"' where t_Id='"+t_Id+"';"
+    t_Id = en_id.get()
+    t_Name = en_name.get()
+    t_Surname = en_surname.get()
+    t_Village = en_village.get()
+    t_District = en_district.get()
+    t_Province = en_province.get()
+    t_Tel = en_tel.get()
+    t_Email = en_email.get()
+    t_Degree = en_degree.get()
+    t_Gender = combo.get()
+    sql_update = (
+        "update tb_teacher set t_Name='"
+        + t_Name
+        + "',t_Surname='"
+        + t_Surname
+        + "',t_Gender='"
+        + t_Gender
+        + "',t_Village='"
+        + t_Village
+        + "',t_District='"
+        + t_District
+        + "',t_Province='"
+        + t_Province
+        + "',t_Tel='"
+        + t_Tel
+        + "',t_Email='"
+        + t_Email
+        + "',t_Degree='"
+        + t_Degree
+        + "' where t_Id='"
+        + t_Id
+        + "';"
+    )
     conn.execute(sql_update)
     connection.commit()
 
     for i in tree.get_children():
         tree.delete(i)
 
-    sql_select="select * from tb_teacher;"
+    sql_select = "select * from tb_teacher;"
     conn.execute(sql_select)
 
-    i=0
+    i = 0
     for row in conn:
-        tree.insert('', i,text="",values=(row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9]))
-        i=i+1
+        tree.insert(
+            "",
+            i,
+            text="",
+            values=(
+                row[0],
+                row[1],
+                row[2],
+                row[3],
+                row[4],
+                row[5],
+                row[6],
+                row[7],
+                row[8],
+                row[9],
+            ),
+        )
+        i = i + 1
 
     # sc =tkinter.Label(a, text="Edit successfully!!!!!!")
     # sc.pack()
@@ -70,9 +108,10 @@ def save():
     en_degree.delete(0, END)
     messagebox.showinfo("ການແກ້ໄຂຂໍ້ມູນ", "ທ່ານໄດ້ແກ້ໄຂຂໍ້ມູນນັກສຶກສາສຳເລັດແລ້ວ!!!")
 
+
 def edit():
     data = tree.selection()
-    value = tree.item(data)['values'][0]
+    value = tree.item(data)["values"][0]
 
     sql_select = "select * from tb_teacher where t_Id='" + value + "';"
     conn.execute(sql_select)
@@ -98,13 +137,13 @@ def edit():
         en_tel.insert(0, t_Tel)
         en_email.insert(0, t_Email)
         en_degree.insert(0, t_Degree)
-    
+
         #####ເພດ
         cbList = ["ຊາຍ", "ຍິງ"]
-        if(t_Gender == cbList[0]):
+        if t_Gender == cbList[0]:
             combo.current(0)
 
-        elif(t_Gender == cbList[1]):
+        elif t_Gender == cbList[1]:
             combo.current(1)
 
         a.withdraw()
@@ -114,12 +153,11 @@ def edit():
 
 def delete():
     pm = tree.selection()
-    mon = tree.item(pm)['values'][0]
+    mon = tree.item(pm)["values"][0]
     # print(mon)
     sql_delete = "delete from tb_teacher where t_Id='" + str(mon) + "';"
     conn.execute(sql_delete)
     connection.commit()
-
 
     for i in tree.get_children():
         tree.delete(i)
@@ -129,7 +167,23 @@ def delete():
 
     i = 0
     for row in conn:
-        tree.insert('', i, text="", values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]))
+        tree.insert(
+            "",
+            i,
+            text="",
+            values=(
+                row[0],
+                row[1],
+                row[2],
+                row[3],
+                row[4],
+                row[5],
+                row[6],
+                row[7],
+                row[8],
+                row[9],
+            ),
+        )
         i = i + 1
     messagebox.showinfo("ການສະແດງຜົນ", "ທ່ານໄດ້ລົບຂໍ້ມູນນັກອາຈານສຳເລັດແລ້ວ!!!")
 
@@ -139,63 +193,52 @@ def insert():
     os.system("D:\ASP_Project\ASP\insert_teacher.py")
 
 
-'''lb=tkinter.Label(a,text="ລາຍຊື່ນັກສຶກສາ")
+"""lb=tkinter.Label(a,text="ລາຍຊື່ນັກສຶກສາ")
 lb.place(x=50,y=20)
-lb.config(font=("Saysettha OT",20),fg="red")'''
+lb.config(font=("Saysettha OT",20),fg="red")"""
 canvas = Canvas(
-    a,
-    bg="#ffffff",
-    height=1080,
-    width=1920,
-    bd=0,
-    highlightthickness=0,
-    relief="ridge")
+    a, bg="#ffffff", height=1080, width=1920, bd=0, highlightthickness=0, relief="ridge"
+)
 canvas.place(x=0, y=0)
 
 background_img = PhotoImage(file=f"ASP/Image/bg_teach.png")
-background = canvas.create_image(
-    950.0, 540.0,
-    image=background_img)
+background = canvas.create_image(950.0, 540.0, image=background_img)
 
 img1 = PhotoImage(file=f"ASP/Image/add.png")
 btAdd = Button(
-    image=img1,
-    borderwidth=0,
-    highlightthickness=0,
-    command=insert,
-    relief="flat")
+    image=img1, borderwidth=0, highlightthickness=0, command=insert, relief="flat"
+)
 btAdd.place(
-    x=480, y=650, )
+    x=480,
+    y=650,
+)
 
 img2 = PhotoImage(file=f"ASP/Image/back.png")
 btBack = Button(
-    image=img2,
-    borderwidth=0,
-    highlightthickness=0,
-    command=back,
-    relief="flat")
+    image=img2, borderwidth=0, highlightthickness=0, command=back, relief="flat"
+)
 btBack.place(
-    x=100, y=650, )
+    x=100,
+    y=650,
+)
 
 img3 = PhotoImage(file=f"ASP/Image/delete.png")
 btDelete = Button(
-    image=img3,
-    borderwidth=0,
-    highlightthickness=0,
-    command=delete,
-    relief="flat")
+    image=img3, borderwidth=0, highlightthickness=0, command=delete, relief="flat"
+)
 btDelete.place(
-    x=1200, y=650, )
+    x=1200,
+    y=650,
+)
 
 img4 = PhotoImage(file=f"ASP/Image/edit.png")
 btEdit = Button(
-    image=img4,
-    borderwidth=0,
-    highlightthickness=0,
-    command=edit,
-    relief="flat")
+    image=img4, borderwidth=0, highlightthickness=0, command=edit, relief="flat"
+)
 btEdit.place(
-    x=840, y=650, )
+    x=840,
+    y=650,
+)
 
 st = ttk.Style()
 st.theme_use("clam")
@@ -235,7 +278,23 @@ tree.heading("#10", text="ລະດັບການສຶກສາ")
 
 i = 0
 for row in conn:
-    tree.insert('', i, text="", values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]))
+    tree.insert(
+        "",
+        i,
+        text="",
+        values=(
+            row[0],
+            row[1],
+            row[2],
+            row[3],
+            row[4],
+            row[5],
+            row[6],
+            row[7],
+            row[8],
+            row[9],
+        ),
+    )
     i = i + 1
 tree.place(x=1, y=80)
 
@@ -247,16 +306,18 @@ tree.place(x=1, y=80)
 b = tkinter.Tk()
 b.geometry("1500x900")
 b.config(bg="#ECF8DC")
-b.attributes('-fullscreen', True)
+b.attributes("-fullscreen", True)
 b.withdraw()
 
 lbShow = tkinter.Label(b, text="ແກ້ໄຂຂໍ້ມູນ")
-lbShow.pack(side='top', fill='x')
+lbShow.pack(side="top", fill="x")
 # lbShow.place(x=1,y=1000)
 lbShow.configure(font=("Saysettha OT", 30), bg="#04C582", fg="white")
 
+
 def ex():
     exit()
+
 
 def back1():
     en_id.delete(0, END)
@@ -271,60 +332,61 @@ def back1():
     a.deiconify()
     b.withdraw()
 
+
 lb_id = tkinter.Label(b, text="ລະຫັດອາຈານ:")
 lb_id.place(x=20, y=150)
-lb_id.config(font=("Saysettha OT", 18),bg="#ECF8DC")
+lb_id.config(font=("Saysettha OT", 18), bg="#ECF8DC")
 
 lb_name = tkinter.Label(b, text="ຊື່:")
 lb_name.place(x=530, y=150)
-lb_name.config(font=("Saysettha OT", 18),bg="#ECF8DC")
+lb_name.config(font=("Saysettha OT", 18), bg="#ECF8DC")
 
 lb_surname = tkinter.Label(b, text="ນາມສະກຸນ:")
 lb_surname.place(x=980, y=150)
-lb_surname.config(font=("Saysettha OT", 18),bg="#ECF8DC")
+lb_surname.config(font=("Saysettha OT", 18), bg="#ECF8DC")
 
 
 lb_gender = tkinter.Label(b, text="ເພດ:")
 lb_gender.place(x=20, y=330)
-lb_gender.config(font=("Saysettha OT", 20),bg="#ECF8DC")
+lb_gender.config(font=("Saysettha OT", 20), bg="#ECF8DC")
 
 lb_village = tkinter.Label(b, text="ບ້ານ:")
 lb_village.place(x=430, y=330)
-lb_village.config(font=("Saysettha OT", 18),bg="#ECF8DC")
+lb_village.config(font=("Saysettha OT", 18), bg="#ECF8DC")
 
 lb_district = tkinter.Label(b, text="ເມືອງ:")
 lb_district.place(x=800, y=330)
-lb_district.config(font=("Saysettha OT", 18),bg="#ECF8DC")
+lb_district.config(font=("Saysettha OT", 18), bg="#ECF8DC")
 
 lb_province = tkinter.Label(b, text="ແຂວງ:")
 lb_province.place(x=1170, y=330)
-lb_province.config(font=("Saysettha OT", 18),bg="#ECF8DC")
+lb_province.config(font=("Saysettha OT", 18), bg="#ECF8DC")
 
 lb_tel = tkinter.Label(b, text="ເບີໂທ:")
 lb_tel.place(x=20, y=520)
-lb_tel.config(font=("Saysettha OT", 18),bg="#ECF8DC")
+lb_tel.config(font=("Saysettha OT", 18), bg="#ECF8DC")
 
 lb_email = tkinter.Label(b, text="ອີເມວ:")
 lb_email.place(x=450, y=520)
-lb_email.config(font=("Saysettha OT", 18),bg="#ECF8DC")
+lb_email.config(font=("Saysettha OT", 18), bg="#ECF8DC")
 
 lb_degree = tkinter.Label(b, text="ລະດັບການສຶກສາ:")
 lb_degree.place(x=920, y=520)
-lb_degree.config(font=("Saysettha OT", 18),bg="#ECF8DC")
+lb_degree.config(font=("Saysettha OT", 18), bg="#ECF8DC")
 
 ###entryyyyy
 # Entry
-en_id = tkinter.Entry(b,width=18)
+en_id = tkinter.Entry(b, width=18)
 en_id.place(x=200, y=150)
-en_id.config(font=("Saysettha OT",18),width=18)
+en_id.config(font=("Saysettha OT", 18), width=18)
 
 en_name = tkinter.Entry(b)
 en_name.place(x=600, y=150)
-en_name.config(font=("Saysettha OT",18),width=25)
+en_name.config(font=("Saysettha OT", 18), width=25)
 
 en_surname = tkinter.Entry(b)
 en_surname.place(x=1150, y=150)
-en_surname.config(font=("Saysettha OT",18),width=25)
+en_surname.config(font=("Saysettha OT", 18), width=25)
 
 en_email = ttk.Entry(b)
 en_email.place(x=550, y=520)
@@ -332,15 +394,15 @@ en_email.config(font=("Saysettha OT", 18))
 
 en_tel = tkinter.Entry(b)
 en_tel.place(x=120, y=520)
-en_tel.config(font=("Saysettha OT",18),width=18)
+en_tel.config(font=("Saysettha OT", 18), width=18)
 
 en_degree = tkinter.Entry(b)
 en_degree.place(x=1100, y=520)
-en_degree.config(font=("Saysettha OT",18),width=25)
+en_degree.config(font=("Saysettha OT", 18), width=25)
 
-#SET FONT
+# SET FONT
 cbFont = tkfont.Font(family="Saysettha OT", size=16)
-#entry
+# entry
 en_village = ttk.Entry(b)
 en_village.place(x=510, y=330)
 en_village.config(font=("Saysettha OT", 18))
@@ -358,20 +420,20 @@ en_province.option_add("*font", cbFont)
 
 ######combo
 cbList = ["ຊາຍ", "ຍິງ"]
-cbfont=tkfont.Font(family="ASP/font/Saysettha OT", size=20)
+cbfont = tkfont.Font(family="ASP/font/Saysettha OT", size=20)
 
-combo = ttk.Combobox(b, width=15,value=cbList)
+combo = ttk.Combobox(b, width=15, value=cbList)
 combo.place(x=150, y=330)
-combo.configure(font=("Saysettha OT", 20),state="readonly")
+combo.configure(font=("Saysettha OT", 20), state="readonly")
 combo.current(0)
 combo.option_add("*font", cbfont)
 
 # button
-bts = tkinter.Button(b, text="Update",command=save,width=20)
+bts = tkinter.Button(b, text="Update", command=save, width=20)
 bts.place(x=900, y=650)
 bts.configure(font=("Saysettha OT", 18), bg="green", fg="white")
 
-bt = tkinter.Button(b, text="BACK",command=back1,width=20)
+bt = tkinter.Button(b, text="BACK", command=back1, width=20)
 bt.place(x=300, y=650)
 bt.configure(font=("Saysettha OT", 18), bg="gray", fg="black")
 
