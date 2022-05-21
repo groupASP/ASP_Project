@@ -100,11 +100,12 @@ def check_in():
                 conn = connection.cursor()
                 if str(profile[5]) == "309" and str(profile[6]) == "CS6B":
                     timee = datetime.now().strftime("%H:%M:%S")
+                    a = 0
+                    b = 1
                     date_Today = datetime.now().strftime("%Y-%m-%d")
                     time = datetime.now().strftime("%H:%M:%S")
                     start_Class = str(timedelta(8, 45, 00))
-                    end_Class = str(timedelta(12, 00, 00))
-                    if time < start_Class and time < end_Class:
+                    if time >= start_Class:
                         insert_data = "INSERT INTO tb_attandance(a_Id, st_Id, Name, Surname, d_Name, s_Name, r_Name, cl_Name, sc_Period, sc_Year, time_In, first_Absence, date) VALUES (0, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
                         VALUES = (
                             str(profile[0]),
@@ -117,13 +118,13 @@ def check_in():
                             str(profile[7]),
                             str(profile[8]),
                             timee,
-                            "0",
+                            b,
                             date_Today,
                         )
                         conn.execute(insert_data, VALUES)
                         connection.commit()
                     else:
-                        insert_dataa = "INSERT INTO tb_attandance(a_Id, st_Id, Name, Surname, d_Name, s_Name, r_Name, cl_Name, sc_Period, sc_Year, time_In, first_Absence, date) VALUES (0, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+                        insert_data = "INSERT INTO tb_attandance(a_Id, st_Id, Name, Surname, d_Name, s_Name, r_Name, cl_Name, sc_Period, sc_Year, time_In, first_Absence, date) VALUES (0, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
                         VALUES = (
                             str(profile[0]),
                             str(profile[1]),
@@ -134,11 +135,11 @@ def check_in():
                             str(profile[6]),
                             str(profile[7]),
                             str(profile[8]),
-                            time,
-                            "1",
+                            timee,
+                            a,
                             date_Today,
                         )
-                        conn.execute(insert_dataa, VALUES)
+                        conn.execute(insert_data, VALUES)
                         connection.commit()
             except Exception as e:
                 print(e)
@@ -267,7 +268,7 @@ def Exit_Room():
                     conn.execute(update_data)
                     connection.commit()
                 else:
-                    update_dataa = (
+                    update_data = (
                         " UPDATE tb_attandance set time_Out = '"
                         + time
                         + "', second_Absence = '"
@@ -282,7 +283,7 @@ def Exit_Room():
                         + date_Today
                         + "';"
                     )
-                    conn.execute(update_dataa)
+                    conn.execute(update_data)
                     connection.commit()
             except Exception as e:
                 print(e)
