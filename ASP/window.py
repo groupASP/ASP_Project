@@ -21,7 +21,7 @@ def login():
     pw = "1234"
 
     teacher = "teacher"
-    t_pw = "123456"
+    t_pw = "1234"
 
     txtu = entry0.get()
     txtp = entry1.get()
@@ -35,7 +35,7 @@ def login():
 
     elif (txtu == teacher) and (txtp == t_pw):
         window.withdraw()
-        os.system("D:\ASP_Project\ASP\\teacher.py")
+        os.system("D:\ASP_Project\ASP\\report_for_teacher.py")
 
     elif (txtu != user and teacher) and (txtp != pw and t_pw):
         messagebox.showerror("LOGIN!!!", "Your User and Password incorrect!!!")

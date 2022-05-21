@@ -47,7 +47,7 @@ def room():
     os.system("D:\ASP_Project\ASP\\Room.py")
 
 
-def Sub():
+def subb():
     window1.withdraw()
     os.system("D:\ASP_Project\ASP\\Subject.py")
 
@@ -60,6 +60,11 @@ def attan():
 def sche():
     window1.withdraw()
     os.system("D:\ASP_Project\ASP\\schedule.py")
+
+
+def report():
+    window1.withdraw()
+    os.system("D:\ASP_Project\ASP\\report.py")
 
 
 window1 = Tk()
@@ -95,13 +100,15 @@ b1.place(x=450, y=750, width=250, height=73)
 
 img2 = PhotoImage(file=f"ASP/Image/report.png")
 b2 = Button(
-    image=img2, borderwidth=0, highlightthickness=0, command=btn_clicked, relief="flat"
+    image=img2, borderwidth=0, highlightthickness=0, command=report, relief="flat"
 )
 
 b2.place(x=1160, y=520, width=180, height=180)
 
 img3 = PhotoImage(file=f"ASP/Image/sub.png")
-b3 = Button(image=img3, borderwidth=0, highlightthickness=0, command=Sub, relief="flat")
+b3 = Button(
+    image=img3, borderwidth=0, highlightthickness=0, command=subb, relief="flat"
+)
 
 b3.place(x=150, y=520, width=180, height=180)
 

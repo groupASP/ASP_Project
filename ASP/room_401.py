@@ -10,8 +10,7 @@ a = tkinter.Tk()
 a.geometry("1500x900")
 a.attributes("-fullscreen", True)
 
-
-# def auto_att():
+# def check_in():
 #     import cv2
 #     import pymysql
 
@@ -97,7 +96,7 @@ a.attributes("-fullscreen", True)
 #                     host="localhost", user="root", password="", database="asp_base"
 #                 )
 #                 conn = connection.cursor()
-#                 if str(profile[5]) == "309" and str(profile[6]) == "CS6B":
+#                 if str(profile[5]) == "309" and str(profile[6] == "CS6B"):
 #                     time = datetime.now().strftime("%H:%M:%S")
 #                     date_Today = datetime.now().strftime("%Y-%m-%d")
 
@@ -126,7 +125,6 @@ a.attributes("-fullscreen", True)
 #         auto()
 #     except Exception as e:
 #         print(e)
-
 
 # def Exit_Room():
 #     import cv2
@@ -234,51 +232,11 @@ a.attributes("-fullscreen", True)
 #         print(e)
 
 
-def go_307():
-    a.withdraw()
-    os.system("D:\ASP_Project\ASP\\room_307.py")
-
-
-def go_308():
-    a.withdraw()
-    os.system("D:\ASP_Project\ASP\\room_308.py")
-
-
-def go_309():
-    a.withdraw()
-    os.system("D:\ASP_Project\ASP\\room_309.py")
-
-
-def go_401():
-    a.withdraw()
-    os.system("D:\ASP_Project\ASP\\room_401.py")
-
-
-def go_406():
-    a.withdraw()
-    os.system("D:\ASP_Project\ASP\\room_406.py")
-
-
-def go_502():
-    a.withdraw()
-    os.system("D:\ASP_Project\ASP\\room_502.py")
-
-
-def go_503():
-    a.withdraw()
-    os.system("D:\ASP_Project\ASP\\room_503.py")
-
-
-def go_507():
-    a.withdraw()
-    os.system("D:\ASP_Project\ASP\\room_507.py")
-
-
 def back():
-    l = messagebox.askquestion("BACK", "ທ່ານຕ້ອງການຈະກັບໄປໜ້າຫຼັກ ຫຼື ບໍ່?")
+    l = messagebox.askquestion("BACK", "ທ່ານຕ້ອງການຈະກັບໄປໜ້າການມາຮຽນ ຫຼື ບໍ່?")
     if l == "yes":
         a.withdraw()
-        os.system("D:\ASP_Project\ASP\\window1.py")
+        os.system("D:\ASP_Project\ASP\\attandance.py")
 
 
 # button
@@ -288,93 +246,48 @@ canvas = Canvas(
 
 canvas.place(x=0, y=0)
 
-background_img = PhotoImage(file="ASP/Image/bg_attan.png")
+background_img = PhotoImage(file="ASP/Image/bg_401.png")
 background = canvas.create_image(950.0, 540.0, image=background_img)
 
-bt1 = PhotoImage(file="ASP/Image/bt307.png")
+bt1 = PhotoImage(file="ASP/Image/bt_checkIn.png")
 button_1 = Button(
     image=bt1,
     borderwidth=0,
     highlightthickness=0,
-    command=go_307,
+    # command=check_in,
     relief="flat",
 )
-button_1.place(x=30, y=100)
+button_1.place(x=200, y=100)
 
-bt2 = PhotoImage(file="ASP/Image/bt308.png")
+bt2 = PhotoImage(file="ASP/Image/bt_checkOut.png")
 button_2 = Button(
     image=bt2,
     borderwidth=0,
     highlightthickness=0,
-    command=go_308,
+    # command=Exit_Room,
     relief="flat",
 )
-button_2.place(x=410, y=100)
+button_2.place(x=950, y=100)
 
-bt3 = PhotoImage(file="ASP/Image/bt309.png")
+bt3 = PhotoImage(file="ASP/Image/bt_break.png")
 button_3 = Button(
     image=bt3,
     borderwidth=0,
     highlightthickness=0,
-    command=go_309,
+    # command=auto_att,
     relief="flat",
 )
-button_3.place(x=810, y=100)
+button_3.place(x=600, y=450)
 
-bt4 = PhotoImage(file="ASP/Image/bt401.png")
+bt4 = PhotoImage(file="ASP/Image/back.png")
 button_4 = Button(
     image=bt4,
     borderwidth=0,
     highlightthickness=0,
-    command=go_401,
+    command=back,
     relief="flat",
 )
-button_4.place(x=1210, y=100)
+button_4.place(x=200, y=700)
 
-bt5 = PhotoImage(file="ASP/Image/bt406.png")
-button_5 = Button(
-    image=bt5,
-    borderwidth=0,
-    highlightthickness=0,
-    command=go_406,
-    relief="flat",
-)
-button_5.place(x=30, y=450)
-
-bt6 = PhotoImage(file="ASP/Image/bt502.png")
-button_6 = Button(
-    image=bt6,
-    borderwidth=0,
-    highlightthickness=0,
-    command=go_502,
-    relief="flat",
-)
-button_6.place(x=410, y=450)
-
-bt7 = PhotoImage(file="ASP/Image/bt503.png")
-button_7 = Button(
-    image=bt7,
-    borderwidth=0,
-    highlightthickness=0,
-    command=go_503,
-    relief="flat",
-)
-button_7.place(x=810, y=450)
-
-bt8 = PhotoImage(file="ASP/Image/bt507.png")
-button_8 = Button(
-    image=bt8,
-    borderwidth=0,
-    highlightthickness=0,
-    command=go_507,
-    relief="flat",
-)
-button_8.place(x=1210, y=450)
-
-bt_back = PhotoImage(file="ASP/Image/back.png")
-button_back = Button(
-    image=bt_back, borderwidth=0, highlightthickness=0, command=back, relief="flat"
-)
-button_back.place(x=200, y=700, width=246, height=90)
 
 a.mainloop()
