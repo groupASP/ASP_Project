@@ -104,14 +104,18 @@ def edit():
         sc_Id = row[0]
         d_Id = row[1]
         sc_Period = row[2]
-        sc_Year = row[3]
-        r_Id = row[4]
-        cl_Id = row[5]
-        s_Id = row[6]
-        t_Id = row[7]
+        sc_Start = row[3]
+        sc_End = row[4]
+        sc_Year = row[5]
+        r_Id = row[6]
+        cl_Id = row[7]
+        s_Id = row[8]
+        t_Id = row[9]
 
         en_scid.insert(0, sc_Id)
         en_year.insert(0, sc_Year)
+        en_start.insert(0, sc_Start)
+        en_end.insert(0, sc_End)
         cb_day.set(d_Id)
         cb_room.set(r_Id)
         cb_cl.set(cl_Id)
@@ -153,7 +157,18 @@ def delete():
             "",
             i,
             text="",
-            values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]),
+            values=(
+                row[0],
+                row[1],
+                row[2],
+                row[3],
+                row[4],
+                row[5],
+                row[6],
+                row[7],
+                row[8],
+                row[9],
+            ),
         )
         i = i + 1
     messagebox.showinfo("ການສະແດງຜົນ", "ທ່ານໄດ້ລົບຂໍ້ມູນຕາຕະລາງຮຽນສຳເລັດແລ້ວ!!!")
@@ -215,24 +230,29 @@ st.configure("Treeview", rowheight=50, font=("Saysettha OT", 12))
 
 
 tree = ttk.Treeview(a)
-tree["columns"] = ("1", "2", "3", "4", "5", "6", "7", "8")
+tree["columns"] = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
 tree.column("#0", width=5)
 tree.column("#1", width=100)
-tree.column("#2", width=180)
-tree.column("#3", width=180)
-tree.column("#4", width=180)
-tree.column("#5", width=180)
-tree.column("#6", width=180)
-tree.column("#7", width=230)
+tree.column("#2", width=100)
+tree.column("#3", width=100)
+tree.column("#4", width=150)
+tree.column("#5", width=150)
+tree.column("#6", width=150)
+tree.column("#7", width=130)
+tree.column("#8", width=180)
+tree.column("#9", width=150)
+tree.column("#10", width=150)
 
 tree.heading("#1", text="ລະຫັດ")
 tree.heading("#2", text="ມື້")
 tree.heading("#3", text="ຄາບຮຽນ")
-tree.heading("#4", text="ສົກຮຽນ")
-tree.heading("#5", text="ລະຫັດຫ້ອງ")
-tree.heading("#6", text="ລະຫັດຊັ້ນຮຽນ")
-tree.heading("#7", text="ລະຫັດວິຊາ")
-tree.heading("#8", text="ລະຫັດອາຈານ")
+tree.heading("#4", text="ເວລາເລີ່ມ")
+tree.heading("#5", text="ເວລາສິ້ນສຸດ")
+tree.heading("#6", text="ລະຫັດສົກຮຽນ")
+tree.heading("#7", text="ລະຫັດຫ້ອງຮຽນ")
+tree.heading("#8", text="ລະຫັດວິຊາ")
+tree.heading("#9", text="ລະຫັດຊັ້ນຮຽນ")
+tree.heading("#10", text="ລະຫັດອາຈານ")
 
 # ຄຳສັ່ງສະແດງຜົນ
 
@@ -242,7 +262,18 @@ for row in conn:
         "",
         i,
         text="",
-        values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]),
+        values=(
+            row[0],
+            row[1],
+            row[2],
+            row[3],
+            row[4],
+            row[5],
+            row[6],
+            row[7],
+            row[8],
+            row[9],
+        ),
     )
     i = i + 1
 tree.place(x=30, y=80)
@@ -291,6 +322,14 @@ lb2 = tkinter.Label(b, text="ຮອບຮຽນ:")
 lb2.place(x=650, y=200)
 lb2.config(font=("Saysettha OT", 18), bg="#ECF8DC")
 
+lb21 = tkinter.Label(b, text="ເວລາເລີ່ມ:")
+lb21.place(x=40, y=350)
+lb21.config(font=("Saysettha OT", 18), bg="#ECF8DC")
+
+lb22 = tkinter.Label(b, text="ເວລາສິ້ນສຸດ:")
+lb22.place(x=500, y=350)
+lb22.config(font=("Saysettha OT", 18), bg="#ECF8DC")
+
 lb3 = tkinter.Label(b, text="ສົກຮຽນ:")
 lb3.place(x=1050, y=200)
 lb3.config(font=("Saysettha OT", 18), bg="#ECF8DC")
@@ -320,6 +359,14 @@ en_year.config(font=("Saysettha OT", 18), width=20)
 en_scid = tkinter.Entry(b)
 en_scid.place(x=100, y=200)
 en_scid.config(font=("Saysettha OT", 18), width=8)
+
+en_start = tkinter.Entry(b)
+en_start.place(x=150, y=350)
+en_start.config(font=("Saysettha OT", 18), width=20)
+
+en_end = tkinter.Entry(b)
+en_end.place(x=650, y=350)
+en_end.config(font=("Saysettha OT", 18), width=20)
 
 
 # SET FONT

@@ -37,7 +37,9 @@ def insert():
     nId = oid + 1
     sc_Id = nId
     d_Id = cb_day.get()
-    sc_Peroid = cb_period.get()
+    sc_Period = cb_period.get()
+    sc_start = en_start.get()
+    sc_end = en_end.get()
     sc_Year = en_year.get()
     r_Id = cb_room.get()
     s_Id = cb_subject.get()
@@ -52,7 +54,7 @@ def insert():
             + "','"
             + str(d_Id)
             + "','"
-            + str(sc_Peroid)
+            + str(sc_Period)
             + "','"
             + str(sc_Year)
             + "','"
@@ -107,6 +109,14 @@ lb2 = tkinter.Label(frm, text="ຮອບຮຽນ:")
 lb2.place(x=500, y=150)
 lb2.config(font=("Saysettha OT", 18), bg="#ECF8DC")
 
+lb21 = tkinter.Label(frm, text="ເວລາເລີ່ມ:")
+lb21.place(x=40, y=300)
+lb21.config(font=("Saysettha OT", 18), bg="#ECF8DC")
+
+lb22 = tkinter.Label(frm, text="ເວລາສິ້ນສຸດ:")
+lb22.place(x=500, y=300)
+lb22.config(font=("Saysettha OT", 18), bg="#ECF8DC")
+
 lb3 = tkinter.Label(frm, text="ສົກຮຽນ:")
 lb3.place(x=1050, y=150)
 lb3.config(font=("Saysettha OT", 18), bg="#ECF8DC")
@@ -133,6 +143,13 @@ en_year = tkinter.Entry(frm)
 en_year.place(x=1150, y=150)
 en_year.config(font=("Saysettha OT", 18), width=20)
 
+en_start = tkinter.Entry(frm)
+en_start.place(x=150, y=300)
+en_start.config(font=("Saysettha OT", 18), width=20)
+
+en_end = tkinter.Entry(frm)
+en_end.place(x=650, y=300)
+en_end.config(font=("Saysettha OT", 18), width=20)
 
 # SET FONT
 cbFont = tkfont.Font(family="Saysettha OT", size=16)

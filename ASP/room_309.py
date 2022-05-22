@@ -249,7 +249,7 @@ def Exit_Room():
                 st_Id = str(profile[0])
                 r_Name = str(profile[5])
                 cl_Name = str(profile[6])
-                if timee > start_Class and timee < end_Class:
+                if timee >= start_Class and timee <= end_Class:
                     update_data = (
                         " UPDATE tb_attandance set time_Out = '"
                         + time
