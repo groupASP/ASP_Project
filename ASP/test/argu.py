@@ -1,24 +1,22 @@
 from tkinter import *
 from tkinter import font as tkFont
-import tkinter
 from tkinter import ttk
 import pymysql
 from tkinter import messagebox
-import os
 from datetime import *
 
-a = tkinter.Tk()
-a.geometry("1500x900")
-a.attributes("-fullscreen", True)
+frm = Tk()
+frm.geometry("900x900")
+frm.title("ລາຍງານຂໍ້ມູນລາຍຊື່ນັກຮຽນ")
 
 connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
 conn = connection.cursor()
 
 
-def report_teacher_today():
-    a.withdraw()
-    b.deiconify()
-    st = ttk.Style(b)
+def Get():
+    frm.withdraw()
+    a.deiconify()
+    st = ttk.Style(a)
     st.theme_use("clam")
     st.configure("Treeview.Heading", fg="blue", font=("Saysettha OT", 14))
     st.configure("Treeview", rowheight=60, font=("Saysettha OT", 12))
@@ -33,7 +31,7 @@ def report_teacher_today():
     )
     conn.execute(sql)
 
-    tree = ttk.Treeview(b)
+    tree = ttk.Treeview(a)
     tree["columns"] = (
         "1",
         "2",
@@ -92,90 +90,35 @@ def report_teacher_today():
 
 
 def back():
-    b.withdraw()
-    a.deiconify()
+    l = messagebox.askquestion("Back", "ທ່ານຕ້ອງການຈະກັບໄປໜ້າຫຼັກ ຫຼື ບໍ່?")
+    if l == "yes":
+        a.withdraw()
+        frm.deiconify()
 
 
-def ex():
-    v = messagebox.askquestion("ການອອກຈາກລະບົບ", "ທ່ານຕ້ອງການອອກຈາກລະບົບ ຫຼື ບໍ່?")
-    if v == "yes":
-        exit()
+btn = Button(frm, text="ເພີ່ມວິຊາຮຽນ", command=Get)
+btn.place(x=450, y=500)
 
 
-# button
-canvas = Canvas(
-    a, bg="#FFFFFF", height=1080, width=1920, bd=0, highlightthickness=0, relief="ridge"
-)
-
-canvas.place(x=0, y=0)
-
-background_img = PhotoImage(file="ASP/Image/bg_report.png")
-background = canvas.create_image(950.0, 540.0, image=background_img)
-
-
-b = Tk()
-b.geometry("1500x900")
-b.config(bg="#ECF8DC")
-b.attributes("-fullscreen", True)
-b.withdraw()
-
-lbShow = tkinter.Label(b, text="ລາຍງານຂໍ້ມູນນັກສຶກສາປະຈຳວັນ")
-lbShow.pack(side="top", fill="x")
-lbShow.configure(font=("Saysettha OT", 30), bg="#04C582", fg="white")
+a = Tk()
+a.geometry("1500x900")
+a.config(bg="#ECF8DC")
+a.attributes("-fullscreen", True)
+a.withdraw()
 
 
 cb_Class = ["HCS6B", "HCS6C", "HCS6E"]
 
 cbFont = tkFont.Font(family="Saysettha OT", size=16)
 
-cb_Style = ttk.Style()
-cb_Style.theme_use("default")
-cb_Style.configure("TCombobox", fieldbackground="orange", background="white")
-
-label = Label(
-    a,
-    text="ກະລຸນາເລືອກຫ້ອງຂອງທ່ານ",
-    font=("Phetsarath OT", 20, "bold"),
-    bg="#FFFFFF",
-    fg="black",
-)
-label.place(x=570, y=200)
-
-
-cb_class = ttk.Combobox(a, width=20, height=20, values=cb_Class)
-cb_class.place(x=600, y=300)
+cb_class = ttk.Combobox(frm, width=17, values=cb_Class)
+cb_class.place(x=450, y=450)
 cb_class.config(font=(cbFont), state="readonly")
 cb_class.option_add("*font", cbFont)
 cb_class.current(0)
 
-bts = tkinter.Button(b, text="Back", command=back, width=20)
-bts.place(x=550, y=750)
-bts.configure(font=("Saysettha OT", 18), bg="green", fg="white")
-
-# bt1 = PhotoImage(file="ASP/Image/bg_report_today.png")
-# button_1 = Button(
-#     image=bt1,
-#     borderwidth=0,
-#     highlightthickness=0,
-#     # command=report_teacher_today,
-#     relief="flat",
-# )
-
-img0 = PhotoImage(file=f"ASP/Image/exit.png")
-b0 = Button(image=img0, borderwidth=0, highlightthickness=0, command=ex, relief="flat")
-
-b0.place(x=400, y=750)
+btn = Button(a, text="ກັບໄປ", command=back)
+btn.place(x=450, y=500)
 
 
-bt5 = PhotoImage(file="ASP/Image/bt_report.png")
-button_5 = Button(
-    image=bt5,
-    borderwidth=0,
-    highlightthickness=0,
-    command=report_teacher_today,
-    relief="flat",
-)
-button_5.place(x=900, y=750)
-
-
-a.mainloop()
+frm.mainloop()

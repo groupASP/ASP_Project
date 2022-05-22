@@ -11,6 +11,21 @@ a.geometry("1500x900")
 a.attributes("-fullscreen", True)
 
 
+def report_today():
+    a.withdraw()
+    os.system("D:\ASP_Project\ASP\\report_today.py")
+
+
+def report_midterm():
+    a.withdraw()
+    os.system("D:\ASP_Project\ASP\\report_midterm.py")
+
+
+def report_final():
+    a.withdraw()
+    os.system("D:\ASP_Project\ASP\\report_final.py")
+
+
 def back():
     l = messagebox.askquestion("BACK", "ທ່ານຕ້ອງການຈະກັບໄປໜ້າລາຍງານຫຼັກ ຫຼື ບໍ່?")
     if l == "yes":
@@ -33,7 +48,7 @@ button_1 = Button(
     image=bt1,
     borderwidth=0,
     highlightthickness=0,
-    # command=check_in,
+    command=report_today,
     relief="flat",
 )
 button_1.place(x=200, y=100)
@@ -43,7 +58,7 @@ button_2 = Button(
     image=bt2,
     borderwidth=0,
     highlightthickness=0,
-    # command=Exit_Room,
+    command=report_midterm,
     relief="flat",
 )
 button_2.place(x=950, y=100)
@@ -53,7 +68,7 @@ button_3 = Button(
     image=bt3,
     borderwidth=0,
     highlightthickness=0,
-    # command=auto_att,
+    command=report_final,
     relief="flat",
 )
 button_3.place(x=200, y=400)
