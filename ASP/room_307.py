@@ -10,226 +10,290 @@ a = tkinter.Tk()
 a.geometry("1500x900")
 a.attributes("-fullscreen", True)
 
-# def check_in():
-#     import cv2
-#     import pymysql
 
-#     faceDetect = cv2.CascadeClassifier("ASP/Detect/haarcascade_frontalface_default.xml")
-#     cam = cv2.VideoCapture(0)
-#     rec = cv2.face.LBPHFaceRecognizer_create()
-#     rec.read("ASP\\Data\\trainingImage.yml")
-#     fontface = cv2.FONT_HERSHEY_SIMPLEX
-#     fontScale = 2
-#     fontColor = (255, 0, 0)
-#     try:
+def check_in():
+    import cv2
+    import pymysql
 
-#         def auto():
-#             def getProfile(Id):
-#                 connection = pymysql.connect(
-#                     host="localhost", user="root", password="", database="asp_base"
-#                 )
-#                 conn = connection.cursor()
-#                 sql = (
-#                     "select st.st_Id, st.st_Name, st.st_Surname, d.d_Name, s.s_Name, \
-#                     r.r_Name, cl.cl_Name, sc.sc_Period, sc.sc_Year, f.Name, f.Surname\
-#                     from tb_face f inner join tb_student st on f.st_Id = st.st_Id\
-#                     inner join tb_class cl on st.cl_Id = cl.cl_Id\
-#                     inner join tb_schedule sc on sc.cl_Id=cl.cl_Id\
-#                     inner join tb_day d on d.d_Id=sc.d_Id\
-#                     inner join tb_subject s on s.s_Id=sc.s_Id\
-#                     inner join tb_room r on r.r_Id=sc.r_Id\
-#                     where f_Id = '"
-#                     + str(Id)
-#                     + "';"
-#                 )
-#                 conn.execute(sql)
-#                 profile = None
-#                 for row in conn:
-#                     profile = row
-#                 conn.close()
-#                 return profile
+    faceDetect = cv2.CascadeClassifier("ASP/Detect/haarcascade_frontalface_default.xml")
+    cam = cv2.VideoCapture(0)
+    rec = cv2.face.LBPHFaceRecognizer_create()
+    rec.read("ASP\\Data\\trainingImage.yml")
+    fontface = cv2.FONT_HERSHEY_SIMPLEX
+    fontScale = 2
+    fontColor = (255, 0, 0)
+    try:
 
-#             while True:
-#                 ret, img = cam.read()
-#                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-#                 faces = faceDetect.detectMultiScale(gray, 1.3, 5)
-#                 for (x, y, w, h) in faces:
-#                     Id, conf = rec.predict(gray[y : y + h, x : x + w])
-#                     if conf < 38:
-#                         print(conf)
-#                         global profile
-#                         profile = getProfile(Id)
-#                         if profile != None:
-#                             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-#                             cv2.putText(
-#                                 img,
-#                                 str(profile[9]),
-#                                 (x, y + h + 30),
-#                                 fontface,
-#                                 fontScale,
-#                                 fontColor,
-#                             )
-#                             cv2.putText(
-#                                 img,
-#                                 str(profile[10]),
-#                                 (x, y + h + 80),
-#                                 fontface,
-#                                 fontScale,
-#                                 fontColor,
-#                             )
-#                     else:
-#                         cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-#                         cv2.putText(
-#                             img,
-#                             "Unknown",
-#                             (x, y + h + 30),
-#                             fontface,
-#                             fontScale,
-#                             fontColor,
-#                         )
-#                 cv2.imshow("Face", img)
-#                 key = cv2.waitKey(1) & 0xFF == ord("q")
-#                 if key or conf <= 38:
-#                     break
-#             try:
-#                 connection = pymysql.connect(
-#                     host="localhost", user="root", password="", database="asp_base"
-#                 )
-#                 conn = connection.cursor()
-#                 if str(profile[5]) == "309" and str(profile[6] == "CS6B"):
-#                     time = datetime.now().strftime("%H:%M:%S")
-#                     date_Today = datetime.now().strftime("%Y-%m-%d")
+        def auto():
+            def getProfile(Id):
+                connection = pymysql.connect(
+                    host="localhost", user="root", password="", database="asp_base"
+                )
+                conn = connection.cursor()
+                sql = (
+                    "select st.st_Id, st.st_Name, st.st_Surname, d.d_Name, s.s_Name, \
+                    r.r_Name, cl.cl_Name, sc.sc_Period, sc.sc_Year, f.Name, f.Surname, sc.start_Class, \
+                    sc.end_Class \
+                    from tb_face f inner join tb_student st on f.st_Id = st.st_Id\
+                    inner join tb_class cl on st.cl_Id = cl.cl_Id\
+                    inner join tb_schedule sc on sc.cl_Id=cl.cl_Id\
+                    inner join tb_day d on d.d_Id=sc.d_Id\
+                    inner join tb_subject s on s.s_Id=sc.s_Id\
+                    inner join tb_room r on r.r_Id=sc.r_Id\
+                    where f_Id = '"
+                    + str(Id)
+                    + "';"
+                )
+                conn.execute(sql)
+                profile = None
+                for row in conn:
+                    profile = row
+                conn.close()
+                return profile
 
-#                     insert_data = "INSERT INTO tb_attandance(a_Id, st_Id, Name, Surname, d_Name, s_Name, r_Name, cl_Name, sc_Period, sc_Year, time_In, date) VALUES (0, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
-#                     VALUES = (
-#                         str(profile[0]),
-#                         str(profile[1]),
-#                         str(profile[2]),
-#                         str(profile[3]),
-#                         str(profile[4]),
-#                         str(profile[5]),
-#                         str(profile[6]),
-#                         str(profile[7]),
-#                         str(profile[8]),
-#                         time,
-#                         date_Today,
-#                     )
-#                     conn.execute(insert_data, VALUES)
-#                     connection.commit()
-#             except Exception as e:
-#                 print(e)
+            while True:
+                ret, img = cam.read()
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                faces = faceDetect.detectMultiScale(gray, 1.3, 5)
+                for (x, y, w, h) in faces:
+                    Id, conf = rec.predict(gray[y : y + h, x : x + w])
+                    if conf < 38:
+                        print(conf)
+                        global profile
+                        profile = getProfile(Id)
+                        if profile != None:
+                            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                            cv2.putText(
+                                img,
+                                str(profile[9]),
+                                (x, y + h + 30),
+                                fontface,
+                                fontScale,
+                                fontColor,
+                            )
+                            cv2.putText(
+                                img,
+                                str(profile[10]),
+                                (x, y + h + 80),
+                                fontface,
+                                fontScale,
+                                fontColor,
+                            )
+                    else:
+                        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                        cv2.putText(
+                            img,
+                            "Unknown",
+                            (x, y + h + 30),
+                            fontface,
+                            fontScale,
+                            fontColor,
+                        )
+                cv2.imshow("Face", img)
+                key = cv2.waitKey(1) & 0xFF == ord("q")
+                if key or conf <= 38:
+                    break
+            try:
+                connection = pymysql.connect(
+                    host="localhost", user="root", password="", database="asp_base"
+                )
+                conn = connection.cursor()
+                if str(profile[5]) == "309" and str(profile[6]) == "CS6B":
+                    timee = datetime.now().strftime("%H:%M:%S")
+                    a = 0
+                    b = 1
+                    date_Today = datetime.now().strftime("%Y-%m-%d")
+                    time = datetime.now().strftime("%H:%M:%S")
+                    start_Class = str(timedelta(8, 45, 00))
+                    if time >= start_Class:
+                        insert_data = "INSERT INTO tb_attandance(a_Id, st_Id, Name, Surname, d_Name, s_Name, r_Name, cl_Name, sc_Period, sc_Year, time_In, first_Absence, date) VALUES (0, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+                        VALUES = (
+                            str(profile[0]),
+                            str(profile[1]),
+                            str(profile[2]),
+                            str(profile[3]),
+                            str(profile[4]),
+                            str(profile[5]),
+                            str(profile[6]),
+                            str(profile[7]),
+                            str(profile[8]),
+                            timee,
+                            b,
+                            date_Today,
+                        )
+                        conn.execute(insert_data, VALUES)
+                        connection.commit()
+                    else:
+                        insert_data = "INSERT INTO tb_attandance(a_Id, st_Id, Name, Surname, d_Name, s_Name, r_Name, cl_Name, sc_Period, sc_Year, time_In, first_Absence, date) VALUES (0, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+                        VALUES = (
+                            str(profile[0]),
+                            str(profile[1]),
+                            str(profile[2]),
+                            str(profile[3]),
+                            str(profile[4]),
+                            str(profile[5]),
+                            str(profile[6]),
+                            str(profile[7]),
+                            str(profile[8]),
+                            timee,
+                            a,
+                            date_Today,
+                        )
+                        conn.execute(insert_data, VALUES)
+                        connection.commit()
+            except Exception as e:
+                print(e)
 
-#             cam.release()
-#             cv2.destroyAllWindows()
+            cam.release()
+            cv2.destroyAllWindows()
 
-#         auto()
-#     except Exception as e:
-#         print(e)
+        auto()
+    except Exception as e:
+        print(e)
 
-# def Exit_Room():
-#     import cv2
-#     import pymysql
 
-#     faceDetect = cv2.CascadeClassifier("ASP/Detect/haarcascade_frontalface_default.xml")
-#     cam = cv2.VideoCapture(0)
-#     rec = cv2.face.LBPHFaceRecognizer_create()
-#     rec.read("ASP\\Data\\trainingImage.yml")
-#     fontface = cv2.FONT_HERSHEY_SIMPLEX
-#     fontScale = 2
-#     fontColor = (255, 0, 0)
-#     try:
+def Exit_Room():
+    import cv2
+    import pymysql
 
-#         def auto():
-#             def getProfile(Id):
-#                 connection = pymysql.connect(
-#                     host="localhost", user="root", password="", database="asp_base"
-#                 )
-#                 conn = connection.cursor()
-#                 sql = (
-#                     "select st.st_Id, st.st_Name, st.st_Surname, d.d_Name, s.s_Name, \
-#                     r.r_Name, cl.cl_Name, sc.sc_Period, sc.sc_Year, f.Name, f.Surname\
-#                     from tb_face f inner join tb_student st on f.st_Id = st.st_Id\
-#                     inner join tb_class cl on st.cl_Id = cl.cl_Id\
-#                     inner join tb_schedule sc on sc.cl_Id=cl.cl_Id\
-#                     inner join tb_day d on d.d_Id=sc.d_Id\
-#                     inner join tb_subject s on s.s_Id=sc.s_Id\
-#                     inner join tb_room r on r.r_Id=sc.r_Id\
-#                     where f_Id = '"
-#                     + str(Id)
-#                     + "';"
-#                 )
-#                 conn.execute(sql)
-#                 profile = None
-#                 for row in conn:
-#                     profile = row
-#                 conn.close()
-#                 return profile
+    faceDetect = cv2.CascadeClassifier("ASP/Detect/haarcascade_frontalface_default.xml")
+    cam = cv2.VideoCapture(0)
+    rec = cv2.face.LBPHFaceRecognizer_create()
+    rec.read("ASP\\Data\\trainingImage.yml")
+    fontface = cv2.FONT_HERSHEY_SIMPLEX
+    fontScale = 2
+    fontColor = (255, 0, 0)
+    try:
 
-#             while True:
-#                 ret, img = cam.read()
-#                 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-#                 faces = faceDetect.detectMultiScale(gray, 1.3, 5)
-#                 for (x, y, w, h) in faces:
-#                     Id, conf = rec.predict(gray[y : y + h, x : x + w])
-#                     if conf < 38:
-#                         print(conf)
-#                         global profile
-#                         profile = getProfile(Id)
-#                         if profile != None:
-#                             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-#                             cv2.putText(
-#                                 img,
-#                                 str(profile[9]),
-#                                 (x, y + h + 30),
-#                                 fontface,
-#                                 fontScale,
-#                                 fontColor,
-#                             )
-#                             cv2.putText(
-#                                 img,
-#                                 str(profile[10]),
-#                                 (x, y + h + 80),
-#                                 fontface,
-#                                 fontScale,
-#                                 fontColor,
-#                             )
-#                     else:
-#                         cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-#                         cv2.putText(
-#                             img,
-#                             "Unknown",
-#                             (x, y + h + 30),
-#                             fontface,
-#                             fontScale,
-#                             fontColor,
-#                         )
-#                 cv2.imshow("Face", img)
-#                 key = cv2.waitKey(1) & 0xFF == ord("q")
-#                 if key or conf <= 38:
-#                     break
-#             try:
-#                 connection = pymysql.connect(
-#                     host="localhost", user="root", password="", database="asp_base"
-#                 )
-#                 conn = connection.cursor()
-#                 time = datetime.now().strftime("%H:%M:%S")
-#                 date_Today = datetime.now().strftime("%Y-%m-%d")
-#                 st_Id = str(profile[0])
-#                 r_Name = str(profile[5])
-#                 cl_Name = str(profile[6])
+        def auto():
+            def getProfile(Id):
+                connection = pymysql.connect(
+                    host="localhost", user="root", password="", database="asp_base"
+                )
+                conn = connection.cursor()
+                sql = (
+                    "select st.st_Id, st.st_Name, st.st_Surname, d.d_Name, s.s_Name, \
+                    r.r_Name, cl.cl_Name, sc.sc_Period, sc.sc_Year, f.Name, f.Surname, sc.start_Class, \
+                    sc.end_Class\
+                    from tb_face f inner join tb_student st on f.st_Id = st.st_Id\
+                    inner join tb_class cl on st.cl_Id = cl.cl_Id\
+                    inner join tb_schedule sc on sc.cl_Id=cl.cl_Id\
+                    inner join tb_day d on d.d_Id=sc.d_Id\
+                    inner join tb_subject s on s.s_Id=sc.s_Id\
+                    inner join tb_room r on r.r_Id=sc.r_Id\
+                    where f_Id = '"
+                    + str(Id)
+                    + "';"
+                )
+                conn.execute(sql)
+                profile = None
+                for row in conn:
+                    profile = row
+                conn.close()
+                return profile
 
-#                 update_data = " UPDATE tb_attandance set time_Out = '"+time+"' where st_Id = '"+str(st_Id)+"' and r_Name = '"+str(r_Name)+"' and cl_Name = '"+str(cl_Name)+"' and date = '"+date_Today+"';"
-#                 conn.execute(update_data)
-#                 connection.commit()
-#             except Exception as e:
-#                 print(e)
+            while True:
+                ret, img = cam.read()
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                faces = faceDetect.detectMultiScale(gray, 1.3, 5)
+                for (x, y, w, h) in faces:
+                    Id, conf = rec.predict(gray[y : y + h, x : x + w])
+                    if conf < 38:
+                        print(conf)
+                        global profile
+                        profile = getProfile(Id)
+                        if profile != None:
+                            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                            cv2.putText(
+                                img,
+                                str(profile[9]),
+                                (x, y + h + 30),
+                                fontface,
+                                fontScale,
+                                fontColor,
+                            )
+                            cv2.putText(
+                                img,
+                                str(profile[10]),
+                                (x, y + h + 80),
+                                fontface,
+                                fontScale,
+                                fontColor,
+                            )
+                    else:
+                        cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                        cv2.putText(
+                            img,
+                            "Unknown",
+                            (x, y + h + 30),
+                            fontface,
+                            fontScale,
+                            fontColor,
+                        )
+                cv2.imshow("Face", img)
+                key = cv2.waitKey(1) & 0xFF == ord("q")
+                if key or conf <= 38:
+                    break
+            try:
+                connection = pymysql.connect(
+                    host="localhost", user="root", password="", database="asp_base"
+                )
+                conn = connection.cursor()
+                time = datetime.now().strftime("%H:%M:%S")
+                timee = datetime.now().strftime("%H:%M:%S")
+                date_Today = datetime.now().strftime("%Y-%m-%d")
+                a = 0
+                b = 1
+                start_Class = str(timedelta(11, 30, 00))
+                end_Class = str(timedelta(12, 00, 00))
+                st_Id = str(profile[0])
+                r_Name = str(profile[5])
+                cl_Name = str(profile[6])
+                if timee >= start_Class and timee <= end_Class:
+                    update_data = (
+                        " UPDATE tb_attandance set time_Out = '"
+                        + time
+                        + "', second_Absence = '"
+                        + str(a)
+                        + "' where st_Id = '"
+                        + str(st_Id)
+                        + "' and r_Name = '"
+                        + str(r_Name)
+                        + "' and cl_Name = '"
+                        + str(cl_Name)
+                        + "' and date = '"
+                        + date_Today
+                        + "';"
+                    )
+                    conn.execute(update_data)
+                    connection.commit()
+                else:
+                    update_data = (
+                        " UPDATE tb_attandance set time_Out = '"
+                        + time
+                        + "', second_Absence = '"
+                        + str(b)
+                        + "' where st_Id = '"
+                        + str(st_Id)
+                        + "' and r_Name = '"
+                        + str(r_Name)
+                        + "' and cl_Name = '"
+                        + str(cl_Name)
+                        + "' and date = '"
+                        + date_Today
+                        + "';"
+                    )
+                    conn.execute(update_data)
+                    connection.commit()
+            except Exception as e:
+                print(e)
 
-#             cam.release()
-#             cv2.destroyAllWindows()
+            cam.release()
+            cv2.destroyAllWindows()
 
-#         auto()
-#     except Exception as e:
-#         print(e)
+        auto()
+    except Exception as e:
+        print(e)
 
 
 def back():
