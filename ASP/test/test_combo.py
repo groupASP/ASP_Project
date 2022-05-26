@@ -1,26 +1,24 @@
-from tkinter import *
-import tkinter
-import pymysql
-from tkinter import ttk
-from tkinter import font as tkfont
+from datetime import *
+import pytz
 
-a = tkinter.Tk()
-a.geometry("1500x900")
+local_time = pytz.timezone("Asia/Bangkok")
+timeee = datetime.now(tz=local_time).strftime("%Y-%m-%d")
+time_now = datetime.now(tz=local_time).strftime("%H:%M:%S")
+# time_now = str(time())
+time = str(
+    time(
+        hour=8,
+        minute=10,
+        second=0,
+        tzinfo=local_time,
+    )
+)
 
-# connect database
-conn = pymysql.connect(user="root", password="", host="Localhost", database="asp_base")
-curs = conn.cursor()
-
-curs.execute("select * from tb_room;")
-results = curs.fetchall()
-combo_r_id = [result[0] for result in results]
-combo_r_name = [result[1] for result in results]
-
-variable = StringVar(a)
-variable.set(combo_r_name[0])
-
-w = OptionMenu(a, variable, *combo_r_id)
-w.pack()
-
-
-a.mainloop()
+if time_now < time:
+    print("Time is less than 8:10:00")
+    print(time_now)
+    print(timeee)
+else:
+    print("Time is greater than 8:10:00")
+    print(time_now)
+    print(timeee)
