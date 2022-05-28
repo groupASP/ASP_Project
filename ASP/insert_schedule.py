@@ -51,19 +51,23 @@ def insert():
         sql_insert = (
             "insert into tb_schedule values('"
             + str(sc_Id)
-            + "','"
+            + "', '"
             + str(d_Id)
-            + "','"
+            + "', '"
             + str(sc_Period)
-            + "','"
+            + "', '"
+            + str(sc_start)
+            + "', '"
+            + str(sc_end)
+            + "', '"
             + str(sc_Year)
-            + "','"
+            + "', '"
             + str(r_Id)
-            + "','"
+            + "', '"
             + str(s_Id)
-            + "','"
+            + "', '"
             + str(cl_Id)
-            + "','"
+            + "', '"
             + str(t_Id)
             + "');"
         )
@@ -73,6 +77,8 @@ def insert():
     cb_day.set("")
     cb_period.set("")
     en_year.delete(0, END)
+    en_start.delete(0, END)
+    en_end.delete(0, END)
     cb_room.set("")
     cb_subject.set("")
     cb_class.set("")

@@ -45,9 +45,15 @@ def save_update():
     txtName.delete(0, "end")
     messagebox.showinfo("ການແກ້ໄຂຂໍ້ມູນ", "ທ່ານໄດ້ແກ້ໄຂຂໍ້ມູນຊັ້ນຮຽນສຳເລັດແລ້ວ!!!")
     btEdit.config(state="normal")
+    btSaveUpdate.config(state="disabled")
+    txtId.config(state="disabled")
+    txtName.config(state="disabled")
 
 
 def update():
+    txtId.config(state="normal")
+    txtName.config(state="normal")
+    btSaveUpdate.config(state="normal")
     data = tree.selection()
     value = tree.item(data)["values"][0]
 
@@ -154,6 +160,7 @@ btSaveUpdate.place(
     x=1200,
     y=500,
 )
+btSaveUpdate.config(state="disabled")
 
 st = ttk.Style()
 st.theme_use("clam")
@@ -196,10 +203,10 @@ lb3.configure(font=("Saysettha OT", 14), bg="#ECF8DC")
 
 txtId = tk.Entry(frm)
 txtId.place(x=1230, y=200)
-txtId.config(font=("Saysettha OT", 14))
+txtId.config(font=("Saysettha OT", 14), state="disabled")
 
 txtName = tk.Entry(frm)
 txtName.place(x=1230, y=270)
-txtName.config(font=("Saysettha OT", 14))
+txtName.config(font=("Saysettha OT", 14), state="disabled")
 
 frm.mainloop()

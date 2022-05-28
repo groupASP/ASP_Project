@@ -34,6 +34,8 @@ def save():
     sc_Id = en_scid.get()
     d_Id = cb_day.get()
     sc_Period = cb_period.get()
+    sc_Start = en_start.get()
+    sc_End = en_end.get()
     sc_Year = en_year.get()
     r_Id = cb_room.get()
     cl_Id = cb_cl.get()
@@ -45,6 +47,10 @@ def save():
         + d_Id
         + "', sc_Period='"
         + sc_Period
+        + "', start_Class='"
+        + str(sc_Start)
+        + "', end_Class='"
+        + str(sc_End)
         + "', sc_Year='"
         + sc_Year
         + "', r_Id='"
@@ -74,18 +80,31 @@ def save():
             "",
             i,
             text="",
-            values=(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]),
+            values=(
+                row[0],
+                row[1],
+                row[2],
+                row[3],
+                row[4],
+                row[5],
+                row[6],
+                row[7],
+                row[8],
+                row[9],
+            ),
         )
         i = i + 1
 
     en_scid.delete(0, END)
+    cb_day.set("")
     en_year.delete(0, END)
-    cb_room.current(0)
-    cb_cl.current(0)
-    cb_period.current(0)
-    cb_subject.current(0)
-    cb_teacher.current(0)
-    cb_day.current(0)
+    en_start.delete(0, END)
+    en_end.delete(0, END)
+    cb_room.set("")
+    cb_cl.set("")
+    cb_period.set("")
+    cb_subject.set("")
+    cb_teacher.set("")
     messagebox.showinfo("ການແກ້ໄຂຂໍ້ມູນ", "ທ່ານໄດ້ແກ້ໄຂຂໍ້ມູນນັກສຶກສາສຳເລັດແລ້ວ!!!")
 
 
