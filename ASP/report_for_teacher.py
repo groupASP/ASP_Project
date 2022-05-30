@@ -124,8 +124,6 @@ lbShow.pack(side="top", fill="x")
 lbShow.configure(font=("Saysettha OT", 30), bg="#04C582", fg="white")
 
 
-cb_Class = ["HCS6B", "HCS6C", "HCS6E"]
-
 cbFont = tkFont.Font(family="Saysettha OT", size=16)
 
 cb_Style = ttk.Style()
@@ -141,10 +139,14 @@ label = Label(
 )
 label.place(x=570, y=200)
 
+conn.execute("select cl_Name from tb_class;")
+results = conn.fetchall()
+combo_cl_name = [result[0] for result in results]
 
-cb_class = ttk.Combobox(a, width=20, height=20, values=cb_Class)
+cb_class = ttk.Combobox(a, width=16, values=combo_cl_name)
 cb_class.place(x=600, y=300)
 cb_class.config(font=(cbFont), state="readonly")
+cb_class.configure(font=("Saysettha OT", 20), state="readonly")
 cb_class.option_add("*font", cbFont)
 cb_class.current(0)
 

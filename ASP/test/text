@@ -1,1 +1,0 @@
-select st_Id, Name, Surname, cl_Name, time_In, time_Out, first_Absence, second_Absence, date from tb_attandance where cl_Name = "HCS6B" and date = "2022-05-02"
