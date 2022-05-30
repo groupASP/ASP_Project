@@ -22,18 +22,17 @@ def report_teacher_today():
     st.configure("Treeview", rowheight=60, font=("Saysettha OT", 12))
     cl_Name = cb_class.get()
     s_Name = cb_Subject.get()
-    start_Date = cale_1.get_date()
-    end_Date = cale_2.get_date()
     sql = (
-        "select st_Id, Name, Surname, s_Name, cl_Name, sc_Period, sc_Year, SUM(first_Absence + second_Absence) from tb_attandance where cl_Name ='"
-        + str(cl_Name)
-        + "' and s_Name='"
-        + str(s_Name)
-        + "' and date BETWEEN '"
-        + str(start_Date)
-        + "' and '"
-        + str(end_Date)
-        + "';"
+        "select st.st_Id, st.st_Name, st.st_Surname, att.s_Name, att.cl_Name, att.sc_Period, att.sc_Year, SUM(att.first_Absence + att.second_Absence), (\
+        CASE\
+         WHEN SUM(att.first_Absence + att.second_Absence) > 7 THEN 'ບໍ່ມີສິດເສັງ'\
+         ELSE 'ມີສິດເສັງ'\
+         END)\
+         from tb_attandance att left join tb_student st on att.st_Id=st.st_Id where att.cl_Name ='"
+        + cl_Name
+        + "' and att.s_Name='"
+        + s_Name
+        + "'group by st.st_Id;"
     )
     conn.execute(sql)
 
@@ -47,17 +46,19 @@ def report_teacher_today():
         "6",
         "7",
         "8",
+        "9",
     )
 
     tree.column("#0", width=5)
     tree.column("#1", width=180, anchor="center")
-    tree.column("#2", width=180, anchor="center")
-    tree.column("#3", width=180, anchor="center")
+    tree.column("#2", width=100, anchor="center")
+    tree.column("#3", width=100, anchor="center")
     tree.column("#4", width=250, anchor="center")
-    tree.column("#5", width=180, anchor="center")
+    tree.column("#5", width=100, anchor="center")
     tree.column("#6", width=180, anchor="center")
     tree.column("#7", width=180, anchor="center")
     tree.column("#8", width=180, anchor="center")
+    tree.column("#9", width=180, anchor="center")
 
     tree.heading("#1", text="ລະຫັດນັກສຶກສາ")
     tree.heading("#2", text="ຊື່")
@@ -67,6 +68,7 @@ def report_teacher_today():
     tree.heading("#6", text="ພາກ")
     tree.heading("#7", text="ສົກຮຽນ")
     tree.heading("#8", text="ຜົນລວມການຂາດຮຽນ")
+    tree.heading("#9", text="ສະຖານະ")
 
     # ຄຳສັ່ງສະແດງຜົນ
 
@@ -85,23 +87,11 @@ def report_teacher_today():
                 row[5],
                 row[6],
                 row[7],
+                row[8],
             ),
         )
         i = i + 1
     tree.place(x=-15, y=80)
-
-
-lb1 = Label(frm, text="ກະລຸນາເລືອກວັນທີ່ເລີ່ມຮຽນ", font=("Saysettha OT", 12))
-lb1.place(x=30, y=20)
-
-cale_1 = Calendar(frm, date_pattern="y-mm-dd", selectmode="day")
-cale_1.place(x=10, y=50)
-
-lb2 = Label(frm, text="ກະລຸນາເລືອກວັນທີ່ສິ້ນສຸດ", font=("Saysettha OT", 12))
-lb2.place(x=550, y=20)
-
-cale_2 = Calendar(frm, date_pattern="y-mm-dd", selectmode="day")
-cale_2.place(x=500, y=50)
 
 
 bt5 = PhotoImage(file="ASP/Image/bt_report.png")
@@ -118,7 +108,7 @@ button_5.place(x=500, y=600)
 b = Tk()
 b.geometry("1500x900")
 b.config(bg="#ECF8DC")
-b.attributes("-fullscreen", True)
+# b.attributes("-fullscreen", True)
 b.withdraw()
 
 cbFont = tkFont.Font(family="Saysettha OT", size=16)
@@ -152,7 +142,7 @@ cb_Subject.configure(font=("Saysettha OT", 16))
 cb_Subject.option_add("*font", cbFont)
 cb_Subject.current(0)
 
-lbShow = Label(b, text="ລາຍງານຂໍ້ມູນນັກສຶກສາປະຈຳວັນ")
+lbShow = Label(b, text="ລາຍງານຂໍ້ມູນນັກສຶກສາ")
 lbShow.pack(side="top", fill="x")
 lbShow.configure(font=("Saysettha OT", 30), bg="#04C582", fg="white")
 
