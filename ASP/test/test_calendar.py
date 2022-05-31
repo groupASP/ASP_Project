@@ -96,6 +96,7 @@ lb1.place(x=30, y=20)
 
 cale_1 = Calendar(frm, date_pattern="y-mm-dd", selectmode="day")
 cale_1.place(x=10, y=50)
+# cale_1.pack(fill="both", expand=True)
 
 lb2 = Label(frm, text="ກະລຸນາເລືອກວັນທີ່ສິ້ນສຸດ", font=("Saysettha OT", 12))
 lb2.place(x=550, y=20)

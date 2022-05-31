@@ -5,12 +5,12 @@ SELECT st_Id, Name, Surname, s_Name, cl_Name, SUM(first_Absence + second_Absence
 where cl_Name="HCS6B" and s_Name="linux system administration" and 
 date BETWEEN "2022-5-01" and "2022-6-01" HAVING SUM(first_Absence + second_Absence) > 7
 
-SELECT st_Id, Name, Surname, s_Name, cl_Name, sc_Period, sc_Year, SUM(first_Absence + second_Absence) as total,
+SELECT st_Id, Name, Surname, s_Name, cl_Name, sc_Period, sc_Year, SUM(first_Absence + second_Absence) as total, 
 (CASE 
-    WHEN SUM(first_Absence + second_Absence) > 7 THEN 'ບໍ່ມີສິດເສັງ'
-    ELSE 'nothing'
-END) AS Final_Report
-FROM tb_attandance WHERE s_Name="wireless communication system" and cl_Name="HCS6B" GROUP BY st_Id;
+ 	WHEN SUM(first_Absence + second_Absence) > 7 THEN 'ບໍ່ມີສິດເສັງ'
+ 	WHEN SUM(first_Absence + second_Absence) IS NULL THEN 'ບໍ່ມີສິດເສັງ'
+ 	ELSE 'ມີສິດເສັງ' END) AS Final_Report 
+ FROM tb_attandance WHERE s_Name="linux system administration" and cl_Name="HCS6B" GROUP BY st_Id
 
 //TODO 30.05.2022
 sudo apt-get update
@@ -65,3 +65,14 @@ from t;
         + "' and r.r_Name='"
         + r_Name
         + "';"
+
+
+
+select st.st_Id, st.st_Name, st.st_Surname, att.cl_Name, att.sc_Period, att.sc_Year, SUM(att.first_Absence + att.second_Absence) as total,
+(
+ CASE
+     WHEN SUM(att.first_Absence + att.second_Absence) <7 THEN 'ມີສິດເສັງ'
+     ELSE 'ບໍ່ມີສິດເສັງ'
+END
+) as FINALREPORT
+from tb_student st left join tb_attandance att on st.st_Id=att.st_Id where att.cl_Name="HCS6B" and att.s_Name ="linux system administration" group by st.st_Id

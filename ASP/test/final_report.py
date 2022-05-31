@@ -23,31 +23,23 @@ def report_teacher_today():
     cl_Name = cb_class.get()
     s_Name = cb_Subject.get()
     sql = (
-        "select st.st_Id, st.st_Name, st.st_Surname, att.s_Name, att.cl_Name, att.sc_Period, att.sc_Year, SUM(att.first_Absence + att.second_Absence), (\
+        "SELECT st.st_Id, st.st_Name, st.st_Surname, att.s_Name, att.cl_Name, att.sc_Period, att.sc_Year, SUM(att.first_Absence + att.second_Absence),\
+        (\
         CASE\
-         WHEN SUM(att.first_Absence + att.second_Absence) > 7 THEN 'ບໍ່ມີສິດເສັງ'\
-         ELSE 'ມີສິດເສັງ'\
-         END)\
-         from tb_attandance att left join tb_student st on att.st_Id=st.st_Id where att.cl_Name ='"
-        + cl_Name
+            WHEN SUM(att.first_Absence + att.second_Absence) < 7 THEN 'ມີສິດເສັງ'\
+            ELSE 'ບໍ່ມີສິດເສັງ'\
+        END\
+        )\
+        FROM tb_student st LEFT JOIN tb_attandance att ON st.st_Id = att.st_Id WHERE att.cl_Name='"
+        + str(cl_Name)
         + "' and att.s_Name='"
-        + s_Name
-        + "'group by st.st_Id;"
+        + str(s_Name)
+        + "' GROUP BY st.st_Id;"
     )
     conn.execute(sql)
 
     tree = ttk.Treeview(b)
-    tree["columns"] = (
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-    )
+    tree["columns"] = ("1", "2", "3", "4", "5", "6", "7", "8", "9")
 
     tree.column("#0", width=5)
     tree.column("#1", width=180, anchor="center")
