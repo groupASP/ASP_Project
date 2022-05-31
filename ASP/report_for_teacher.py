@@ -23,13 +23,16 @@ def report_teacher_today():
     st.configure("Treeview.Heading", fg="blue", font=("Saysettha OT", 14))
     st.configure("Treeview", rowheight=60, font=("Saysettha OT", 12))
     cl_Name = cb_class.get()
-    today = str(date(2022, 5, 2))
+    s_Name = cb_subject.get()
+    today = str(date(2022, 5, 30))
     sql = (
         "select st_Id, Name, Surname, cl_Name, time_In, time_Out, first_Absence, second_Absence, date from tb_attandance where cl_Name = '"
         + cl_Name
+        + "' and s_Name='"
+        + s_Name
         + "' and date = '"
         + today
-        + "' ;"
+        + "';"
     )
     conn.execute(sql)
 
@@ -149,6 +152,26 @@ cb_class.config(font=(cbFont), state="readonly")
 cb_class.configure(font=("Saysettha OT", 20), state="readonly")
 cb_class.option_add("*font", cbFont)
 cb_class.current(0)
+
+label = Label(
+    a,
+    text="ກະລຸນາເລືອກວິຊາຂອງທ່ານ",
+    font=("Phetsarath OT", 20, "bold"),
+    bg="#FFFFFF",
+    fg="black",
+)
+label.place(x=570, y=380)
+
+conn.execute("select s_Name from tb_subject;")
+results = conn.fetchall()
+combo_s_name = [result[0] for result in results]
+
+cb_subject = ttk.Combobox(a, width=16, values=combo_s_name)
+cb_subject.place(x=600, y=450)
+cb_subject.config(font=(cbFont), state="readonly")
+cb_subject.configure(font=("Saysettha OT", 20), state="readonly")
+cb_subject.option_add("*font", cbFont)
+cb_subject.current(0)
 
 bts = tkinter.Button(b, text="Back", command=back, width=20)
 bts.place(x=550, y=750)
