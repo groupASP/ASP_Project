@@ -14,7 +14,9 @@ a.attributes("-fullscreen", True)
 connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
 conn = connection.cursor()
 
-sql = "select * from tb_attandance;"
+date_today = datetime.now().strftime("%Y-%m-%d")
+
+sql = "select * from tb_attandance where date='" + date_today + "';"
 conn.execute(sql)
 
 

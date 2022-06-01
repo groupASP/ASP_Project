@@ -6,6 +6,7 @@ from tkinter import messagebox
 import os
 from datetime import *
 import pytz
+from tkinter import font as tkFont
 
 
 a = tkinter.Tk()
@@ -330,7 +331,7 @@ button_1 = Button(
     command=check_in,
     relief="flat",
 )
-button_1.place(x=200, y=100)
+button_1.place(x=250, y=380)
 
 bt2 = PhotoImage(file="ASP/Image/bt_checkOut.png")
 button_2 = Button(
@@ -340,7 +341,7 @@ button_2 = Button(
     command=Exit_Room,
     relief="flat",
 )
-button_2.place(x=950, y=100)
+button_2.place(x=950, y=380)
 
 bt3 = PhotoImage(file="ASP/Image/bt_break.png")
 button_3 = Button(
@@ -350,7 +351,7 @@ button_3 = Button(
     # command=auto_att,
     relief="flat",
 )
-button_3.place(x=600, y=450)
+button_3.place(x=950, y=700)
 
 bt4 = PhotoImage(file="ASP/Image/back.png")
 button_4 = Button(
@@ -360,7 +361,38 @@ button_4 = Button(
     command=back,
     relief="flat",
 )
-button_4.place(x=200, y=700)
+button_4.place(x=300, y=700)
 
+bt5 = PhotoImage(file="ASP/Image/bt_start_class.png")
+button_5 = Button(
+    image=bt5,
+    borderwidth=0,
+    highlightthickness=0,
+    # command=back,
+    relief="flat",
+)
+button_5.place(x=900, y=150)
+
+connection = pymysql.connect(
+    host="localhost", user="root", password="", database="asp_base"
+)
+conn = connection.cursor()
+
+cbFont = tkFont.Font(family="Saysettha OT", size=18)
+
+conn.execute("select cl_Name from tb_class;")
+results = conn.fetchall()
+combo_cl_name = [result[0] for result in results]
+
+
+class_lb = Label(a, text="ກະລຸນາເລືອກຊັ້ນຮຽນ : ", font=cbFont, bg="#ECF8DC")
+class_lb.place(x=200, y=180)
+
+cb_class = ttk.Combobox(a, width=25, values=combo_cl_name)
+cb_class.place(x=500, y=180)
+cb_class.config(font=(cbFont), state="readonly")
+cb_class.configure(font=("Saysettha OT", 16))
+cb_class.option_add("*font", cbFont)
+cb_class.current(0)
 
 a.mainloop()
