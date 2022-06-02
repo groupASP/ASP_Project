@@ -1,5 +1,6 @@
 import pandas as pd
 import pymysql
+import tkinter.filedialog as fd
 
 
 local = "localhost"
@@ -33,7 +34,7 @@ header = [
     "ພາກ",
     "ສົກຮຽນ",
 ]
-filename = input("ກະລຸນາປ້ອນຊື່ໄຟລ໌ໃຫ້ກົດປຸ່ມ Enter: ")
-df.to_excel(
-    "ASP\\test\\" + filename + ".xlsx", index=False, header=header, encoding="utf-8"
+file_name = fd.asksaveasfilename(
+    filetypes=[("excel file", "*.xlsx")], defaultextension=".xlsx"
 )
+df.to_excel(file_name, index=False, header=header, encoding="utf-8")
