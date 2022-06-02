@@ -24,7 +24,7 @@ def report_teacher_today():
     st.configure("Treeview", rowheight=60, font=("Saysettha OT", 12))
     cl_Name = cb_class.get()
     s_Name = cb_subject.get()
-    today = str(date(2022, 5, 30))
+    today = datetime.now().strftime("%Y-%m-%d")
     sql = (
         "select st_Id, Name, Surname, cl_Name, time_In, time_Out, first_Absence, second_Absence, date from tb_attandance where cl_Name = '"
         + cl_Name
