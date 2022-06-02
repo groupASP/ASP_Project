@@ -8,10 +8,66 @@ from datetime import *
 import pytz
 from tkinter import font as tkFont
 
-
 a = tkinter.Tk()
 a.geometry("1500x900")
 a.attributes("-fullscreen", True)
+
+
+def Insert_Data():
+    def Insert_Student():
+        global connection, conn
+        cl_Id = cb_class.get()
+        d_Id = cb_day.get()
+        r_Id = "r_309"
+        connection = pymysql.connect(
+            host="localhost", user="root", password="", database="asp_base"
+        )
+        conn = connection.cursor()
+        sql = (
+            "select st.st_Id, st.st_Name, st.st_Surname, d.d_Name, s.s_Name, r.r_Name, cl.cl_Name, sc.sc_Period, sc.sc_Year from \
+            tb_schedule sc LEFT JOIN tb_class cl on sc.cl_Id=cl.cl_Id\
+            INNER join tb_student st on st.cl_Id=cl.cl_Id\
+            INNER JOIN tb_day d on d.d_Id=sc.d_Id\
+            INNER JOIN tb_subject s on s.s_Id=sc.s_Id\
+            INNER JOIN tb_room r on r.r_Id=sc.r_Id\
+            where r.r_Id='"
+            + r_Id
+            + "' and cl.cl_Id='"
+            + cl_Id
+            + "' and d.d_Id='"
+            + d_Id
+            + "'"
+        )
+        conn.execute(sql)
+        result = conn.fetchall()
+        return result
+
+    try:
+        profile = Insert_Student()
+        if profile:
+            date = datetime.now().strftime("%Y-%m-%d")
+            for i in profile:
+                insert_data = "INSERT INTO tb_attandance(a_Id, st_Id, Name, Surname, d_Name, s_Name, r_Name, cl_Name, sc_Period, sc_Year, date) VALUES (0, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+                VALUES = (
+                    str(i[0]),
+                    str(i[1]),
+                    str(i[2]),
+                    str(i[3]),
+                    str(i[4]),
+                    str(i[5]),
+                    str(i[6]),
+                    str(i[7]),
+                    str(i[8]),
+                    date,
+                )
+                conn.execute(insert_data, VALUES)
+                connection.commit()
+            messagebox.showinfo("Success", "ບັນທຶກຂໍ້ມູນສຳເລັດ")
+        else:
+            messagebox.showerror("Error", "ບໍ່ມີຂໍ້ມູນນັກສຶກສາໃນຫລັກສູດນີ້")
+    except Exception as e:
+        # print(e)
+        messagebox.showerror("Error", e)
 
 
 def check_in():
@@ -368,7 +424,7 @@ button_5 = Button(
     image=bt5,
     borderwidth=0,
     highlightthickness=0,
-    # command=back,
+    command=Insert_Data,
     relief="flat",
 )
 button_5.place(x=900, y=150)
@@ -380,19 +436,34 @@ conn = connection.cursor()
 
 cbFont = tkFont.Font(family="Saysettha OT", size=18)
 
-conn.execute("select cl_Name from tb_class;")
+conn.execute("select cl_Id from tb_class;")
 results = conn.fetchall()
 combo_cl_name = [result[0] for result in results]
 
 
 class_lb = Label(a, text="ກະລຸນາເລືອກຊັ້ນຮຽນ : ", font=cbFont, bg="#ECF8DC")
-class_lb.place(x=200, y=180)
+class_lb.place(x=200, y=140)
 
 cb_class = ttk.Combobox(a, width=25, values=combo_cl_name)
-cb_class.place(x=500, y=180)
+cb_class.place(x=500, y=140)
 cb_class.config(font=(cbFont), state="readonly")
 cb_class.configure(font=("Saysettha OT", 16))
 cb_class.option_add("*font", cbFont)
 cb_class.current(0)
+
+conn.execute("select d_Id from tb_day;")
+results = conn.fetchall()
+combo_d_name = [result[0] for result in results]
+
+
+day_lb = Label(a, text="ກະລຸນາເລືອກມື້ : ", font=cbFont, bg="#ECF8DC")
+day_lb.place(x=200, y=210)
+
+cb_day = ttk.Combobox(a, width=25, values=combo_d_name)
+cb_day.place(x=500, y=210)
+cb_day.config(font=(cbFont), state="readonly")
+cb_day.configure(font=("Saysettha OT", 16))
+cb_day.option_add("*font", cbFont)
+cb_day.current(0)
 
 a.mainloop()

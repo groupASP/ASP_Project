@@ -76,3 +76,12 @@ select st.st_Id, st.st_Name, st.st_Surname, att.cl_Name, att.sc_Period, att.sc_Y
 END
 ) as FINALREPORT
 from tb_student st left join tb_attandance att on st.st_Id=att.st_Id where att.cl_Name="HCS6B" and att.s_Name ="linux system administration" group by st.st_Id
+
+
+select st.st_Id, st.st_Name, st.st_Surname, d.d_Name, s.s_Name, r.r_Name, cl.cl_Name, sc.sc_Period, sc.sc_Year from 
+tb_schedule sc LEFT JOIN tb_class cl on sc.cl_Id=cl.cl_Id
+INNER join tb_student st on st.cl_Id=cl.cl_Id
+INNER JOIN tb_day d on d.d_Id=sc.d_Id
+INNER JOIN tb_subject s on s.s_Id=sc.s_Id
+INNER JOIN tb_room r on r.r_Id=sc.r_Id
+where r.r_Id="r_309" and cl.cl_Id="cl_HCS6A" and d.d_Id="d_Thursday"

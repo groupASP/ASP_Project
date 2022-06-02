@@ -269,8 +269,8 @@ tree.heading("#4", text="ເວລາເລີ່ມ")
 tree.heading("#5", text="ເວລາສິ້ນສຸດ")
 tree.heading("#6", text="ລະຫັດສົກຮຽນ")
 tree.heading("#7", text="ລະຫັດຫ້ອງຮຽນ")
-tree.heading("#8", text="ລະຫັດວິຊາ")
-tree.heading("#9", text="ລະຫັດຊັ້ນຮຽນ")
+tree.heading("#8", text="ລະຫັດຊັ້ນຮຽນ")
+tree.heading("#9", text="ລະຫັດວິຊາ")
 tree.heading("#10", text="ລະຫັດອາຈານ")
 
 # ຄຳສັ່ງສະແດງຜົນ

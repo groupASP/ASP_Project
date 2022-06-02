@@ -2,7 +2,7 @@ import pymysql
 from datetime import datetime
 
 
-def getProfile():
+def Insert_Student():
     global connection, conn
     cl_Name = "HCS6E"
     r_Name = "307"
@@ -28,7 +28,7 @@ def getProfile():
     return result
 
 
-profile = getProfile()
+profile = Insert_Student()
 # print(profile)
 date = datetime.now().strftime("%Y-%m-%d")
 for i in profile:
