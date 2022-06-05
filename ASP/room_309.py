@@ -5,6 +5,7 @@ import pymysql
 from tkinter import messagebox
 import os
 from datetime import *
+import datetime as dt
 import pytz
 from tkinter import font as tkFont
 
@@ -42,10 +43,26 @@ def Insert_Data():
         result = conn.fetchall()
         return result
 
+    def Check_Data():
+        date = datetime.now().strftime("%Y-%m-%d")
+        sql = "select date from tb_attandance where date='" + date + "'"
+        conn.execute(sql)
+        result = conn.fetchall()
+        return result
+
+    def get_date():
+        my_data = Check_Data()
+        if my_data:
+            return str(my_data[0][0])
+        else:
+            my_data = dt.date(2022, 1, 1)
+            return str(my_data)
+
     try:
+        data = get_date()
+        date = datetime.now().strftime("%Y-%m-%d")
         profile = Insert_Student()
-        if profile:
-            date = datetime.now().strftime("%Y-%m-%d")
+        if data != date:
             for i in profile:
                 insert_data = "INSERT INTO tb_attandance(a_Id, st_Id, Name, Surname, d_Name, s_Name, r_Name, cl_Name, sc_Period, sc_Year, date) VALUES (0, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
                 VALUES = (
@@ -64,7 +81,10 @@ def Insert_Data():
                 connection.commit()
             messagebox.showinfo("Success", "ບັນທຶກຂໍ້ມູນສຳເລັດ")
         else:
-            messagebox.showerror("Error", "ບໍ່ມີຂໍ້ມູນນັກສຶກສາໃນຫລັກສູດນີ້")
+            messagebox.showerror(
+                "Error",
+                "ບໍ່ມີຂໍ້ມູນນັກສຶກສາໃນຫລັກສູດນີ້ ຫຼື ມີຂໍ້ມູນນັກສຶກສາໃນຫລັກສູດນີ້ອີກແລ້ວ",
+            )
     except Exception as e:
         # print(e)
         messagebox.showerror("Error", e)
