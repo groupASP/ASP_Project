@@ -1,3 +1,4 @@
+from tabnanny import check
 from tkinter import *
 import tkinter
 from tkinter import ttk
@@ -15,8 +16,9 @@ a.attributes("-fullscreen", True)
 
 
 def Insert_Data():
+    global connection, conn
+
     def Insert_Student():
-        global connection, conn
         cl_Id = cb_class.get()
         d_Id = cb_day.get()
         r_Id = "r_309"
@@ -44,8 +46,19 @@ def Insert_Data():
         return result
 
     def Check_Data():
+        profile = Insert_Student()
+        d_Name = profile[0][3]
+        cl_Name = profile[0][6]
         date = datetime.now().strftime("%Y-%m-%d")
-        sql = "select date from tb_attandance where date='" + date + "'"
+        sql = (
+            "select d_Name, cl_Name, date from tb_attandance where date='"
+            + date
+            + "' and cl_Name='"
+            + str(cl_Name)
+            + "' and d_Name='"
+            + str(d_Name)
+            + "'LIMIT 1"
+        )
         conn.execute(sql)
         result = conn.fetchall()
         return result
@@ -53,16 +66,21 @@ def Insert_Data():
     def get_date():
         my_data = Check_Data()
         if my_data:
-            return str(my_data[0][0])
+            day = str(my_data[0][0])
+            clas = str(my_data[0][1])
+            date = str(my_data[0][2])
+            return day, clas, date
         else:
+            my_day = ""
+            my_class = ""
             my_data = dt.date(2022, 1, 1)
-            return str(my_data)
+            return str(my_day), str(my_class), str(my_data)
 
     try:
         data = get_date()
         date = datetime.now().strftime("%Y-%m-%d")
         profile = Insert_Student()
-        if data != date:
+        if data != (str(profile[0][3]), str(profile[0][6]), date):
             for i in profile:
                 insert_data = "INSERT INTO tb_attandance(a_Id, st_Id, Name, Surname, d_Name, s_Name, r_Name, cl_Name, sc_Period, sc_Year, date) VALUES (0, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
                 VALUES = (
