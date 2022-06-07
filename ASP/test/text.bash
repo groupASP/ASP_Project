@@ -15,6 +15,8 @@ SELECT st_Id, Name, Surname, s_Name, cl_Name, sc_Period, sc_Year, SUM(first_Abse
 //TODO 30.05.2022
 sudo apt-get update
 
+JetBrains Mono ExtraLight
+
 sudo apt-get -y install apache2 mysql-client mysql-server php5
 
 mysql -u root -h localhost -p

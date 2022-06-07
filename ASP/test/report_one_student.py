@@ -19,37 +19,33 @@ def report_teacher_today():
     st.theme_use("clam")
     st.configure("Treeview.Heading", fg="blue", font=("Saysettha OT", 14))
     st.configure("Treeview", rowheight=60, font=("Saysettha OT", 12))
-    cl_Name = cb_class.get()
+    st_Id = st_En.get()
     s_Name = cb_Subject.get()
     sql = (
-        "SELECT st.st_Id, st.st_Name, st.st_Surname, att.s_Name, att.cl_Name, att.sc_Period, att.sc_Year, SUM(att.first_Absence + att.second_Absence),\
-        (\
-        CASE\
-            WHEN SUM(att.first_Absence + att.second_Absence) < 7 THEN 'ມີສິດເສັງ'\
-            ELSE 'ບໍ່ມີສິດເສັງ'\
-        END\
-        )\
-        FROM tb_student st LEFT JOIN tb_attandance att ON st.st_Id = att.st_Id WHERE att.cl_Name='"
-        + str(cl_Name)
-        + "' and att.s_Name='"
+        "SELECT st_Id, Name, Surname, s_Name, cl_Name, sc_Period, sc_Year, time_In, time_Out, first_Absence, second_Absence, date from tb_attandance where st_Id='"
+        + st_Id
+        + "' and s_Name='"
         + str(s_Name)
-        + "' GROUP BY st.st_Id;"
+        + "' GROUP BY a_Id, date"
     )
     conn.execute(sql)
 
     tree = ttk.Treeview(b)
-    tree["columns"] = ("1", "2", "3", "4", "5", "6", "7", "8", "9")
+    tree["columns"] = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
 
     tree.column("#0", width=5)
     tree.column("#1", width=180, anchor="center")
     tree.column("#2", width=100, anchor="center")
     tree.column("#3", width=100, anchor="center")
-    tree.column("#4", width=250, anchor="center")
+    tree.column("#4", width=100, anchor="center")
     tree.column("#5", width=100, anchor="center")
-    tree.column("#6", width=180, anchor="center")
-    tree.column("#7", width=180, anchor="center")
-    tree.column("#8", width=180, anchor="center")
-    tree.column("#9", width=180, anchor="center")
+    tree.column("#6", width=100, anchor="center")
+    tree.column("#7", width=100, anchor="center")
+    tree.column("#8", width=100, anchor="center")
+    tree.column("#9", width=100, anchor="center")
+    tree.column("#10", width=100, anchor="center")
+    tree.column("#11", width=100, anchor="center")
+    tree.column("#12", width=100, anchor="center")
 
     tree.heading("#1", text="ລະຫັດນັກສຶກສາ")
     tree.heading("#2", text="ຊື່")
@@ -58,8 +54,11 @@ def report_teacher_today():
     tree.heading("#5", text="ຊັ້ນຮຽນ")
     tree.heading("#6", text="ພາກ")
     tree.heading("#7", text="ສົກຮຽນ")
-    tree.heading("#8", text="ຜົນລວມການຂາດຮຽນ")
-    tree.heading("#9", text="ສະຖານະ")
+    tree.heading("#8", text="ເວລາເຂົ້າ")
+    tree.heading("#9", text="ເວລາອອກ")
+    tree.heading("#10", text="ໝາຍເຂົ້າ")
+    tree.heading("#11", text="ໝາຍອອກ")
+    tree.heading("#12", text="ວັນທີ່")
 
     # ຄຳສັ່ງສະແດງຜົນ
 
@@ -79,6 +78,9 @@ def report_teacher_today():
                 row[6],
                 row[7],
                 row[8],
+                row[9],
+                row[10],
+                row[11],
             ),
         )
         i = i + 1
@@ -99,25 +101,16 @@ button_5.place(x=500, y=600)
 b = Tk()
 b.geometry("1500x900")
 b.config(bg="#ECF8DC")
-# b.attributes("-fullscreen", True)
 b.withdraw()
 
 cbFont = tkFont.Font(family="Saysettha OT", size=16)
 
-conn.execute("select cl_Name from tb_class;")
-results = conn.fetchall()
-combo_cl_name = [result[0] for result in results]
 
-
-class_lb = Label(frm, text="ກະລຸນາເລືອກຊັ້ນຮຽນ", font=cbFont)
+class_lb = Label(frm, text="ກະລຸນາປ້ອນລະຫັດນັກສຶກສາ", font=cbFont)
 class_lb.place(x=200, y=350)
 
-cb_class = ttk.Combobox(frm, width=16, values=combo_cl_name)
-cb_class.place(x=200, y=400)
-cb_class.config(font=(cbFont), state="readonly")
-cb_class.configure(font=("Saysettha OT", 16))
-cb_class.option_add("*font", cbFont)
-cb_class.current(0)
+st_En = Entry(frm, width=30, font=cbFont)
+st_En.place(x=200, y=400)
 
 conn.execute("select s_Name from tb_subject")
 results = conn.fetchall()
