@@ -21,7 +21,7 @@ def Insert_Data():
     def Insert_Student():
         cl_Id = cb_class.get()
         d_Id = cb_day.get()
-        r_Id = "r_309"
+        r_Id = "309"
         connection = pymysql.connect(
             host="localhost", user="root", password="", database="asp_base"
         )
@@ -79,10 +79,12 @@ def Insert_Data():
     try:
         data = get_date()
         date = datetime.now().strftime("%Y-%m-%d")
+        a = 1
+        b = 1
         profile = Insert_Student()
         if data != (str(profile[0][3]), str(profile[0][6]), date):
             for i in profile:
-                insert_data = "INSERT INTO tb_attandance(a_Id, st_Id, Name, Surname, d_Name, s_Name, r_Name, cl_Name, sc_Period, sc_Year, date) VALUES (0, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
+                insert_data = "INSERT INTO tb_attandance(a_Id, st_Id, Name, Surname, d_Name, s_Name, r_Name, cl_Name, sc_Period, sc_Year, first_Absence, second_Absence, date) VALUES (0, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"
                 VALUES = (
                     str(i[0]),
                     str(i[1]),
@@ -93,6 +95,8 @@ def Insert_Data():
                     str(i[6]),
                     str(i[7]),
                     str(i[8]),
+                    str(a),
+                    str(b),
                     date,
                 )
                 conn.execute(insert_data, VALUES)
