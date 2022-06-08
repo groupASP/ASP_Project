@@ -39,7 +39,7 @@ def Insert_Data():
             + cl_Id
             + "' and d.d_Id='"
             + d_Id
-            + "'"
+            + "' and sc.sc_Status='Active'"
         )
         conn.execute(sql)
         result = conn.fetchall()
@@ -143,7 +143,7 @@ def check_in():
                     inner join tb_room r on r.r_Id=sc.r_Id\
                     where f_Id = '"
                     + str(Id)
-                    + "';"
+                    + "' and sc.sc_Status='Active';"
                 )
                 conn.execute(sql)
                 profile = None

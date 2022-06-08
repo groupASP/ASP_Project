@@ -31,6 +31,7 @@ def insert():
     st_province = en_province.get()
     st_Gender = cbGender.get()
     cl_Id = cb.get()
+    stt = "Active"
     value = messagebox.askquestion("ການຢືນຢັນ", "ທ່ານຕ້ອງການເພີ່ມຂໍ້ມູນແທ້ຫຼືບໍ່?")
     if value == "yes":
         sql_insert = (
@@ -54,6 +55,8 @@ def insert():
             + st_district
             + "','"
             + st_province
+            + "', '"
+            + stt
             + "');"
         )
         conn.execute(sql_insert)
@@ -188,7 +191,7 @@ conn = pymysql.connect(user="root", password="", host="Localhost", database="asp
 curs = conn.cursor()
 
 # combo_student_id form database
-curs.execute("select cl_Id from tb_class;")
+curs.execute("select cl_Id from tb_class where cl_Status='Active';")
 results = curs.fetchall()
 combo_cl_id = [result[0] for result in results]
 

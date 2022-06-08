@@ -14,7 +14,7 @@ frm.attributes("-fullscreen", True)
 connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
 conn = connection.cursor()
 
-sql = "select* from tb_class"
+sql = "select* from tb_class where cl_Status='Active';"
 conn.execute(sql)
 
 
@@ -33,31 +33,29 @@ def save_update():
     for i in tree.get_children():
         tree.delete(i)
 
-    sql_select = "select * from tb_class;"
+    sql_select = "select * from tb_class where cl_Status='Active';"
     conn.execute(sql_select)
 
     i = 0
     for row in conn:
-        tree.insert("", i, text="", values=(row[0], row[1]))
+        tree.insert("", i, text="", values=(row[0], row[1], row[2]))
         i += 1
 
     txtId.delete(0, "end")
     txtName.delete(0, "end")
     messagebox.showinfo("ການແກ້ໄຂຂໍ້ມູນ", "ທ່ານໄດ້ແກ້ໄຂຂໍ້ມູນຊັ້ນຮຽນສຳເລັດແລ້ວ!!!")
     btEdit.config(state="normal")
-    btSaveUpdate.config(state="disabled")
-    txtId.config(state="disabled")
-    txtName.config(state="disabled")
 
 
 def update():
-    txtId.config(state="normal")
-    txtName.config(state="normal")
-    btSaveUpdate.config(state="normal")
     data = tree.selection()
     value = tree.item(data)["values"][0]
 
-    sql_select = "select * from tb_class where cl_Id='" + str(value) + "';"
+    sql_select = (
+        "select * from tb_class where cl_Id='"
+        + str(value)
+        + "' and cl_Status='Active';"
+    )
     conn.execute(sql_select)
 
     for row in conn:
@@ -75,19 +73,27 @@ def delete():
     data = tree.selection()
     value = tree.item(data)["values"][0]
 
-    sql_delete = "delete from tb_class where cl_Id = '" + str(value) + "';"
+    stt = "Non-Active"
+
+    sql_delete = (
+        "update tb_class set cl_Status='"
+        + stt
+        + "' where cl_Id = '"
+        + str(value)
+        + "';"
+    )
     conn.execute(sql_delete)
     connection.commit()
 
     for i in tree.get_children():
         tree.delete(i)
 
-    sql_select = "select * from tb_class;"
+    sql_select = "select * from tb_class where cl_Status='Active';"
     conn.execute(sql_select)
 
     i = 0
     for row in conn:
-        tree.insert("", i, text="", values=(row[0], row[1]))
+        tree.insert("", i, text="", values=(row[0], row[1], row[2]))
         i += 1
 
 
@@ -160,7 +166,6 @@ btSaveUpdate.place(
     x=1200,
     y=500,
 )
-btSaveUpdate.config(state="disabled")
 
 st = ttk.Style()
 st.theme_use("clam")
@@ -168,26 +173,28 @@ st.configure("Treeview.Heading", foreground="blue", font=("Saysettha OT", 16))
 st.configure("Treeview", rowheight=50, font=("Saysettha OT", 14))
 
 tree = ttk.Treeview(frm)
-tree["columns"] = ("1", "2")
+tree["columns"] = ("1", "2", "3")
 
-tree.column("#0", width=0)
-tree.column("#1", width=100)
-tree.column("#2", width=800)
+tree.column("#0", width=0, anchor="center")
+tree.column("#1", width=300, anchor="center")
+tree.column("#2", width=400, anchor="center")
+tree.column("#3", width=150, anchor="center")
 
-tree.heading("#1", text="ລະຫັດ", anchor="w")
-tree.heading("#2", text="ຊື່", anchor="w")
+tree.heading("#1", text="ລະຫັດ")
+tree.heading("#2", text="ຊື່")
+tree.heading("#3", text="ສະຖານະ")
 
 
 i = 0
 for row in conn:
-    tree.insert("", i, text="", values=(row[0], row[1]))
+    tree.insert("", i, text="", values=(row[0], row[1], row[2]))
     i = i + 1
 
 tree.place(x=150, y=100)
 
 ############################################################################
 
-frm.geometry("1600x700")
+# frm.geometry('1600x700')
 
 lb2 = tk.Label(frm, text="ຟອມແກ້ໄຂຂໍ້ມູນຊັ້ນຮຽນ")
 lb2.place(x=1150, y=100)
@@ -203,10 +210,10 @@ lb3.configure(font=("Saysettha OT", 14), bg="#ECF8DC")
 
 txtId = tk.Entry(frm)
 txtId.place(x=1230, y=200)
-txtId.config(font=("Saysettha OT", 14), state="disabled")
+txtId.config(font=("Saysettha OT", 14))
 
 txtName = tk.Entry(frm)
 txtName.place(x=1230, y=270)
-txtName.config(font=("Saysettha OT", 14), state="disabled")
+txtName.config(font=("Saysettha OT", 14))
 
 frm.mainloop()

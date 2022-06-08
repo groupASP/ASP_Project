@@ -38,7 +38,7 @@ def report_teacher_today():
         "SELECT st.st_Id, st.st_Name, st.st_Surname, att.s_Name, att.cl_Name, att.sc_Period, att.sc_Year, SUM(att.first_Absence + att.second_Absence),\
         (\
         CASE\
-            WHEN SUM(att.first_Absence + att.second_Absence) < 7 THEN ''\
+            WHEN SUM(att.first_Absence + att.second_Absence) <= 7 THEN ''\
             ELSE 'ບໍ່ມີສິດເສັງ'\
         END\
         )\

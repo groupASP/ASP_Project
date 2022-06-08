@@ -18,7 +18,7 @@ a.attributes("-fullscreen", True)
 connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
 conn = connection.cursor()
 
-sql = "select * from tb_student;"
+sql = "select * from tb_student where st_Status = 'Active';"
 conn.execute(sql)
 
 
@@ -73,7 +73,7 @@ def save():
     for i in tree.get_children():
         tree.delete(i)
 
-    sql_select = "select * from tb_student;"
+    sql_select = "select * from tb_student where st_Status='Active';"
     conn.execute(sql_select)
 
     i = 0
@@ -93,6 +93,7 @@ def save():
                 row[7],
                 row[8],
                 row[9],
+                row[10],
             ),
         )
         i = i + 1
@@ -162,17 +163,25 @@ def delete():
     )
     conn = connection.cursor()
 
-    pm = tree.selection()
-    mon = tree.item(pm)["values"][0]
+    stt = "Inactive"
+
+    treee = tree.selection()
+    value = tree.item(treee)["values"][0]
     # print(mon)
-    sql_delete = "delete from tb_student where st_Id='" + mon + "';"
+    sql_delete = (
+        "update tb_student set st_Status='"
+        + str(stt)
+        + "' where st_Id='"
+        + value
+        + "';"
+    )
     conn.execute(sql_delete)
     connection.commit()
 
     for i in tree.get_children():
         tree.delete(i)
 
-    sql_select = "select * from tb_student;"
+    sql_select = "select * from tb_student where st_Status = 'Active';"
     conn.execute(sql_select)
 
     i = 0
@@ -191,10 +200,52 @@ def delete():
                 row[6],
                 row[7],
                 row[8],
+                row[9],
+                row[10],
             ),
         )
         i = i + 1
     messagebox.showinfo("ການສະແດງຜົນ", "ທ່ານໄດ້ລົບຂໍ້ມູນນັກສຶກສາສຳເລັດແລ້ວ!!!")
+
+
+def search():
+    connection = pymysql.connect(
+        host="localhost", user="root", password="", db="asp_base"
+    )
+    conn = connection.cursor()
+
+    st_Id = entry0.get()
+
+    sql_search = (
+        "select * from tb_student where st_Id='"
+        + str(st_Id)
+        + "' and st_Status='Active';"
+    )
+    conn.execute(sql_search)
+
+    for i in tree.get_children():
+        tree.delete(i)
+
+    i = 0
+    for row in conn:
+        tree.insert(
+            "",
+            i,
+            text="",
+            values=(
+                row[0],
+                row[1],
+                row[2],
+                row[3],
+                row[4],
+                row[5],
+                row[6],
+                row[7],
+                row[8],
+                row[9],
+                row[10],
+            ),
+        )
 
 
 def insert():
@@ -216,7 +267,7 @@ btAdd = Button(
 )
 btAdd.place(
     x=480,
-    y=700,
+    y=750,
 )
 
 img2 = PhotoImage(file=f"ASP/Image/back.png")
@@ -225,7 +276,7 @@ btBack = Button(
 )
 btBack.place(
     x=100,
-    y=700,
+    y=750,
 )
 
 img3 = PhotoImage(file=f"ASP/Image/delete.png")
@@ -234,7 +285,7 @@ btDelete = Button(
 )
 btDelete.place(
     x=1200,
-    y=700,
+    y=750,
 )
 
 img4 = PhotoImage(file=f"ASP/Image/edit.png")
@@ -243,28 +294,58 @@ btEdit = Button(
 )
 btEdit.place(
     x=840,
-    y=700,
+    y=750,
 )
+
+#######entry search
+
+img_search = PhotoImage(file=f"ASP/Image/bt_search.png")
+btsearch = Button(
+    image=img_search,
+    borderwidth=0,
+    highlightthickness=0,
+    command=search,
+    relief="flat",
+)
+btsearch.place(
+    x=1360,
+    y=90,
+)
+
+
+lb_search = tkinter.Label(a, text="ຄົ້ນຫາ :")
+lb_search.place(x=1000, y=85)
+lb_search.config(font=("Saysettha OT", 18), bg="#ECF8DC")
+
+
+entry0_img = PhotoImage(file=f"ASP/Image/img_textBox0.png")
+entry0_bg = canvas.create_image(305.5, 357.0, image=entry0_img)
+
+entry0 = Entry(font=("Times New Roman", 20), bd=0, bg="#e5e5e5", highlightthickness=0)
+
+entry0.place(x=1100.0, y=80, width=250, height=50)
+
 
 st = ttk.Style()
 st.theme_use("clam")
 st.configure("Treeview.Heading", fg="blue", font=("Saysettha OT", 14))
-st.configure("Treeview", rowheight=55, font=("Saysettha OT", 12))
+st.configure("Treeview", rowheight=53, font=("Saysettha OT", 12))
 
 
 tree = ttk.Treeview(a)
-tree["columns"] = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-tree.column("#0", width=5)
-tree.column("#1", width=200)
-tree.column("#2", width=180)
-tree.column("#3", width=180)
-tree.column("#4", width=80)
-tree.column("#5", width=100)
-tree.column("#6", width=180)
-tree.column("#7", width=150)
-tree.column("#8", width=150)
-tree.column("#9", width=150)
-tree.column("#10", width=170)
+tree["columns"] = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
+tree.column("#0", width=5, anchor="center")
+tree.column("#1", width=180, anchor="center")
+tree.column("#2", width=140, anchor="center")
+tree.column("#3", width=150, anchor="center")
+tree.column("#4", width=80, anchor="center")
+tree.column("#5", width=100, anchor="center")
+tree.column("#6", width=160, anchor="center")
+tree.column("#7", width=150, anchor="center")
+tree.column("#8", width=150, anchor="center")
+tree.column("#9", width=150, anchor="center")
+tree.column("#10", width=170, anchor="center")
+tree.column("#11", width=110, anchor="center")
 
 tree.heading("#1", text="ລະຫັດ")
 tree.heading("#2", text="ຊື່")
@@ -276,6 +357,7 @@ tree.heading("#7", text="ເບີໂທ")
 tree.heading("#8", text="ບ້ານ")
 tree.heading("#9", text="ເມືອງ")
 tree.heading("#10", text="ແຂວງ")
+tree.heading("#11", text="ສະຖານະ")
 
 # ຄຳສັ່ງສະແດງຜົນ
 
@@ -296,10 +378,11 @@ for row in conn:
             row[7],
             row[8],
             row[9],
+            row[10],
         ),
     )
     i = i + 1
-tree.place(x=-15, y=80)
+tree.place(x=-15, y=150)
 
 ############################################################################################################
 ############################################################################################################
@@ -421,13 +504,13 @@ combo.option_add("*font", cbfont)
 conn = pymysql.connect(user="root", password="", host="Localhost", database="asp_base")
 curs = conn.cursor()
 # combo_class_id form database
-curs.execute("select cl_Id from tb_class;")
+curs.execute("select cl_Id from tb_class where cl_Status='Active';")
 results = curs.fetchall()
 combo_cl_id = [result[0] for result in results]
 
 # combobox_class_id
 cb_class = ttk.Combobox(b, width=16, values=combo_cl_id)
-cb_class.place(x=1300, y=520)
+cb_class.place(x=1250, y=520)
 cb_class.config(font=(cbfont), state="readonly")
 cb_class.configure(font=("Saysettha OT", 20), state="readonly")
 cb_class.option_add("*font", cbfont)

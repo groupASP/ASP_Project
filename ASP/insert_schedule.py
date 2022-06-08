@@ -45,6 +45,7 @@ def insert():
     s_Id = cb_subject.get()
     cl_Id = cb_class.get()
     t_Id = cb_teacher.get()
+    stt = "Active"
 
     value = messagebox.askquestion("ການຢືນຢັນ", "ທ່ານຕ້ອງການເພີ່ມຂໍ້ມູນແທ້ຫຼືບໍ່?")
     if value == "yes":
@@ -64,11 +65,13 @@ def insert():
             + "', '"
             + str(r_Id)
             + "', '"
-            + str(s_Id)
-            + "', '"
             + str(cl_Id)
             + "', '"
+            + str(s_Id)
+            + "', '"
             + str(t_Id)
+            + "', '"
+            + str(stt)
             + "');"
         )
         conn.execute(sql_insert)
@@ -184,7 +187,7 @@ cb_day.current(0)
 cb_day.option_add("*font", cbFont)
 
 # combo_room_id form database
-curs.execute("select * from tb_room;")
+curs.execute("select * from tb_room where r_Status='Active';")
 results = curs.fetchall()
 combo_r_id = [result[0] for result in results]
 combo_r_name = [result[1] for result in results]
@@ -198,7 +201,7 @@ cb_room.option_add("*font", cbFont)
 cb_room.current(0)
 
 # combo_subject_id form database
-curs.execute("select s_Name from tb_subject;")
+curs.execute("select s_Name from tb_subject where s_Status='Active';")
 results = curs.fetchall()
 combo_s_id = [result[0] for result in results]
 
@@ -222,7 +225,7 @@ cb_class.option_add("*font", cbFont)
 cb_class.current(0)
 
 # combo_teacher_id form database
-curs.execute("select t_Id from tb_teacher;")
+curs.execute("select t_Id from tb_teacher where t_Status='Active';")
 results = curs.fetchall()
 combo_t_id = [result[0] for result in results]
 

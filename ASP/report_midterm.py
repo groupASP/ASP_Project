@@ -42,7 +42,7 @@ def report_teacher_today():
         + str(start_Date)
         + "' and '"
         + str(end_Date)
-        + "';"
+        + "' group by st_Id;"
     )
     conn.execute(sql)
 

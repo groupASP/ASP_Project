@@ -29,6 +29,7 @@ def insert():
     t_Email = en_email.get()
     t_Degree = en_degree.get()
     t_Gender = cbGender.get()
+    stt = "Active"
     value = messagebox.askquestion("ການຢືນຢັນ", "ທ່ານຕ້ອງການເພີ່ມຂໍ້ມູນແທ້ຫຼືບໍ່?")
     if value == "yes":
         sql_insert = (
@@ -52,6 +53,8 @@ def insert():
             + t_Email
             + "','"
             + t_Degree
+            + "', '"
+            + stt
             + "');"
         )
         conn.execute(sql_insert)

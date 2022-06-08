@@ -18,9 +18,18 @@ def insert():
     conn = connection.cursor()
     r_Id = en.get()
     r_Name = en1.get()
+    stt = "Active"
     value = messagebox.askquestion("ການຢືນຢັນ", "ທ່ານຕ້ອງການເພີ່ມຂໍ້ມູນແທ້ຫຼືບໍ່?")
     if value == "yes":
-        sql_insert = "insert into tb_room values('" + str(r_Id) + "','" + r_Name + "');"
+        sql_insert = (
+            "insert into tb_room values('"
+            + str(r_Id)
+            + "','"
+            + r_Name
+            + "', '"
+            + stt
+            + "');"
+        )
         conn.execute(sql_insert)
         connection.commit()
         messagebox.showinfo("ການສະແດງຜົນ", "ທ່ານໄດ້ເພີ່ມຂໍ້ມູນສຳເລັດແລ້ວ")

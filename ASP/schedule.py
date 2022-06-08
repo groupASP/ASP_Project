@@ -14,7 +14,7 @@ a.attributes("-fullscreen", True)
 connection = pymysql.connect(host="localhost", user="root", password="", db="asp_base")
 conn = connection.cursor()
 
-sql = "select * from tb_schedule;"
+sql = "select * from tb_schedule where sc_Status='Active';"
 conn.execute(sql)
 
 
@@ -34,8 +34,8 @@ def save():
     sc_Id = en_scid.get()
     d_Id = cb_day.get()
     sc_Period = cb_period.get()
-    sc_Start = en_start.get()
-    sc_End = en_end.get()
+    start_Class = en_start.get()
+    end_Class = en_end.get()
     sc_Year = en_year.get()
     r_Id = cb_room.get()
     cl_Id = cb_cl.get()
@@ -47,12 +47,12 @@ def save():
         + d_Id
         + "', sc_Period='"
         + sc_Period
-        + "', start_Class='"
-        + str(sc_Start)
-        + "', end_Class='"
-        + str(sc_End)
         + "', sc_Year='"
         + sc_Year
+        + "', start_Class='"
+        + start_Class
+        + "', end_Class='"
+        + end_Class
         + "', r_Id='"
         + r_Id
         + "', cl_Id='"
@@ -71,7 +71,7 @@ def save():
     for i in tree.get_children():
         tree.delete(i)
 
-    sql_select = "select * from tb_schedule;"
+    sql_select = "select * from tb_schedule where sc_Status='Active';"
     conn.execute(sql_select)
 
     i = 0
@@ -91,20 +91,21 @@ def save():
                 row[7],
                 row[8],
                 row[9],
+                row[10],
             ),
         )
         i = i + 1
 
     en_scid.delete(0, END)
-    cb_day.set("")
     en_year.delete(0, END)
     en_start.delete(0, END)
     en_end.delete(0, END)
-    cb_room.set("")
-    cb_cl.set("")
-    cb_period.set("")
-    cb_subject.set("")
-    cb_teacher.set("")
+    cb_room.current(0)
+    cb_cl.current(0)
+    cb_period.current(0)
+    cb_subject.current(0)
+    cb_teacher.current(0)
+    cb_day.current(0)
     messagebox.showinfo("ການແກ້ໄຂຂໍ້ມູນ", "ທ່ານໄດ້ແກ້ໄຂຂໍ້ມູນນັກສຶກສາສຳເລັດແລ້ວ!!!")
 
 
@@ -159,15 +160,18 @@ def delete():
     )
     conn = connection.cursor()
     pm = tree.selection()
+    stt = "Inactive"
     mon = tree.item(pm)["values"][0]
-    sql_delete = "delete from tb_schedule where sc_Id='" + str(mon) + "';"
+    sql_delete = (
+        "update tb_schedule set sc_Status='" + stt + "' where sc_Id='" + str(mon) + "';"
+    )
     conn.execute(sql_delete)
     connection.commit()
 
     for i in tree.get_children():
         tree.delete(i)
 
-    sql_select = "select * from tb_schedule;"
+    sql_select = "select * from tb_schedule where sc_Status='Active';"
     conn.execute(sql_select)
 
     i = 0
@@ -187,10 +191,51 @@ def delete():
                 row[7],
                 row[8],
                 row[9],
+                row[10],
             ),
         )
         i = i + 1
     messagebox.showinfo("ການສະແດງຜົນ", "ທ່ານໄດ້ລົບຂໍ້ມູນຕາຕະລາງຮຽນສຳເລັດແລ້ວ!!!")
+
+
+def search():
+    connection = pymysql.connect(
+        host="localhost", user="root", password="", db="asp_base"
+    )
+    conn = connection.cursor()
+
+    d_Id = entry0.get()
+
+    sql_search = (
+        "select * from tb_schedule where d_Id='"
+        + str(d_Id)
+        + "' and sc_Status='Active';"
+    )
+    conn.execute(sql_search)
+
+    for i in tree.get_children():
+        tree.delete(i)
+
+    i = 0
+    for row in conn:
+        tree.insert(
+            "",
+            i,
+            text="",
+            values=(
+                row[0],
+                row[1],
+                row[2],
+                row[3],
+                row[4],
+                row[5],
+                row[6],
+                row[7],
+                row[8],
+                row[9],
+                row[10],
+            ),
+        )
 
 
 def insert():
@@ -212,7 +257,7 @@ btAdd = Button(
 )
 btAdd.place(
     x=480,
-    y=650,
+    y=750,
 )
 
 img2 = PhotoImage(file=f"ASP/Image/back.png")
@@ -221,7 +266,7 @@ btBack = Button(
 )
 btBack.place(
     x=100,
-    y=650,
+    y=750,
 )
 
 img3 = PhotoImage(file=f"ASP/Image/delete.png")
@@ -230,7 +275,7 @@ btDelete = Button(
 )
 btDelete.place(
     x=1200,
-    y=650,
+    y=750,
 )
 
 img4 = PhotoImage(file=f"ASP/Image/edit.png")
@@ -239,8 +284,36 @@ btEdit = Button(
 )
 btEdit.place(
     x=840,
-    y=650,
+    y=750,
 )
+
+
+img_search = PhotoImage(file=f"ASP/Image/bt_search.png")
+btsearch = Button(
+    image=img_search,
+    borderwidth=0,
+    highlightthickness=0,
+    command=search,
+    relief="flat",
+)
+btsearch.place(
+    x=1360,
+    y=90,
+)
+
+
+lb_search = tkinter.Label(a, text="ຄົ້ນຫາ :")
+lb_search.place(x=1000, y=85)
+lb_search.config(font=("Saysettha OT", 18), bg="#ECF8DC")
+
+
+entry0_img = PhotoImage(file=f"ASP/Image/img_textBox0.png")
+entry0_bg = canvas.create_image(305.5, 357.0, image=entry0_img)
+
+entry0 = Entry(font=("Times New Roman", 20), bd=0, bg="#e5e5e5", highlightthickness=0)
+
+entry0.place(x=1100.0, y=80, width=250, height=50)
+
 
 st = ttk.Style()
 st.theme_use("clam")
@@ -249,29 +322,31 @@ st.configure("Treeview", rowheight=50, font=("Saysettha OT", 12))
 
 
 tree = ttk.Treeview(a)
-tree["columns"] = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-tree.column("#0", width=5)
-tree.column("#1", width=100)
-tree.column("#2", width=100)
-tree.column("#3", width=100)
-tree.column("#4", width=150)
-tree.column("#5", width=150)
-tree.column("#6", width=150)
-tree.column("#7", width=130)
-tree.column("#8", width=180)
-tree.column("#9", width=150)
-tree.column("#10", width=150)
+tree["columns"] = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11")
+tree.column("#0", width=1)
+tree.column("#1", width=50, anchor="center")
+tree.column("#2", width=100, anchor="center")
+tree.column("#3", width=100, anchor="center")
+tree.column("#4", width=150, anchor="center")
+tree.column("#5", width=150, anchor="center")
+tree.column("#6", width=150, anchor="center")
+tree.column("#7", width=130, anchor="center")
+tree.column("#8", width=140, anchor="center")
+tree.column("#9", width=280, anchor="center")
+tree.column("#10", width=150, anchor="center")
+tree.column("#11", width=130, anchor="center")
 
 tree.heading("#1", text="ລະຫັດ")
 tree.heading("#2", text="ມື້")
 tree.heading("#3", text="ຄາບຮຽນ")
 tree.heading("#4", text="ເວລາເລີ່ມ")
 tree.heading("#5", text="ເວລາສິ້ນສຸດ")
-tree.heading("#6", text="ລະຫັດສົກຮຽນ")
-tree.heading("#7", text="ລະຫັດຫ້ອງຮຽນ")
-tree.heading("#8", text="ລະຫັດຊັ້ນຮຽນ")
-tree.heading("#9", text="ລະຫັດວິຊາ")
-tree.heading("#10", text="ລະຫັດອາຈານ")
+tree.heading("#6", text="ສົກຮຽນ")
+tree.heading("#7", text="ຫ້ອງຮຽນ")
+tree.heading("#8", text="ຊັ້ນຮຽນ")
+tree.heading("#9", text="ວິຊາຮຽນ")
+tree.heading("#10", text="ອາຈານ")
+tree.heading("#11", text="ສະຖານະ")
 
 # ຄຳສັ່ງສະແດງຜົນ
 
@@ -292,10 +367,11 @@ for row in conn:
             row[7],
             row[8],
             row[9],
+            row[10],
         ),
     )
     i = i + 1
-tree.place(x=30, y=80)
+tree.place(x=10, y=150)
 
 ############################################################################################################
 ############################################################################################################
@@ -319,6 +395,8 @@ def ex():
 def back1():
     en_scid.delete(0, END)
     en_year.delete(0, END)
+    en_start.delete(0, END)
+    en_end.delete(0, END)
     cb_room.set("")
     cb_cl.set("")
     cb_period.set("")
@@ -418,7 +496,7 @@ cb_day.option_add("*font", cbFont)
 cb_day.current()
 
 # combo_room_id form database
-curs.execute("select r_Id from tb_room;")
+curs.execute("select r_Id from tb_room where r_Status='Active';")
 results = curs.fetchall()
 combo_r_id = [result[0] for result in results]
 
@@ -431,7 +509,7 @@ cb_room.option_add("*font", cbFont)
 cb_room.current()
 
 # combo_subject_id form database
-curs.execute("select s_Id from tb_subject;")
+curs.execute("select s_Id from tb_subject where s_Status='Active';")
 results = curs.fetchall()
 combo_s_id = [result[0] for result in results]
 
@@ -444,7 +522,7 @@ cb_subject.option_add("*font", cbFont)
 cb_subject.current()
 
 # combo_class_id form database
-curs.execute("select cl_Id from tb_class;")
+curs.execute("select cl_Id from tb_class where cl_Status='Active';")
 results = curs.fetchall()
 combo_cl_id = [result[0] for result in results]
 
@@ -457,7 +535,7 @@ cb_cl.option_add("*font", cbFont)
 cb_cl.current()
 
 # combo_teacher_id form database
-curs.execute("select t_Id from tb_teacher;")
+curs.execute("select t_Id from tb_teacher where t_Status='Active';")
 results = curs.fetchall()
 combo_t_id = [result[0] for result in results]
 

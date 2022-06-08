@@ -19,10 +19,17 @@ def insert():
     conn = connection.cursor()
     cl_Id = en.get()
     cl_Name = en1.get()
+    stt = "Active"
     value = messagebox.askquestion("ການຢືນຢັນ", "ທ່ານຕ້ອງການເພີ່ມຂໍ້ມູນແທ້ຫຼືບໍ່?")
     if value == "yes":
         sql_insert = (
-            "insert into tb_class values('" + str(cl_Id) + "','" + str(cl_Name) + "');"
+            "insert into tb_class values('"
+            + str(cl_Id)
+            + "','"
+            + str(cl_Name)
+            + "', '"
+            + stt
+            + "');"
         )
         conn.execute(sql_insert)
         connection.commit()
