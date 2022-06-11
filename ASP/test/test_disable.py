@@ -14,13 +14,13 @@ date = dt.datetime.now().strftime("%Y-%m-%d")
 # print(date)
 
 cl_Name = "HCS6B"
-d_Name = "Friday"
+d_Name = "Monday"
 
 
 def Insert_Student():
-    cl_Id = "cl_HCS6B"
-    d_Id = "d_Friday"
-    r_Id = "r_309"
+    cl_Id = "HCS6B"
+    d_Id = "Friday"
+    r_Id = "309"
     connection = pymysql.connect(
         host="localhost", user="root", password="", database="asp_base"
     )

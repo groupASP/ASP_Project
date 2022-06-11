@@ -133,9 +133,10 @@ def check_in():
                 conn = connection.cursor()
                 sql = (
                     "select st.st_Id, st.st_Name, st.st_Surname, d.d_Name, s.s_Name, \
-                    r.r_Name, cl.cl_Name, sc.sc_Period, sc.sc_Year, f.Name, f.Surname, sc.start_Class, \
-                    sc.end_Class \
+                    r.r_Name, cl.cl_Name, sc.sc_Period, sc.sc_Year, f.Name, f.Surname, \
+                    t.t_Name, t.t_Surname \
                     from tb_face f inner join tb_student st on f.st_Id = st.st_Id\
+                    inner join tb_teacher t on f.t_Id=t.t_Id\
                     inner join tb_class cl on st.cl_Id = cl.cl_Id\
                     inner join tb_schedule sc on sc.cl_Id=cl.cl_Id\
                     inner join tb_day d on d.d_Id=sc.d_Id\
@@ -143,7 +144,7 @@ def check_in():
                     inner join tb_room r on r.r_Id=sc.r_Id\
                     where f_Id = '"
                     + str(Id)
-                    + "' and sc.sc_Status='Active';"
+                    + "' and sc.sc_Status='Active' and st.st_Status='Active' and t.t_Status='Active';"
                 )
                 conn.execute(sql)
                 profile = None
@@ -199,7 +200,249 @@ def check_in():
                     host="localhost", user="root", password="", database="asp_base"
                 )
                 conn = connection.cursor()
-                if str(profile[5]) == "309" and str(profile[6]) == "CS6B":
+                if str(profile[11]) != "0":
+                    print(profile)
+                elif str(profile[5]) == "309" and str(profile[6]) == "HCS6A":
+                    local_time = pytz.timezone("Asia/Bangkok")
+                    a = 0
+                    b = 1
+                    date_Today = datetime.now(tz=local_time).strftime("%Y-%m-%d")
+                    time_now = datetime.now(tz=local_time).strftime("%H:%M:%S")
+                    start_Class = str(
+                        time(hour=8, minute=45, second=0, tzinfo=local_time)
+                    )
+                    st_Id = str(profile[0])
+                    r_Name = str(profile[5])
+                    cl_Name = str(profile[6])
+                    if time_now < start_Class:
+                        update_data = (
+                            " UPDATE tb_attandance set time_In = '"
+                            + time_now
+                            + "', first_Absence = '"
+                            + str(a)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                    else:
+                        update_data = (
+                            " UPDATE tb_attandance set time_In = '"
+                            + time_now
+                            + "', first_Absence = '"
+                            + str(b)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                elif str(profile[5]) == "309" and str(profile[6]) == "HCS6B":
+                    local_time = pytz.timezone("Asia/Bangkok")
+                    a = 0
+                    b = 1
+                    date_Today = datetime.now(tz=local_time).strftime("%Y-%m-%d")
+                    time_now = datetime.now(tz=local_time).strftime("%H:%M:%S")
+                    start_Class = str(
+                        time(hour=8, minute=45, second=0, tzinfo=local_time)
+                    )
+                    st_Id = str(profile[0])
+                    r_Name = str(profile[5])
+                    cl_Name = str(profile[6])
+                    if time_now < start_Class:
+                        update_data = (
+                            " UPDATE tb_attandance set time_In = '"
+                            + time_now
+                            + "', first_Absence = '"
+                            + str(a)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                    else:
+                        update_data = (
+                            " UPDATE tb_attandance set time_In = '"
+                            + time_now
+                            + "', first_Absence = '"
+                            + str(b)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                elif str(profile[5]) == "309" and str(profile[6]) == "HCS6C":
+                    local_time = pytz.timezone("Asia/Bangkok")
+                    a = 0
+                    b = 1
+                    date_Today = datetime.now(tz=local_time).strftime("%Y-%m-%d")
+                    time_now = datetime.now(tz=local_time).strftime("%H:%M:%S")
+                    start_Class = str(
+                        time(hour=8, minute=45, second=0, tzinfo=local_time)
+                    )
+                    st_Id = str(profile[0])
+                    r_Name = str(profile[5])
+                    cl_Name = str(profile[6])
+                    if time_now < start_Class:
+                        update_data = (
+                            " UPDATE tb_attandance set time_In = '"
+                            + time_now
+                            + "', first_Absence = '"
+                            + str(a)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                    else:
+                        update_data = (
+                            " UPDATE tb_attandance set time_In = '"
+                            + time_now
+                            + "', first_Absence = '"
+                            + str(b)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                elif str(profile[5]) == "309" and str(profile[6]) == "HCS6D":
+                    local_time = pytz.timezone("Asia/Bangkok")
+                    a = 0
+                    b = 1
+                    date_Today = datetime.now(tz=local_time).strftime("%Y-%m-%d")
+                    time_now = datetime.now(tz=local_time).strftime("%H:%M:%S")
+                    start_Class = str(
+                        time(hour=8, minute=45, second=0, tzinfo=local_time)
+                    )
+                    st_Id = str(profile[0])
+                    r_Name = str(profile[5])
+                    cl_Name = str(profile[6])
+                    if time_now < start_Class:
+                        update_data = (
+                            " UPDATE tb_attandance set time_In = '"
+                            + time_now
+                            + "', first_Absence = '"
+                            + str(a)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                    else:
+                        update_data = (
+                            " UPDATE tb_attandance set time_In = '"
+                            + time_now
+                            + "', first_Absence = '"
+                            + str(b)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                elif str(profile[5]) == "309" and str(profile[6]) == "HCS6E":
+                    local_time = pytz.timezone("Asia/Bangkok")
+                    a = 0
+                    b = 1
+                    date_Today = datetime.now(tz=local_time).strftime("%Y-%m-%d")
+                    time_now = datetime.now(tz=local_time).strftime("%H:%M:%S")
+                    start_Class = str(
+                        time(hour=8, minute=45, second=0, tzinfo=local_time)
+                    )
+                    st_Id = str(profile[0])
+                    r_Name = str(profile[5])
+                    cl_Name = str(profile[6])
+                    if time_now < start_Class:
+                        update_data = (
+                            " UPDATE tb_attandance set time_In = '"
+                            + time_now
+                            + "', first_Absence = '"
+                            + str(a)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                    else:
+                        update_data = (
+                            " UPDATE tb_attandance set time_In = '"
+                            + time_now
+                            + "', first_Absence = '"
+                            + str(b)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                elif str(profile[5]) == "309" and str(profile[6]) == "HCS6F":
                     local_time = pytz.timezone("Asia/Bangkok")
                     a = 0
                     b = 1
@@ -250,7 +493,7 @@ def check_in():
                 else:
                     print("Hello")
             except Exception as e:
-                print(e.args)
+                print(e)
 
             cam.release()
             cv2.destroyAllWindows()
