@@ -215,7 +215,19 @@ def check_in():
                 )
                 conn = connection.cursor()
                 if str(profile[11]) != "0":
-                    print(profile)
+                    x = 1
+                    index = 1
+                    while True:
+                        if x == index:
+                            for i in range(0):
+                                servo(pin, i)
+                            sleep(2)
+                            for i in range(0, 90, 1):
+                                servo(pin, i)
+                            sleep(10)
+                            for i in range(90, 0, -1):
+                                servo(pin, i)
+                        break
                 elif str(profile[5]) == "309" and str(profile[6]) == "HCS6A":
                     local_time = pytz.timezone("Asia/Bangkok")
                     a = 0
