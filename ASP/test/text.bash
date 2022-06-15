@@ -43,6 +43,20 @@ sudo cdmod -R 777 /var/www/moodledata
 
 password Souliya@#2015
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 select t.*,
        (case when A > B then 1 else 0 end) as true_col,
        (case when A > B then 0 else 1 end) as false_col

@@ -9,10 +9,23 @@ from datetime import *
 import datetime as dt
 import pytz
 from tkinter import font as tkFont
+from pyfirmata import Arduino, SERVO
+from time import sleep
 
 a = tkinter.Tk()
 a.geometry("1500x900")
 a.attributes("-fullscreen", True)
+
+port = "COM7"
+pin = 9
+board = Arduino(port)
+
+board.digital[pin].mode = SERVO
+
+
+def servo(pin, angle):
+    board.digital[pin].write(angle)
+    sleep(0.015)
 
 
 def Insert_Data():
@@ -123,6 +136,7 @@ def check_in():
     fontface = cv2.FONT_HERSHEY_SIMPLEX
     fontScale = 2
     fontColor = (255, 0, 0)
+
     try:
 
         def auto():
@@ -214,6 +228,7 @@ def check_in():
                     st_Id = str(profile[0])
                     r_Name = str(profile[5])
                     cl_Name = str(profile[6])
+
                     if time_now < start_Class:
                         update_data = (
                             " UPDATE tb_attandance set time_In = '"
@@ -232,6 +247,20 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
+
                     else:
                         update_data = (
                             " UPDATE tb_attandance set time_In = '"
@@ -250,6 +279,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
                 elif str(profile[5]) == "309" and str(profile[6]) == "HCS6B":
                     local_time = pytz.timezone("Asia/Bangkok")
                     a = 0
@@ -280,6 +322,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
                     else:
                         update_data = (
                             " UPDATE tb_attandance set time_In = '"
@@ -298,6 +353,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
                 elif str(profile[5]) == "309" and str(profile[6]) == "HCS6C":
                     local_time = pytz.timezone("Asia/Bangkok")
                     a = 0
@@ -328,6 +396,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
                     else:
                         update_data = (
                             " UPDATE tb_attandance set time_In = '"
@@ -346,6 +427,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
                 elif str(profile[5]) == "309" and str(profile[6]) == "HCS6D":
                     local_time = pytz.timezone("Asia/Bangkok")
                     a = 0
@@ -376,6 +470,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
                     else:
                         update_data = (
                             " UPDATE tb_attandance set time_In = '"
@@ -394,6 +501,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
                 elif str(profile[5]) == "309" and str(profile[6]) == "HCS6E":
                     local_time = pytz.timezone("Asia/Bangkok")
                     a = 0
@@ -424,6 +544,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
                     else:
                         update_data = (
                             " UPDATE tb_attandance set time_In = '"
@@ -442,6 +575,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
                 elif str(profile[5]) == "309" and str(profile[6]) == "HCS6F":
                     local_time = pytz.timezone("Asia/Bangkok")
                     a = 0
@@ -472,6 +618,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
                     else:
                         update_data = (
                             " UPDATE tb_attandance set time_In = '"
@@ -490,8 +649,31 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
                 else:
                     print("Hello")
+                    redLED = 13
+                    on = 1
+                    of = 0
+                    while True:
+                        board.digital[redLED].write(on)
+                        sleep(1)
+                        board.digital[redLED].write(of)
+                        sleep(1)
+                        break
+
             except Exception as e:
                 print(e)
 
@@ -618,6 +800,19 @@ def Exit_Room():
                     )
                     conn.execute(update_data)
                     connection.commit()
+                    x = 1
+                    index = 1
+                    while True:
+                        if x == index:
+                            for i in range(0):
+                                servo(pin, i)
+                            sleep(2)
+                            for i in range(0, 90, 1):
+                                servo(pin, i)
+                            sleep(10)
+                            for i in range(90, 0, -1):
+                                servo(pin, i)
+                        break
                 else:
                     update_data = (
                         " UPDATE tb_attandance set time_Out = '"
@@ -636,6 +831,19 @@ def Exit_Room():
                     )
                     conn.execute(update_data)
                     connection.commit()
+                    x = 1
+                    index = 1
+                    while True:
+                        if x == index:
+                            for i in range(0):
+                                servo(pin, i)
+                            sleep(2)
+                            for i in range(0, 90, 1):
+                                servo(pin, i)
+                            sleep(10)
+                            for i in range(90, 0, -1):
+                                servo(pin, i)
+                        break
             except Exception as e:
                 print(e)
 
@@ -652,6 +860,22 @@ def back():
     if l == "yes":
         a.withdraw()
         os.system("D:\ASP_Project\ASP\\attandance.py")
+
+
+def breakk():
+    x = 1
+    index = 1
+    while True:
+        if x == index:
+            for i in range(0):
+                servo(pin, i)
+            sleep(2)
+            for i in range(0, 90, 1):
+                servo(pin, i)
+            sleep(10)
+            for i in range(90, 0, -1):
+                servo(pin, i)
+        break
 
 
 # button
@@ -689,7 +913,7 @@ button_3 = Button(
     image=bt3,
     borderwidth=0,
     highlightthickness=0,
-    # command=auto_att,
+    command=breakk,
     relief="flat",
 )
 button_3.place(x=950, y=700)

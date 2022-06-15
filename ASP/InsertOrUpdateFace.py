@@ -7,7 +7,7 @@ import pymysql
 
 frm = Tk()
 frm.geometry("1500x900")
-frm.attributes("-fullscreen", True)
+# frm.attributes("-fullscreen", True)
 frm.configure(background="snow")
 
 
@@ -57,7 +57,7 @@ def insertOrUpdate():
     elif t_Id == "":
         t_Id = None
     faceDetect = cv2.CascadeClassifier("ASP/Detect/haarcascade_frontalface_default.xml")
-    cam = cv2.VideoCapture(0)
+    cam = cv2.VideoCapture(1)
     cam.set(
         cv2.CAP_PROP_FRAME_WIDTH, 1280
     )  # set new dimensionns to cam object (not cap)
@@ -108,7 +108,7 @@ def insertOrUpdate():
             cv2.waitKey(100)
         cv2.imshow("Face", img)
         cv2.waitKey(1)
-        if SampleNum > 50:
+        if SampleNum > 120:
             break
     cam.release()
     cv2.destroyAllWindows()
