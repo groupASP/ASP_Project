@@ -142,8 +142,9 @@ def report_today():
         )
         df.to_excel(file_name, index=False, header=header, encoding="utf-8")
 
-    but = Button(b, text="Export", command=export_data)
-    but.place(x=900, y=700)
+    bt_export = tkinter.Button(b, text="Export", command=export_data, width=16)
+    bt_export.place(x=900, y=750)
+    bt_export.configure(font=("Times New Roman", 25), bg="green", fg="white")
 
 
 def back():
@@ -229,10 +230,9 @@ cb_subject.configure(font=("Saysettha OT", 20), state="readonly")
 cb_subject.option_add("*font", cbFont)
 cb_subject.current(0)
 
-bts = tkinter.Button(b, text="Back", command=back, width=20)
-bts.place(x=550, y=750)
-bts.configure(font=("Saysettha OT", 18), bg="green", fg="white")
-
+bts = tkinter.Button(b, text="Back", command=back, width=16)
+bts.place(x=300, y=750)
+bts.configure(font=("Times New Roman", 25), bg="#CEC2C2", fg="black")
 
 img0 = PhotoImage(file=f"ASP/Image/back.png")
 b0 = Button(

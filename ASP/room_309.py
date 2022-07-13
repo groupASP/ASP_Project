@@ -1,4 +1,3 @@
-from tabnanny import check
 from tkinter import *
 import tkinter
 from tkinter import ttk
@@ -209,6 +208,8 @@ def check_in():
                 key = cv2.waitKey(1) & 0xFF == ord("q")
                 if key or conf <= 38:
                     break
+            cam.release()
+            cv2.destroyAllWindows()
             try:
                 connection = pymysql.connect(
                     host="localhost", user="root", password="", database="asp_base"
@@ -291,18 +292,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
-                        x = 1
-                        index = 1
+                        print("Hello")
+                        redLED = 13
+                        on = 1
+                        of = 0
                         while True:
-                            if x == index:
-                                for i in range(0):
-                                    servo(pin, i)
-                                sleep(2)
-                                for i in range(0, 90, 1):
-                                    servo(pin, i)
-                                sleep(10)
-                                for i in range(90, 0, -1):
-                                    servo(pin, i)
+                            board.digital[redLED].write(on)
+                            sleep(5)
+                            board.digital[redLED].write(of)
+                            sleep(1)
+                            board.digital[redLED].write(on)
+                            sleep(5)
+                            board.digital[redLED].write(of)
+                            sleep(1)
                             break
                 elif str(profile[5]) == "309" and str(profile[6]) == "HCS6B":
                     local_time = pytz.timezone("Asia/Bangkok")
@@ -365,18 +367,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
-                        x = 1
-                        index = 1
+                        print("Hello")
+                        redLED = 13
+                        on = 1
+                        of = 0
                         while True:
-                            if x == index:
-                                for i in range(0):
-                                    servo(pin, i)
-                                sleep(2)
-                                for i in range(0, 90, 1):
-                                    servo(pin, i)
-                                sleep(10)
-                                for i in range(90, 0, -1):
-                                    servo(pin, i)
+                            board.digital[redLED].write(on)
+                            sleep(5)
+                            board.digital[redLED].write(of)
+                            sleep(1)
+                            board.digital[redLED].write(on)
+                            sleep(5)
+                            board.digital[redLED].write(of)
+                            sleep(1)
                             break
                 elif str(profile[5]) == "309" and str(profile[6]) == "HCS6C":
                     local_time = pytz.timezone("Asia/Bangkok")
@@ -385,7 +388,7 @@ def check_in():
                     date_Today = datetime.now(tz=local_time).strftime("%Y-%m-%d")
                     time_now = datetime.now(tz=local_time).strftime("%H:%M:%S")
                     start_Class = str(
-                        time(hour=8, minute=45, second=0, tzinfo=local_time)
+                        time(hour=13, minute=45, second=0, tzinfo=local_time)
                     )
                     st_Id = str(profile[0])
                     r_Name = str(profile[5])
@@ -439,18 +442,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
-                        x = 1
-                        index = 1
+                        print("Hello")
+                        redLED = 13
+                        on = 1
+                        of = 0
                         while True:
-                            if x == index:
-                                for i in range(0):
-                                    servo(pin, i)
-                                sleep(2)
-                                for i in range(0, 90, 1):
-                                    servo(pin, i)
-                                sleep(10)
-                                for i in range(90, 0, -1):
-                                    servo(pin, i)
+                            board.digital[redLED].write(on)
+                            sleep(5)
+                            board.digital[redLED].write(of)
+                            sleep(1)
+                            board.digital[redLED].write(on)
+                            sleep(5)
+                            board.digital[redLED].write(of)
+                            sleep(1)
                             break
                 elif str(profile[5]) == "309" and str(profile[6]) == "HCS6D":
                     local_time = pytz.timezone("Asia/Bangkok")
@@ -459,7 +463,7 @@ def check_in():
                     date_Today = datetime.now(tz=local_time).strftime("%Y-%m-%d")
                     time_now = datetime.now(tz=local_time).strftime("%H:%M:%S")
                     start_Class = str(
-                        time(hour=8, minute=45, second=0, tzinfo=local_time)
+                        time(hour=13, minute=45, second=0, tzinfo=local_time)
                     )
                     st_Id = str(profile[0])
                     r_Name = str(profile[5])
@@ -513,18 +517,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
-                        x = 1
-                        index = 1
+                        print("Hello")
+                        redLED = 13
+                        on = 1
+                        of = 0
                         while True:
-                            if x == index:
-                                for i in range(0):
-                                    servo(pin, i)
-                                sleep(2)
-                                for i in range(0, 90, 1):
-                                    servo(pin, i)
-                                sleep(10)
-                                for i in range(90, 0, -1):
-                                    servo(pin, i)
+                            board.digital[redLED].write(on)
+                            sleep(5)
+                            board.digital[redLED].write(of)
+                            sleep(1)
+                            board.digital[redLED].write(on)
+                            sleep(5)
+                            board.digital[redLED].write(of)
+                            sleep(1)
                             break
                 elif str(profile[5]) == "309" and str(profile[6]) == "HCS6E":
                     local_time = pytz.timezone("Asia/Bangkok")
@@ -533,7 +538,7 @@ def check_in():
                     date_Today = datetime.now(tz=local_time).strftime("%Y-%m-%d")
                     time_now = datetime.now(tz=local_time).strftime("%H:%M:%S")
                     start_Class = str(
-                        time(hour=8, minute=45, second=0, tzinfo=local_time)
+                        time(hour=17, minute=15, second=0, tzinfo=local_time)
                     )
                     st_Id = str(profile[0])
                     r_Name = str(profile[5])
@@ -587,18 +592,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
-                        x = 1
-                        index = 1
+                        print("Hello")
+                        redLED = 13
+                        on = 1
+                        of = 0
                         while True:
-                            if x == index:
-                                for i in range(0):
-                                    servo(pin, i)
-                                sleep(2)
-                                for i in range(0, 90, 1):
-                                    servo(pin, i)
-                                sleep(10)
-                                for i in range(90, 0, -1):
-                                    servo(pin, i)
+                            board.digital[redLED].write(on)
+                            sleep(5)
+                            board.digital[redLED].write(of)
+                            sleep(1)
+                            board.digital[redLED].write(on)
+                            sleep(5)
+                            board.digital[redLED].write(of)
+                            sleep(1)
                             break
                 elif str(profile[5]) == "309" and str(profile[6]) == "HCS6F":
                     local_time = pytz.timezone("Asia/Bangkok")
@@ -607,7 +613,7 @@ def check_in():
                     date_Today = datetime.now(tz=local_time).strftime("%Y-%m-%d")
                     time_now = datetime.now(tz=local_time).strftime("%H:%M:%S")
                     start_Class = str(
-                        time(hour=8, minute=45, second=0, tzinfo=local_time)
+                        time(hour=17, minute=15, second=0, tzinfo=local_time)
                     )
                     st_Id = str(profile[0])
                     r_Name = str(profile[5])
@@ -661,18 +667,19 @@ def check_in():
                         )
                         conn.execute(update_data)
                         connection.commit()
-                        x = 1
-                        index = 1
+                        print("Hello")
+                        redLED = 13
+                        on = 1
+                        of = 0
                         while True:
-                            if x == index:
-                                for i in range(0):
-                                    servo(pin, i)
-                                sleep(2)
-                                for i in range(0, 90, 1):
-                                    servo(pin, i)
-                                sleep(10)
-                                for i in range(90, 0, -1):
-                                    servo(pin, i)
+                            board.digital[redLED].write(on)
+                            sleep(5)
+                            board.digital[redLED].write(of)
+                            sleep(1)
+                            board.digital[redLED].write(on)
+                            sleep(5)
+                            board.digital[redLED].write(of)
+                            sleep(1)
                             break
                 else:
                     print("Hello")
@@ -681,7 +688,11 @@ def check_in():
                     of = 0
                     while True:
                         board.digital[redLED].write(on)
+                        sleep(5)
+                        board.digital[redLED].write(of)
                         sleep(1)
+                        board.digital[redLED].write(on)
+                        sleep(5)
                         board.digital[redLED].write(of)
                         sleep(1)
                         break
@@ -779,6 +790,8 @@ def Exit_Room():
                 key = cv2.waitKey(1) & 0xFF == ord("q")
                 if key or conf <= 38:
                     break
+            cam.release()
+            cv2.destroyAllWindows()
             try:
                 connection = pymysql.connect(
                     host="localhost", user="root", password="", database="asp_base"
@@ -789,73 +802,404 @@ def Exit_Room():
                 date_Today = datetime.now().strftime("%Y-%m-%d")
                 a = 0
                 b = 1
-                start_Class = str(time(hour=8, minute=45, second=0, tzinfo=local_time))
-                end_Class = str(time(hour=12, minute=0, second=0, tzinfo=local_time))
+                mn_start_Class = str(
+                    time(hour=8, minute=45, second=0, tzinfo=local_time)
+                )
+                mn_end_Class = str(time(hour=12, minute=0, second=0, tzinfo=local_time))
+
+                an_start_Class = str(
+                    time(hour=13, minute=45, second=0, tzinfo=local_time)
+                )
+                an_end_Class = str(time(hour=17, minute=0, second=0, tzinfo=local_time))
+
+                en_start_Class = str(
+                    time(hour=17, minute=15, second=0, tzinfo=local_time)
+                )
+                en_end_Class = str(
+                    time(hour=20, minute=15, second=0, tzinfo=local_time)
+                )
+
                 st_Id = str(profile[0])
                 r_Name = str(profile[5])
                 cl_Name = str(profile[6])
-                if time_now <= start_Class and time_now >= end_Class:
-                    update_data = (
-                        " UPDATE tb_attandance set time_Out = '"
-                        + time_now
-                        + "', second_Absence = '"
-                        + str(a)
-                        + "' where st_Id = '"
-                        + st_Id
-                        + "' and r_Name = '"
-                        + r_Name
-                        + "' and cl_Name = '"
-                        + cl_Name
-                        + "' and date = '"
-                        + date_Today
-                        + "';"
-                    )
-                    conn.execute(update_data)
-                    connection.commit()
-                    x = 1
-                    index = 1
-                    while True:
-                        if x == index:
-                            for i in range(0):
-                                servo(pin, i)
-                            sleep(2)
-                            for i in range(0, 90, 1):
-                                servo(pin, i)
-                            sleep(10)
-                            for i in range(90, 0, -1):
-                                servo(pin, i)
-                        break
-                else:
-                    update_data = (
-                        " UPDATE tb_attandance set time_Out = '"
-                        + time_now
-                        + "', second_Absence = '"
-                        + str(b)
-                        + "' where st_Id = '"
-                        + st_Id
-                        + "' and r_Name = '"
-                        + r_Name
-                        + "' and cl_Name = '"
-                        + cl_Name
-                        + "' and date = '"
-                        + date_Today
-                        + "';"
-                    )
-                    conn.execute(update_data)
-                    connection.commit()
-                    x = 1
-                    index = 1
-                    while True:
-                        if x == index:
-                            for i in range(0):
-                                servo(pin, i)
-                            sleep(2)
-                            for i in range(0, 90, 1):
-                                servo(pin, i)
-                            sleep(10)
-                            for i in range(90, 0, -1):
-                                servo(pin, i)
-                        break
+                if str(profile[5]) == "309" and str(profile[6]) == "HCS6A":
+                    if time_now <= mn_start_Class and time_now >= mn_end_Class:
+                        update_data = (
+                            " UPDATE tb_attandance set time_Out = '"
+                            + time_now
+                            + "', second_Absence = '"
+                            + str(a)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
+                    else:
+                        update_data = (
+                            " UPDATE tb_attandance set time_Out = '"
+                            + time_now
+                            + "', second_Absence = '"
+                            + str(b)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
+                elif str(profile[5]) == "309" and str(profile[6]) == "HCS6B":
+                    if time_now <= mn_start_Class and time_now >= mn_end_Class:
+                        update_data = (
+                            " UPDATE tb_attandance set time_Out = '"
+                            + time_now
+                            + "', second_Absence = '"
+                            + str(a)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
+                    else:
+                        update_data = (
+                            " UPDATE tb_attandance set time_Out = '"
+                            + time_now
+                            + "', second_Absence = '"
+                            + str(b)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
+                elif str(profile[5]) == "309" and str(profile[6]) == "HCS6C":
+                    if time_now <= an_start_Class and time_now >= an_end_Class:
+                        update_data = (
+                            " UPDATE tb_attandance set time_Out = '"
+                            + time_now
+                            + "', second_Absence = '"
+                            + str(a)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
+                    else:
+                        update_data = (
+                            " UPDATE tb_attandance set time_Out = '"
+                            + time_now
+                            + "', second_Absence = '"
+                            + str(b)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
+                elif str(profile[5]) == "309" and str(profile[6]) == "HCS6D":
+                    if time_now <= an_start_Class and time_now >= an_end_Class:
+                        update_data = (
+                            " UPDATE tb_attandance set time_Out = '"
+                            + time_now
+                            + "', second_Absence = '"
+                            + str(a)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
+                    else:
+                        update_data = (
+                            " UPDATE tb_attandance set time_Out = '"
+                            + time_now
+                            + "', second_Absence = '"
+                            + str(b)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
+                elif str(profile[5]) == "309" and str(profile[6]) == "HCS6E":
+                    if time_now <= an_start_Class and time_now >= an_end_Class:
+                        update_data = (
+                            " UPDATE tb_attandance set time_Out = '"
+                            + time_now
+                            + "', second_Absence = '"
+                            + str(a)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
+                    else:
+                        update_data = (
+                            " UPDATE tb_attandance set time_Out = '"
+                            + time_now
+                            + "', second_Absence = '"
+                            + str(b)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
+                elif str(profile[5]) == "309" and str(profile[6]) == "HCS6F":
+                    if time_now <= en_start_Class and time_now >= en_end_Class:
+                        update_data = (
+                            " UPDATE tb_attandance set time_Out = '"
+                            + time_now
+                            + "', second_Absence = '"
+                            + str(a)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
+                    else:
+                        update_data = (
+                            " UPDATE tb_attandance set time_Out = '"
+                            + time_now
+                            + "', second_Absence = '"
+                            + str(b)
+                            + "' where st_Id = '"
+                            + st_Id
+                            + "' and r_Name = '"
+                            + r_Name
+                            + "' and cl_Name = '"
+                            + cl_Name
+                            + "' and date = '"
+                            + date_Today
+                            + "';"
+                        )
+                        conn.execute(update_data)
+                        connection.commit()
+                        x = 1
+                        index = 1
+                        while True:
+                            if x == index:
+                                for i in range(0):
+                                    servo(pin, i)
+                                sleep(2)
+                                for i in range(0, 90, 1):
+                                    servo(pin, i)
+                                sleep(10)
+                                for i in range(90, 0, -1):
+                                    servo(pin, i)
+                            break
             except Exception as e:
                 print(e)
 
@@ -949,6 +1293,16 @@ button_5 = Button(
     relief="flat",
 )
 button_5.place(x=900, y=150)
+
+bt_sos = PhotoImage(file="ASP/Image/bt_sos.png")
+button_6 = Button(
+    image=bt_sos,
+    borderwidth=0,
+    highlightthickness=0,
+    command=breakk,
+    relief="flat",
+)
+button_6.place(x=600, y=700)
 
 connection = pymysql.connect(
     host="localhost", user="root", password="", database="asp_base"

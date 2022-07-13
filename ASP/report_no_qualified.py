@@ -8,6 +8,8 @@ from tkinter import ttk
 import pymysql
 from tkinter import messagebox
 import os
+import pandas as pd
+import tkinter.filedialog as fd
 
 frm = Tk()
 frm.title("Calendar")
@@ -18,6 +20,11 @@ connection = pymysql.connect(host="localhost", user="root", password="", db="asp
 conn = connection.cursor()
 
 
+def back1():
+    b.withdraw()
+    frm.deiconify()
+
+
 def back():
     l = messagebox.askquestion("BACK", "ທ່ານຕ້ອງການຈະກັບໄປໜ້າລາຍງານຫຼັກ ຫຼື ບໍ່?")
     if l == "yes":
@@ -25,7 +32,7 @@ def back():
         os.system("D:\ASP_Project\ASP\\report.py")
 
 
-def report_teacher_today():
+def report_no_qualified():
     frm.withdraw()
     b.deiconify()
     st = ttk.Style(b)
@@ -38,7 +45,7 @@ def report_teacher_today():
         "SELECT st.st_Id, st.st_Name, st.st_Surname, att.s_Name, att.cl_Name, att.sc_Period, att.sc_Year, SUM(att.first_Absence + att.second_Absence),\
         (\
         CASE\
-            WHEN SUM(att.first_Absence + att.second_Absence) <= 7 THEN ''\
+            WHEN SUM(att.first_Absence + att.second_Absence) <= 7 THEN 'ມີສິດເສັງ'\
             ELSE 'ບໍ່ມີສິດເສັງ'\
         END\
         )\
@@ -97,6 +104,42 @@ def report_teacher_today():
         i = i + 1
     tree.place(x=-15, y=80)
 
+    def export_data():
+        sql = (
+            "SELECT st.st_Id, st.st_Name, st.st_Surname, att.s_Name, att.cl_Name, att.sc_Period, att.sc_Year, SUM(att.first_Absence + att.second_Absence),\
+        (\
+        CASE\
+            WHEN SUM(att.first_Absence + att.second_Absence) <= 7 THEN 'ມີສິດເສັງ'\
+            ELSE 'ບໍ່ມີສິດເສັງ'\
+        END\
+        )\
+        FROM tb_student st LEFT JOIN tb_attandance att ON st.st_Id = att.st_Id WHERE att.cl_Name='"
+            + str(cl_Name)
+            + "' and att.s_Name='"
+            + str(s_Name)
+            + "' GROUP BY st.st_Id;"
+        )
+        df = pd.read_sql(sql, connection)
+        header = [
+            "ລະຫັດນັກສຶກສາ",
+            "ຊື່",
+            "ນາມສະກຸນ",
+            "ວິຊາ",
+            "ຊັ້ນຮຽນ",
+            "ພາກ",
+            "ສົກຮຽນ",
+            "ຜົນລວມການຂາດຮຽນ",
+            "ສະຖານະ",
+        ]
+        file_name = fd.asksaveasfilename(
+            filetypes=[("excel file", "*.xlsx")], defaultextension=".xlsx"
+        )
+        df.to_excel(file_name, index=False, header=header, encoding="utf-8")
+
+    bt_export = tkinter.Button(b, text="Export", command=export_data, width=16)
+    bt_export.place(x=900, y=750)
+    bt_export.configure(font=("Times New Roman", 25), bg="green", fg="white")
+
 
 canvas = Canvas(
     frm,
@@ -116,7 +159,7 @@ button_5 = Button(
     image=bt5,
     borderwidth=0,
     highlightthickness=0,
-    command=report_teacher_today,
+    command=report_no_qualified,
     relief="flat",
 )
 button_5.place(x=900, y=700)
@@ -182,9 +225,9 @@ lbShow = Label(b, text="ລາຍງານຂໍ້ມູນນັກສຶກ�
 lbShow.pack(side="top", fill="x")
 lbShow.configure(font=("Saysettha OT", 30), bg="#04C582", fg="white")
 
-bts = tkinter.Button(b, text="Back", command=back1, width=20)
-bts.place(x=550, y=750)
-bts.configure(font=("Saysettha OT", 18), bg="green", fg="white")
+bts = tkinter.Button(b, text="Back", command=back1, width=16)
+bts.place(x=300, y=750)
+bts.configure(font=("Times New Roman", 25), bg="#CEC2C2", fg="black")
 
 
 frm.mainloop()

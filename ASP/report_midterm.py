@@ -1,3 +1,4 @@
+import tkinter
 from tkcalendar import *
 from tkinter import *
 from tkinter import font as tkFont
@@ -6,6 +7,8 @@ from tkinter import ttk
 import pymysql
 from tkinter import messagebox
 import os
+import pandas as pd
+import tkinter.filedialog as fd
 
 frm = Tk()
 frm.geometry("1500x900")
@@ -15,14 +18,19 @@ connection = pymysql.connect(host="localhost", user="root", password="", db="asp
 conn = connection.cursor()
 
 
+def back1():
+    b.withdraw()
+    frm.deiconify()
+
+
 def back():
     l = messagebox.askquestion("BACK", "ທ່ານຕ້ອງການຈະກັບໄປໜ້າລາຍງານຫຼັກ ຫຼື ບໍ່?")
     if l == "yes":
-        b.withdraw()
-        os.system("D:\ASP_Project\ASP\\report_midterm.py")
+        frm.withdraw()
+        os.system("D:\ASP_Project\ASP\\report.py")
 
 
-def report_teacher_today():
+def report_midterm():
     frm.withdraw()
     b.deiconify()
     st = ttk.Style(b)
@@ -42,7 +50,7 @@ def report_teacher_today():
         + str(start_Date)
         + "' and '"
         + str(end_Date)
-        + "' group by st_Id;"
+        + "';"
     )
     conn.execute(sql)
 
@@ -99,6 +107,38 @@ def report_teacher_today():
         i = i + 1
     tree.place(x=-15, y=80)
 
+    def export_data():
+        sql = (
+            "select st_Id, Name, Surname, s_Name, cl_Name, sc_Period, sc_Year, SUM(first_Absence + second_Absence) from tb_attandance where cl_Name ='"
+            + str(cl_Name)
+            + "' and s_Name='"
+            + str(s_Name)
+            + "' and date BETWEEN '"
+            + str(start_Date)
+            + "' and '"
+            + str(end_Date)
+            + "';"
+        )
+        df = pd.read_sql(sql, connection)
+        header = [
+            "ລະຫັດນັກສຶກສາ",
+            "ຊື່",
+            "ນາມສະກຸນ",
+            "ວິຊາ",
+            "ຊັ້ນຮຽນ",
+            "ພາກ",
+            "ສົກຮຽນ",
+            "ຜົນລວມການຂາດຮຽນ",
+        ]
+        file_name = fd.asksaveasfilename(
+            filetypes=[("excel file", "*.xlsx")], defaultextension=".xlsx"
+        )
+        df.to_excel(file_name, index=False, header=header, encoding="utf-8")
+
+    bt_export = tkinter.Button(b, text="Export", command=export_data, width=16)
+    bt_export.place(x=900, y=750)
+    bt_export.configure(font=("Times New Roman", 25), bg="green", fg="white")
+
 
 canvas = Canvas(
     frm,
@@ -138,7 +178,7 @@ button_5 = Button(
     image=bt5,
     borderwidth=0,
     highlightthickness=0,
-    command=report_teacher_today,
+    command=report_midterm,
     relief="flat",
 )
 button_5.place(x=1100, y=750)
@@ -165,10 +205,6 @@ b.attributes("-fullscreen", True)
 b.withdraw()
 
 cbFont = tkFont.Font(family="Saysettha OT", size=18)
-
-bts = Button(b, text="Back", command=back, width=20)
-bts.place(x=550, y=750)
-bts.configure(font=("Saysettha OT", 18), bg="green", fg="white")
 
 conn.execute("select cl_Name from tb_class;")
 results = conn.fetchall()
@@ -198,6 +234,10 @@ cb_Subject.config(font=(cbFont), state="readonly")
 cb_Subject.configure(font=("Saysettha OT", 16))
 cb_Subject.option_add("*font", cbFont)
 cb_Subject.current(0)
+
+bts = tkinter.Button(b, text="Back", command=back1, width=16)
+bts.place(x=300, y=750)
+bts.configure(font=("Times New Roman", 25), bg="#CEC2C2", fg="black")
 
 lbShow = Label(b, text="ລາຍງານຂໍ້ມູນນການຂາດນັກສຶກສາກາງພາກ")
 lbShow.pack(side="top", fill="x")
